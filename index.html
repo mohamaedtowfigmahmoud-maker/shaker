@@ -1,3012 +1,442 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>شاورما وعصيرات جزيرة شاكر | جدة</title>
-
-    <meta
-        name="description"
-        content="شاورما وعصيرات جزيرة شاكر - شاورما لذيذة، عصيرات طازجة وتجربة مميزة في جدة."
-    >
-
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet"
-    >
-
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ريحني — أقرب حمام عام ليك</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-/* =====================================================
-   GENERAL
-===================================================== */
+  :root{
+    --teal-dark:#10474C;
+    --teal:#166A6E;
+    --aqua:#35B0A7;
+    --sand:#F2E9D8;
+    --ink:#16242A;
+    --amber:#E0A458;
+    --white:#FFFFFF;
+    --line:#DCD0B8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--sand);
+    color:var(--ink);
+    font-family:'IBM Plex Sans Arabic', sans-serif;
+    min-height:100vh;
+    line-height:1.6;
+  }
+  .wrap{max-width:640px; margin:0 auto; padding:0 20px 100px;}
 
-:root {
-    --primary: #d94a28;
-    --primary-dark: #b93619;
-    --secondary: #f5a623;
+  header.hero{
+    background:var(--teal-dark);
+    color:var(--white);
+    padding:36px 20px 44px;
+    border-radius:0 0 28px 28px;
+    text-align:center;
+  }
+  header.hero h1{
+    font-family:'Tajawal', sans-serif;
+    font-weight:900;
+    font-size:2.6rem;
+    color:var(--white);
+    letter-spacing:0.5px;
+  }
+  header.hero p{
+    margin-top:10px;
+    font-size:1.05rem;
+    color:#CFE8E4;
+    max-width:420px;
+    margin-inline:auto;
+  }
 
-    --dark: #171310;
-    --dark-2: #211a16;
+  .locate-btn{
+    display:block;
+    width:100%;
+    max-width:420px;
+    margin:24px auto 0;
+    background:var(--amber);
+    color:var(--teal-dark);
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:1.15rem;
+    border:none;
+    border-radius:14px;
+    padding:16px;
+    cursor:pointer;
+    transition:transform .12s ease;
+  }
+  .locate-btn:active{transform:scale(0.98);}
+  .locate-btn:disabled{opacity:0.6; cursor:wait;}
 
-    --text: #29221e;
-    --muted: #746b65;
+  .status{
+    text-align:center;
+    font-size:0.95rem;
+    color:var(--teal);
+    margin-top:14px;
+    min-height:1.2em;
+  }
 
-    --light: #fffaf5;
-    --white: #ffffff;
+  #map{
+    height:260px;
+    border-radius:16px;
+    margin-top:24px;
+    border:1px solid var(--line);
+    display:none;
+  }
 
-    --border: #eadfd6;
+  section.list{margin-top:28px;}
+  section.list h2{
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:1.2rem;
+    color:var(--teal-dark);
+    margin-bottom:12px;
+  }
 
-    --shadow:
-        0 20px 60px rgba(40, 25, 15, 0.10);
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .card .info h3{
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--ink);
+  }
+  .card .info p{
+    font-size:0.88rem;
+    color:#5B6A6C;
+    margin-top:2px;
+  }
+  .card .dist{
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    color:var(--teal);
+    font-size:0.95rem;
+    white-space:nowrap;
+  }
+  .card a.go{
+    display:inline-block;
+    margin-top:6px;
+    font-size:0.85rem;
+    color:var(--aqua);
+    text-decoration:none;
+    font-weight:600;
+  }
 
-    --radius: 24px;
+  .empty{
+    text-align:center;
+    color:#5B6A6C;
+    padding:30px 10px;
+    font-size:0.95rem;
+  }
 
-    --transition: 0.3s ease;
-}
-
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-
-html {
-    scroll-behavior: smooth;
-}
-
-
-body {
-    font-family: "Cairo", sans-serif;
-    background: var(--light);
-    color: var(--text);
-    line-height: 1.8;
-    overflow-x: hidden;
-}
-
-
-img {
-    width: 100%;
-    display: block;
-}
-
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-
-button {
-    font-family: inherit;
-}
-
-
-.container {
-    width: min(1180px, 92%);
-    margin: auto;
-}
-
-
-.section {
-    padding: 110px 0;
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-.header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 100%;
+  .fab{
+    position:fixed;
+    left:20px;
+    bottom:20px;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:var(--teal-dark);
+    color:var(--white);
+    font-size:1.8rem;
+    border:none;
+    box-shadow:0 6px 18px rgba(16,71,76,0.35);
+    cursor:pointer;
     z-index: 1000;
-
-    background: rgba(255, 250, 245, 0.92);
-
-    backdrop-filter: blur(15px);
-
-    border-bottom: 1px solid rgba(234, 223, 214, 0.6);
-
-    transition: var(--transition);
-}
-
-
-.header.scrolled {
-    box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.08);
-}
-
-
-.nav-container {
-    min-height: 82px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
-}
-
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-
-.logo-icon {
-    width: 48px;
-    height: 48px;
-
-    border-radius: 14px;
-
-    display: grid;
-    place-items: center;
-
-    color: white;
-    background: var(--primary);
-
-    font-size: 20px;
-}
-
-
-.logo strong {
-    display: block;
-
-    font-size: 18px;
-    line-height: 1.2;
-    font-weight: 900;
-}
-
-
-.logo small {
-    display: block;
-
-    color: var(--muted);
-
-    font-size: 11px;
-}
-
-
-.navbar {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-}
-
-
-.nav-link {
-    position: relative;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    color: #4f4742;
-
-    transition: var(--transition);
-}
-
-
-.nav-link::after {
-    content: "";
-
-    position: absolute;
-
-    bottom: -8px;
-    right: 0;
-
-    width: 0;
-    height: 2px;
-
-    background: var(--primary);
-
-    transition: var(--transition);
-}
-
-
-.nav-link:hover,
-.nav-link.active {
-    color: var(--primary);
-}
-
-
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
-}
-
-
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-
-.phone-btn {
-    width: 42px;
-    height: 42px;
-
-    display: grid;
-    place-items: center;
-
-    color: white;
-    background: var(--primary);
-
-    border-radius: 12px;
-
-    transition: var(--transition);
-}
-
-
-.phone-btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-}
-
-
-.menu-toggle {
-    display: none;
-
-    border: 0;
-    background: transparent;
-
-    width: 42px;
-    height: 42px;
-
-    font-size: 22px;
-    cursor: pointer;
-}
-
-
-/* =====================================================
-   HERO
-===================================================== */
-
-.hero {
-    min-height: 100vh;
-
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(16, 11, 8, 0.94),
-            rgba(16, 11, 8, 0.65),
-            rgba(16, 11, 8, 0.15)
-        ),
-        url("https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=1800&q=90");
-
-    background-size: cover;
-    background-position: center;
-}
-
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-
-    padding-top: 80px;
-}
-
-
-.hero-text {
-    max-width: 700px;
-
-    color: white;
-}
-
-
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    padding: 7px 15px;
-
-    border: 1px solid rgba(255, 255, 255, 0.25);
-
-    background: rgba(255, 255, 255, 0.10);
-
-    backdrop-filter: blur(10px);
-
-    border-radius: 50px;
-
-    font-size: 13px;
-}
-
-
-.hero-badge i {
-    color: var(--secondary);
-}
-
-
-.hero h1 {
-    margin-top: 22px;
-
-    font-size: clamp(48px, 7vw, 88px);
-
-    line-height: 1.1;
-
-    font-weight: 900;
-
-    letter-spacing: -2px;
-}
-
-
-.hero h1 span {
-    color: var(--secondary);
-}
-
-
-.hero p {
-    max-width: 600px;
-
-    margin-top: 25px;
-
-    color: #eee5df;
-
-    font-size: 17px;
-}
-
-
-.hero-buttons {
-    display: flex;
-    gap: 14px;
-
-    margin-top: 35px;
-
-    flex-wrap: wrap;
-}
-
-
-.btn {
-    min-height: 52px;
-
-    padding: 0 25px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 10px;
-
-    border-radius: 14px;
-
-    font-weight: 800;
-
-    transition: var(--transition);
-}
-
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-}
-
-
-.btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(217, 74, 40, 0.30);
-}
-
-
-.btn-outline {
-    border: 1px solid rgba(255, 255, 255, 0.4);
-
-    color: white;
-
-    background: rgba(255, 255, 255, 0.08);
-
-    backdrop-filter: blur(10px);
-}
-
-
-.btn-outline:hover {
-    background: white;
-    color: var(--dark);
-}
-
-
-.hero-info {
-    display: flex;
-    gap: 35px;
-
-    margin-top: 55px;
-}
-
-
-.hero-info div {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.hero-info strong {
-    font-size: 23px;
-    line-height: 1.3;
-}
-
-
-.hero-info small {
-    color: #d7cec8;
-    font-size: 11px;
-}
-
-
-.hero-info i {
-    color: var(--secondary);
-    font-size: 13px;
-}
-
-
-/* =====================================================
-   SECTION HEADING
-===================================================== */
-
-.section-heading {
-    text-align: center;
-
-    max-width: 650px;
-
-    margin: 0 auto 60px;
-}
-
-
-.section-heading > span {
-    color: var(--primary);
-
-    font-size: 13px;
-
-    font-weight: 800;
-}
-
-
-.section-heading h2 {
-    margin-top: 8px;
-
-    font-size: clamp(32px, 5vw, 48px);
-
-    line-height: 1.25;
-
-    font-weight: 900;
-}
-
-
-.section-heading h2 strong {
-    color: var(--primary);
-}
-
-
-.section-heading p {
-    margin-top: 12px;
-
-    color: var(--muted);
-
-    font-size: 15px;
-}
-
-
-/* =====================================================
-   ABOUT
-===================================================== */
-
-.about {
-    background: white;
-}
-
-
-.about-grid {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    align-items: center;
-
-    gap: 80px;
-}
-
-
-.about-images {
-    position: relative;
-}
-
-
-.main-image {
-    overflow: hidden;
-
-    border-radius: 30px;
-
-    box-shadow: var(--shadow);
-}
-
-
-.main-image img {
-    height: 530px;
-
-    object-fit: cover;
-}
-
-
-.about-card {
-    position: absolute;
-
-    left: -25px;
-    bottom: 35px;
-
-    width: 190px;
-
-    padding: 22px;
-
-    background: white;
-
-    border-radius: 20px;
-
-    box-shadow: var(--shadow);
-}
-
-
-.about-card i {
-    width: 45px;
-    height: 45px;
-
-    display: grid;
-    place-items: center;
-
-    margin-bottom: 12px;
-
-    color: var(--primary);
-
-    background: #fff0eb;
-
-    border-radius: 13px;
-}
-
-
-.about-card strong {
-    display: block;
-
-    font-size: 14px;
-}
-
-
-.about-card span {
-    color: var(--muted);
-
-    font-size: 11px;
-}
-
-
-.small-title {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    color: var(--primary);
-
-    font-size: 13px;
-    font-weight: 800;
-}
-
-
-.about-text h3 {
-    margin-top: 12px;
-
-    font-size: clamp(35px, 5vw, 52px);
-
-    line-height: 1.2;
-
-    font-weight: 900;
-}
-
-
-.about-text > p {
-    max-width: 550px;
-
-    margin-top: 20px;
-
-    color: var(--muted);
-}
-
-
-.features {
-    margin-top: 30px;
-
-    display: grid;
-    gap: 18px;
-}
-
-
-.feature {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-
-.feature > i {
-    flex: 0 0 36px;
-
-    width: 36px;
-    height: 36px;
-
-    display: grid;
-    place-items: center;
-
-    color: var(--primary);
-
-    background: #fff0eb;
-
-    border-radius: 50%;
-
-    font-size: 12px;
-}
-
-
-.feature strong,
-.feature span {
-    display: block;
-}
-
-
-.feature strong {
-    font-size: 14px;
-}
-
-
-.feature span {
-    color: var(--muted);
-
-    font-size: 12px;
-}
-
-
-.text-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-
-    margin-top: 30px;
-
-    color: var(--primary);
-
-    font-weight: 800;
-}
-
-
-/* =====================================================
-   MENU
-===================================================== */
-
-.menu {
-    background: var(--light);
-}
-
-
-.menu-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-
-    margin-bottom: 40px;
-
-    flex-wrap: wrap;
-}
-
-
-.menu-tab {
-    padding: 10px 22px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 50px;
-
-    background: white;
-
-    color: var(--muted);
-
-    cursor: pointer;
-
-    font-size: 13px;
-    font-weight: 700;
-
-    transition: var(--transition);
-}
-
-
-.menu-tab:hover,
-.menu-tab.active {
-    color: white;
-    background: var(--primary);
-    border-color: var(--primary);
-}
-
-
-.menu-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 25px;
-}
-
-
-.menu-card {
-    overflow: hidden;
-
-    background: white;
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    transition: var(--transition);
-}
-
-
-.menu-card:hover {
-    transform: translateY(-7px);
-
-    box-shadow: var(--shadow);
-}
-
-
-.menu-image {
-    position: relative;
-
-    overflow: hidden;
-}
-
-
-.menu-image img {
-    height: 230px;
-
-    object-fit: cover;
-
-    transition: 0.5s ease;
-}
-
-
-.menu-card:hover .menu-image img {
-    transform: scale(1.06);
-}
-
-
-.popular {
-    position: absolute;
-
-    top: 15px;
-    right: 15px;
-
-    padding: 5px 10px;
-
-    background: var(--primary);
-
-    color: white;
-
-    border-radius: 50px;
-
-    font-size: 10px;
-    font-weight: 700;
-}
-
-
-.menu-content {
-    padding: 20px;
-}
-
-
-.menu-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
-}
-
-
-.menu-title h3 {
-    font-size: 17px;
-}
-
-
-.menu-title strong {
-    color: var(--primary);
-
-    font-size: 16px;
-}
-
-
-.menu-content p {
-    min-height: 50px;
-
-    margin-top: 8px;
-
-    color: var(--muted);
-
-    font-size: 12px;
-}
-
-
-.order-item {
-    width: 100%;
-
-    margin-top: 15px;
-
-    padding: 10px 15px;
-
-    border: 0;
-
-    border-radius: 10px;
-
-    background: #fff0eb;
-
-    color: var(--primary);
-
-    cursor: pointer;
-
-    font-weight: 800;
-
-    transition: var(--transition);
-}
-
-
-.order-item:hover {
-    background: var(--primary);
-    color: white;
-}
-
-
-/* =====================================================
-   CTA
-===================================================== */
-
-.cta {
-    padding: 70px 0;
-
-    background:
-        linear-gradient(
-            100deg,
-            var(--primary),
-            #a9361e
-        );
-
-    color: white;
-}
-
-
-.cta-content {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 30px;
-}
-
-
-.cta span {
-    font-size: 13px;
-    opacity: 0.8;
-}
-
-
-.cta h2 {
-    margin-top: 5px;
-
-    font-size: clamp(30px, 5vw, 48px);
-
-    line-height: 1.2;
-
-    font-weight: 900;
-}
-
-
-.btn-light {
-    background: white;
-    color: var(--primary);
-
-    min-width: 210px;
-}
-
-
-.btn-light:hover {
-    transform: translateY(-4px);
-
-    box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.2);
-}
-
-
-/* =====================================================
-   GALLERY
-===================================================== */
-
-.gallery {
-    background: white;
-}
-
-
-.gallery-grid {
-    display: grid;
-
-    grid-template-columns:
-        1.4fr 1fr 1fr;
-
-    grid-auto-rows: 230px;
-
-    gap: 15px;
-}
-
-
-.gallery-item {
-    overflow: hidden;
-
-    border-radius: 20px;
-}
-
-
-.gallery-item.large {
-    grid-row: span 2;
-}
-
-
-.gallery-item img {
-    height: 100%;
-
-    object-fit: cover;
-
-    transition: 0.5s ease;
-}
-
-
-.gallery-item:hover img {
-    transform: scale(1.07);
-}
-
-
-/* =====================================================
-   REVIEWS
-===================================================== */
-
-.reviews {
-    background: var(--light);
-}
-
-
-.rating-summary {
-    width: fit-content;
-
-    margin: 0 auto 50px;
-
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-
-.rating-summary > strong {
-    font-size: 60px;
-
-    line-height: 1;
-
-    font-weight: 900;
-}
-
-
-.stars {
-    color: var(--secondary);
-
-    letter-spacing: 2px;
-}
-
-
-.rating-summary span {
-    color: var(--muted);
-
-    font-size: 12px;
-}
-
-
-.reviews-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-}
-
-
-.review-card {
-    padding: 25px;
-
-    background: white;
-
-    border: 1px solid var(--border);
-
-    border-radius: 20px;
-
-    transition: var(--transition);
-}
-
-
-.review-card:hover {
-    transform: translateY(-5px);
-
-    box-shadow: var(--shadow);
-}
-
-
-.review-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-
-.avatar {
-    width: 45px;
-    height: 45px;
-
-    display: grid;
-    place-items: center;
-
-    background: #fff0eb;
-
-    color: var(--primary);
-
-    border-radius: 50%;
-
-    font-weight: 900;
-}
-
-
-.review-top strong {
-    font-size: 13px;
-}
-
-
-.review-top .stars {
-    font-size: 11px;
-}
-
-
-.review-card p {
-    margin-top: 18px;
-
-    color: var(--muted);
-
-    font-size: 13px;
-}
-
-
-/* =====================================================
-   CONTACT
-===================================================== */
-
-.contact {
-    background: white;
-}
-
-
-.contact-box {
-    display: grid;
-
-    grid-template-columns: 0.8fr 1.2fr;
-
-    min-height: 480px;
-
-    overflow: hidden;
-
-    border-radius: 30px;
-
-    background: var(--dark);
-
-    color: white;
-
-    box-shadow: var(--shadow);
-}
-
-
-.contact-info {
-    padding: 60px;
-}
-
-
-.contact-info h2 {
-    margin-top: 10px;
-
-    font-size: 42px;
-
-    line-height: 1.2;
-
-    font-weight: 900;
-}
-
-
-.contact-info h2 strong {
-    color: var(--secondary);
-}
-
-
-.contact-info > p {
-    margin-top: 15px;
-
-    color: #bdb3ad;
-
-    font-size: 13px;
-}
-
-
-.contact-details {
-    margin-top: 40px;
-
-    display: grid;
-    gap: 20px;
-}
-
-
-.contact-details a {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-
-.contact-details i {
-    width: 45px;
-    height: 45px;
-
-    display: grid;
-    place-items: center;
-
-    border-radius: 13px;
-
-    color: var(--secondary);
-
-    background: rgba(255, 255, 255, 0.08);
-}
-
-
-.contact-details small,
-.contact-details strong {
-    display: block;
-}
-
-
-.contact-details small {
-    color: #918780;
-
-    font-size: 10px;
-}
-
-
-.contact-details strong {
-    font-size: 13px;
-}
-
-
-.map-box {
-    min-height: 480px;
-
-    display: grid;
-    place-items: center;
-
-    background:
-        linear-gradient(
-            rgba(25, 20, 17, 0.25),
-            rgba(25, 20, 17, 0.55)
-        ),
-        url("https://images.unsplash.com/photo-1524666041070-9e4b9b3a2d0d?auto=format&fit=crop&w=1200&q=85");
-
-    background-size: cover;
-    background-position: center;
-}
-
-
-.map-overlay {
-    width: min(360px, 85%);
-
-    padding: 30px;
-
-    text-align: center;
-
-    background: rgba(255, 255, 255, 0.95);
-
-    color: var(--text);
-
-    border-radius: 22px;
-
-    box-shadow: var(--shadow);
-}
-
-
-.map-overlay > i {
-    width: 55px;
-    height: 55px;
-
-    display: grid;
-    place-items: center;
-
-    margin: 0 auto 15px;
-
-    border-radius: 50%;
-
-    color: white;
-    background: var(--primary);
-
-    font-size: 20px;
-}
-
-
-.map-overlay h3 {
-    font-size: 17px;
-}
-
-
-.map-overlay p {
-    color: var(--muted);
-
-    font-size: 12px;
-
-    margin: 5px 0 20px;
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-.footer {
-    background: #110e0c;
-
-    color: white;
-}
-
-
-.footer-grid {
-    display: grid;
-
-    grid-template-columns:
-        1.5fr 1fr 1fr;
-
-    gap: 70px;
-
-    padding: 70px 0;
-}
-
-
-.footer .logo small {
-    color: #8d837d;
-}
-
-
-.footer-brand p {
-    max-width: 320px;
-
-    margin-top: 20px;
-
-    color: #8d837d;
-
-    font-size: 12px;
-}
-
-
-.socials {
-    display: flex;
-
-    gap: 10px;
-
-    margin-top: 25px;
-}
-
-
-.socials a {
-    width: 40px;
-    height: 40px;
-
-    display: grid;
-    place-items: center;
-
-    border-radius: 11px;
-
-    background: rgba(255, 255, 255, 0.07);
-
-    color: #cfc6c0;
-
-    transition: var(--transition);
-}
-
-
-.socials a:hover {
-    color: white;
-
-    background: var(--primary);
-
-    transform: translateY(-3px);
-}
-
-
-.footer h3 {
-    margin-bottom: 20px;
-
-    font-size: 15px;
-}
-
-
-.footer-links,
-.footer-contact {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-
-.footer-links a,
-.footer-contact a,
-.footer-contact span {
-    color: #8d837d;
-
-    font-size: 12px;
-
-    transition: var(--transition);
-}
-
-
-.footer-links a:hover,
-.footer-contact a:hover {
-    color: white;
-}
-
-
-.footer-contact i {
-    width: 20px;
-
-    color: var(--primary);
-
-    margin-left: 5px;
-}
-
-
-.footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-
-.footer-bottom .container {
-    min-height: 70px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-}
-
-
-.footer-bottom p {
-    color: #706963;
-
-    font-size: 10px;
-}
-
-
-.demo-note {
-    color: var(--primary) !important;
-}
-
-
-/* =====================================================
-   WHATSAPP
-===================================================== */
-
-.whatsapp {
-    position: fixed;
-
-    left: 25px;
-    bottom: 25px;
-
-    width: 58px;
-    height: 58px;
-
-    display: grid;
-    place-items: center;
-
-    z-index: 999;
-
-    border-radius: 50%;
-
-    background: #25d366;
-
-    color: white;
-
-    font-size: 28px;
-
-    box-shadow:
-        0 10px 30px rgba(37, 211, 102, 0.3);
-
-    transition: var(--transition);
-}
-
-
-.whatsapp:hover {
-    transform: scale(1.1);
-}
-
-
-/* =====================================================
-   BACK TO TOP
-===================================================== */
-
-.back-top {
-    position: fixed;
-
-    right: 25px;
-    bottom: 25px;
-
-    width: 45px;
-    height: 45px;
-
-    z-index: 999;
-
-    border: 0;
-
-    border-radius: 12px;
-
-    color: white;
-    background: var(--dark);
-
-    cursor: pointer;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transform: translateY(15px);
-
-    transition: var(--transition);
-}
-
-
-.back-top.show {
-    opacity: 1;
-    visibility: visible;
-
-    transform: translateY(0);
-}
-
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width: 1000px) {
-
-    .navbar {
-        gap: 16px;
-    }
-
-    .menu-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .about-grid {
-        gap: 40px;
-    }
-
-    .contact-box {
-        grid-template-columns: 1fr 1fr;
-    }
-
-}
-
-
-@media (max-width: 800px) {
-
-    .section {
-        padding: 80px 0;
-    }
-
-
-    .navbar {
-        position: absolute;
-
-        top: 82px;
-        right: 4%;
-
-        width: 92%;
-
-        padding: 20px;
-
-        display: none;
-
-        flex-direction: column;
-
-        align-items: stretch;
-
-        gap: 0;
-
-        background: white;
-
-        border-radius: 18px;
-
-        box-shadow: var(--shadow);
-    }
-
-
-    .navbar.show {
-        display: flex;
-    }
-
-
-    .nav-link {
-        padding: 13px;
-
-        border-bottom: 1px solid var(--border);
-    }
-
-
-    .nav-link:last-child {
-        border-bottom: 0;
-    }
-
-
-    .nav-link::after {
-        display: none;
-    }
-
-
-    .menu-toggle {
-        display: grid;
-
-        place-items: center;
-    }
-
-
-    .about-grid,
-    .contact-box {
-        grid-template-columns: 1fr;
-    }
-
-
-    .about-images {
-        max-width: 600px;
-
-        margin: auto;
-    }
-
-
-    .contact-info {
-        padding: 45px 30px;
-    }
-
-
-    .map-box {
-        min-height: 400px;
-    }
-
-
-    .reviews-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-
-        gap: 40px;
-    }
-
-
-    .footer-brand {
-        grid-column: 1 / -1;
-    }
-
-}
-
-
-@media (max-width: 600px) {
-
-    .nav-container {
-        min-height: 72px;
-    }
-
-
-    .navbar {
-        top: 72px;
-    }
-
-
-    .logo-icon {
-        width: 42px;
-        height: 42px;
-    }
-
-
-    .logo strong {
-        font-size: 15px;
-    }
-
-
-    .hero {
-        min-height: 760px;
-
-        background-position: 65% center;
-    }
-
-
-    .hero-content {
-        padding-top: 100px;
-    }
-
-
-    .hero h1 {
-        font-size: 52px;
-    }
-
-
-    .hero p {
-        font-size: 14px;
-    }
-
-
-    .hero-info {
-        gap: 20px;
-
-        margin-top: 40px;
-    }
-
-
-    .hero-info strong {
-        font-size: 18px;
-    }
-
-
-    .hero-info small {
-        font-size: 9px;
-    }
-
-
-    .menu-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .menu-image img {
-        height: 250px;
-    }
-
-
-    .about-card {
-        left: 15px;
-        bottom: 20px;
-    }
-
-
-    .main-image img {
-        height: 420px;
-    }
-
-
-    .cta-content {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-
-    .cta .btn {
-        width: 100%;
-    }
-
-
-    .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-
-        grid-auto-rows: 180px;
-    }
-
-
-    .gallery-item.large {
-        grid-column: 1 / -1;
-        grid-row: span 1;
-    }
-
-
-    .rating-summary {
-        gap: 15px;
-    }
-
-
-    .rating-summary > strong {
-        font-size: 48px;
-    }
-
-
-    .contact-info h2 {
-        font-size: 36px;
-    }
-
-
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .footer-brand {
-        grid-column: auto;
-    }
-
-
-    .footer-bottom .container {
-        flex-direction: column;
-
-        justify-content: center;
-
-        padding: 15px 0;
-    }
-
-
-    .whatsapp {
-        left: 18px;
-        bottom: 18px;
-    }
-
-
-    .back-top {
-        right: 18px;
-        bottom: 18px;
-    }
-
-}
+  }
+
+  .modal-bg{
+    display:none;
+    position:fixed; inset:0;
+    background:rgba(22,36,42,0.55);
+    align-items:flex-end;
+    justify-content:center;
+    z-index:1001;
+  }
+  .modal-bg.open{display:flex;}
+  .modal{
+    background:var(--white);
+    width:100%;
+    max-width:640px;
+    border-radius:20px 20px 0 0;
+    padding:24px 20px 28px;
+  }
+  .modal h3{
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:1.2rem;
+    color:var(--teal-dark);
+    margin-bottom:14px;
+  }
+  .modal label{
+    display:block;
+    font-size:0.88rem;
+    color:#5B6A6C;
+    margin-bottom:6px;
+  }
+  .modal input, .modal textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:11px 12px;
+    font-family:inherit;
+    font-size:0.95rem;
+    margin-bottom:14px;
+    background:var(--sand);
+  }
+  .modal .row{display:flex; gap:10px;}
+  .modal .row button{flex:1;}
+  .btn-primary{
+    background:var(--teal-dark);
+    color:var(--white);
+    border:none;
+    border-radius:10px;
+    padding:12px;
+    font-weight:700;
+    font-family:'Tajawal', sans-serif;
+    cursor:pointer;
+  }
+  .btn-secondary{
+    background:transparent;
+    color:var(--teal-dark);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    font-weight:700;
+    font-family:'Tajawal', sans-serif;
+    cursor:pointer;
+  }
+  .hint{font-size:0.8rem; color:#8A8060; margin-top:-6px; margin-bottom:14px;}
 </style>
+</head>
 <body>
 
-<!-- ================= HEADER ================= -->
-
-<header class="header">
-
-    <div class="container nav-container">
-
-        <a href="#home" class="logo">
-            <span class="logo-icon">
-                <i class="fa-solid fa-utensils"></i>
-            </span>
-
-            <div>
-                <strong>جزيرة شاكر</strong>
-                <small>شاورما وعصيرات</small>
-            </div>
-        </a>
-
-        <nav class="navbar" id="navbar">
-
-            <a href="#home" class="nav-link active">الرئيسية</a>
-            <a href="#about" class="nav-link">عن المطعم</a>
-            <a href="#menu" class="nav-link">المنيو</a>
-            <a href="#gallery" class="nav-link">صورنا</a>
-            <a href="#reviews" class="nav-link">آراء العملاء</a>
-            <a href="#contact" class="nav-link">تواصل معنا</a>
-
-        </nav>
-
-        <div class="nav-actions">
-
-            <a
-                href="tel:+966539605065"
-                class="phone-btn"
-                aria-label="اتصل بنا"
-            >
-                <i class="fa-solid fa-phone"></i>
-            </a>
-
-            <button
-                class="menu-toggle"
-                id="menuToggle"
-                aria-label="فتح القائمة"
-            >
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-        </div>
-
-    </div>
-
+<header class="hero">
+  <h1>ريحني</h1>
+  <p>محتاج حمام دلوقتي؟ اضغط الزر وشوف أقرب حمام عام ليك.</p>
+  <button class="locate-btn" id="locateBtn">📍 وين أقرب حمام مني؟</button>
+  <div class="status" id="status"></div>
 </header>
 
+<div class="wrap">
+  <div id="map"></div>
 
-<!-- ================= HERO ================= -->
+  <section class="list">
+    <h2 id="listTitle">الحمامات المضافة</h2>
+    <div id="listContainer"></div>
+  </section>
+</div>
 
-<section class="hero" id="home">
+<button class="fab" id="addFab" title="أضف حمام">+</button>
 
-    <div class="hero-overlay"></div>
-
-    <div class="container hero-content">
-
-        <div class="hero-text">
-
-            <span class="hero-badge">
-                <i class="fa-solid fa-star"></i>
-                نكهة تستحق التجربة
-            </span>
-
-            <h1>
-                شاورما على
-                <span>أصولها</span>
-            </h1>
-
-            <p>
-                شاورما طازجة، عصيرات منعشة، وطعم يخليك ترجع مرة ثانية.
-                اكتشف تجربة جزيرة شاكر في جدة.
-            </p>
-
-            <div class="hero-buttons">
-
-                <a href="#menu" class="btn btn-primary">
-                    اكتشف المنيو
-                    <i class="fa-solid fa-arrow-left"></i>
-                </a>
-
-                <a
-                    href="https://www.google.com/maps/search/?api=1&query=شاورما+وعصيرات+جزيرة+شاكر+جدة"
-                    target="_blank"
-                    rel="noopener"
-                    class="btn btn-outline"
-                >
-                    <i class="fa-solid fa-location-dot"></i>
-                    موقعنا
-                </a>
-
-            </div>
-
-            <div class="hero-info">
-
-                <div>
-                    <strong>4.5</strong>
-                    <span>
-                        <i class="fa-solid fa-star"></i>
-                    </span>
-                    <small>تقييم العملاء</small>
-                </div>
-
-                <div>
-                    <strong>2,300+</strong>
-                    <small>تقييم وتجربة</small>
-                </div>
-
-                <div>
-                    <strong>20–40</strong>
-                    <small>متوسط السعر ﷼</small>
-                </div>
-
-            </div>
-
-        </div>
-
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3>إضافة حمام جديد</h3>
+    <label for="name">اسم المكان</label>
+    <input id="name" type="text" placeholder="مثال: محطة بنزين شرق كسلا">
+    <div class="hint" id="coordHint">سيتم تحديد الإحداثيات للمكان المختار</div>
+    <label for="notes">ملاحظات (اختياري)</label>
+    <textarea id="notes" rows="2" placeholder="مثال: مجاني، متاح ٢٤ ساعة"></textarea>
+    <div class="row">
+      <button class="btn-secondary" id="cancelAdd">إلغاء</button>
+      <button class="btn-primary" id="saveAdd">حفظ</button>
     </div>
-
-</section>
-
-
-<!-- ================= ABOUT ================= -->
-
-<section class="about section" id="about">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <span>من نحن</span>
-
-            <h2>
-                الطعم اللي
-                <strong>تحبه</strong>
-            </h2>
-
-            <p>
-                نؤمن أن الشاورما الجيدة تبدأ من المكونات الطازجة،
-                وتنتهي بابتسامة العميل.
-            </p>
-
-        </div>
-
-        <div class="about-grid">
-
-            <div class="about-images">
-
-                <div class="about-image main-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=900&q=85"
-                        alt="شاورما"
-                    >
-                </div>
-
-                <div class="about-card">
-                    <i class="fa-solid fa-heart"></i>
-                    <strong>طعم يحبه الجميع</strong>
-                    <span>جودة نهتم بها</span>
-                </div>
-
-            </div>
-
-            <div class="about-text">
-
-                <span class="small-title">
-                    <i class="fa-solid fa-fire"></i>
-                    مذاق لا يُنسى
-                </span>
-
-                <h3>
-                    شاورما طازجة
-                    <br>
-                    بكل حب
-                </h3>
-
-                <p>
-                    في جزيرة شاكر نقدم لك تجربة مختلفة لعشاق الشاورما
-                    والعصيرات. نحرص على جودة المكونات والطعم الذي يرضي
-                    جميع الأذواق.
-                </p>
-
-                <div class="features">
-
-                    <div class="feature">
-                        <i class="fa-solid fa-check"></i>
-                        <div>
-                            <strong>مكونات طازجة</strong>
-                            <span>نختار مكوناتنا بعناية.</span>
-                        </div>
-                    </div>
-
-                    <div class="feature">
-                        <i class="fa-solid fa-check"></i>
-                        <div>
-                            <strong>تحضير يومي</strong>
-                            <span>نكهة طازجة في كل طلب.</span>
-                        </div>
-                    </div>
-
-                    <div class="feature">
-                        <i class="fa-solid fa-check"></i>
-                        <div>
-                            <strong>خدمة سريعة</strong>
-                            <span>طلبك يوصل لك بأسرع وقت.</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <a href="#menu" class="text-link">
-                    شاهد المنيو
-                    <i class="fa-solid fa-arrow-left"></i>
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= MENU ================= -->
-
-<section class="menu section" id="menu">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <span>قائمة الطعام</span>
-
-            <h2>
-                اختر
-                <strong>مزاجك</strong>
-            </h2>
-
-            <p>
-                مجموعة من أشهر اختياراتنا، اختر وجبتك واستمتع.
-            </p>
-
-        </div>
-
-        <div class="menu-tabs">
-
-            <button class="menu-tab active" data-category="all">
-                الكل
-            </button>
-
-            <button class="menu-tab" data-category="shawarma">
-                الشاورما
-            </button>
-
-            <button class="menu-tab" data-category="meals">
-                الوجبات
-            </button>
-
-            <button class="menu-tab" data-category="drinks">
-                العصيرات
-            </button>
-
-        </div>
-
-        <div class="menu-grid">
-
-            <!-- ITEM -->
-
-            <article class="menu-card" data-category="shawarma">
-
-                <div class="menu-image">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=700&q=85"
-                        alt="شاورما لحم"
-                    >
-
-                    <span class="popular">
-                        الأكثر طلباً
-                    </span>
-
-                </div>
-
-                <div class="menu-content">
-
-                    <div class="menu-title">
-
-                        <h3>شاورما لحم</h3>
-
-                        <strong>18 ﷼</strong>
-
-                    </div>
-
-                    <p>
-                        شاورما لحم طازجة مع الخضار والصوص الخاص.
-                    </p>
-
-                    <button
-                        class="order-item"
-                        data-item="شاورما لحم"
-                    >
-                        اطلب الآن
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- ITEM -->
-
-            <article class="menu-card" data-category="shawarma">
-
-                <div class="menu-image">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=700&q=85"
-                        alt="شاورما دجاج"
-                    >
-
-                </div>
-
-                <div class="menu-content">
-
-                    <div class="menu-title">
-
-                        <h3>شاورما دجاج</h3>
-
-                        <strong>16 ﷼</strong>
-
-                    </div>
-
-                    <p>
-                        شاورما دجاج بتتبيلة خاصة وطعم غني.
-                    </p>
-
-                    <button
-                        class="order-item"
-                        data-item="شاورما دجاج"
-                    >
-                        اطلب الآن
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- ITEM -->
-
-            <article class="menu-card" data-category="meals">
-
-                <div class="menu-image">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=700&q=85"
-                        alt="وجبة شاورما"
-                    >
-
-                </div>
-
-                <div class="menu-content">
-
-                    <div class="menu-title">
-
-                        <h3>وجبة شاورما</h3>
-
-                        <strong>28 ﷼</strong>
-
-                    </div>
-
-                    <p>
-                        وجبة متكاملة مع البطاطس والصوص والمشروب.
-                    </p>
-
-                    <button
-                        class="order-item"
-                        data-item="وجبة شاورما"
-                    >
-                        اطلب الآن
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- ITEM -->
-
-            <article class="menu-card" data-category="meals">
-
-                <div class="menu-image">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=85"
-                        alt="بطاطس"
-                    >
-
-                </div>
-
-                <div class="menu-content">
-
-                    <div class="menu-title">
-
-                        <h3>بطاطس مميزة</h3>
-
-                        <strong>10 ﷼</strong>
-
-                    </div>
-
-                    <p>
-                        بطاطس مقرمشة مع الصوص الخاص.
-                    </p>
-
-                    <button
-                        class="order-item"
-                        data-item="بطاطس مميزة"
-                    >
-                        اطلب الآن
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- ITEM -->
-
-            <article class="menu-card" data-category="drinks">
-
-                <div class="menu-image">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=700&q=85"
-                        alt="عصير مانجو"
-                    >
-
-                </div>
-
-                <div class="menu-content">
-
-                    <div class="menu-title">
-
-                        <h3>عصير مانجو</h3>
-
-                        <strong>12 ﷼</strong>
-
-                    </div>
-
-                    <p>
-                        مانجو طازجة بطعم منعش.
-                    </p>
-
-                    <button
-                        class="order-item"
-                        data-item="عصير مانجو"
-                    >
-                        اطلب الآن
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- ITEM -->
-
-            <article class="menu-card" data-category="drinks">
-
-                <div class="menu-image">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=85"
-                        alt="عصير فراولة"
-                    >
-
-                </div>
-
-                <div class="menu-content">
-
-                    <div class="menu-title">
-
-                        <h3>عصير فراولة</h3>
-
-                        <strong>14 ﷼</strong>
-
-                    </div>
-
-                    <p>
-                        عصير فراولة طازج ومنعش.
-                    </p>
-
-                    <button
-                        class="order-item"
-                        data-item="عصير فراولة"
-                    >
-                        اطلب الآن
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= CTA ================= -->
-
-<section class="cta">
-
-    <div class="container cta-content">
-
-        <div>
-
-            <span>
-                جوعان؟
-            </span>
-
-            <h2>
-                خلك على ذوقك
-                <br>
-                واطلب الآن 🌯
-            </h2>
-
-        </div>
-
-        <a
-            href="https://wa.me/966539605065"
-            target="_blank"
-            rel="noopener"
-            class="btn btn-light"
-        >
-            <i class="fa-brands fa-whatsapp"></i>
-            اطلب عبر واتساب
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- ================= GALLERY ================= -->
-
-<section class="gallery section" id="gallery">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <span>من أجوائنا</span>
-
-            <h2>
-                شوف
-                <strong>تجربتنا</strong>
-            </h2>
-
-        </div>
-
-        <div class="gallery-grid">
-
-            <div class="gallery-item large">
-                <img
-                    src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=1000&q=85"
-                    alt="شاورما"
-                >
-            </div>
-
-            <div class="gallery-item">
-                <img
-                    src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=85"
-                    alt="طعام"
-                >
-            </div>
-
-            <div class="gallery-item">
-                <img
-                    src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=85"
-                    alt="عصير"
-                >
-            </div>
-
-            <div class="gallery-item">
-                <img
-                    src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=85"
-                    alt="بطاطس"
-                >
-            </div>
-
-            <div class="gallery-item">
-                <img
-                    src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=800&q=85"
-                    alt="وجبة"
-                >
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= REVIEWS ================= -->
-
-<section class="reviews section" id="reviews">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <span>آراء العملاء</span>
-
-            <h2>
-                كلام
-                <strong>عملائنا</strong>
-            </h2>
-
-        </div>
-
-        <div class="rating-summary">
-
-            <strong>4.5</strong>
-
-            <div>
-
-                <div class="stars">
-                    ★★★★★
-                </div>
-
-                <span>
-                    أكثر من 2,300 تقييم على Google
-                </span>
-
-            </div>
-
-        </div>
-
-        <div class="reviews-grid">
-
-            <article class="review-card">
-
-                <div class="review-top">
-
-                    <div class="avatar">
-                        ن
-                    </div>
-
-                    <div>
-                        <strong>عميلنا العزيز</strong>
-                        <div class="stars">★★★★★</div>
-                    </div>
-
-                </div>
-
-                <p>
-                    الأكل نظيف ولذيذ جدًا والعصيرات رهيبة،
-                    تجربة جميلة وخدمة ممتازة.
-                </p>
-
-            </article>
-
-
-            <article class="review-card">
-
-                <div class="review-top">
-
-                    <div class="avatar">
-                        ع
-                    </div>
-
-                    <div>
-                        <strong>عميلنا العزيز</strong>
-                        <div class="stars">★★★★★</div>
-                    </div>
-
-                </div>
-
-                <p>
-                    الطعم ممتاز والشاورما لذيذة،
-                    والخدمة سريعة جدًا.
-                </p>
-
-            </article>
-
-
-            <article class="review-card">
-
-                <div class="review-top">
-
-                    <div class="avatar">
-                        م
-                    </div>
-
-                    <div>
-                        <strong>عميلنا العزيز</strong>
-                        <div class="stars">★★★★★</div>
-                    </div>
-
-                </div>
-
-                <p>
-                    مكان جميل وتجربة تستحق التكرار.
-                    الشاورما والعصيرات ممتازة.
-                </p>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= CONTACT ================= -->
-
-<section class="contact section" id="contact">
-
-    <div class="container">
-
-        <div class="contact-box">
-
-            <div class="contact-info">
-
-                <span class="small-title">
-                    تواصل معنا
-                </span>
-
-                <h2>
-                    جاهزين
-                    <strong>لخدمتك</strong>
-                </h2>
-
-                <p>
-                    تواصل معنا أو زرنا في فرعنا بجدة.
-                </p>
-
-                <div class="contact-details">
-
-                    <a href="tel:+966539605065">
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        <div>
-                            <small>اتصل بنا</small>
-                            <strong dir="ltr">
-                                +966 53 960 5065
-                            </strong>
-                        </div>
-
-                    </a>
-
-
-                    <a
-                        href="https://www.google.com/maps/search/?api=1&query=شاورما+وعصيرات+جزيرة+شاكر+جدة"
-                        target="_blank"
-                        rel="noopener"
-                    >
-
-                        <i class="fa-solid fa-location-dot"></i>
-
-                        <div>
-                            <small>العنوان</small>
-                            <strong>
-                                الفيصلية، جدة، السعودية
-                            </strong>
-                        </div>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-            <div class="map-box">
-
-                <div class="map-overlay">
-
-                    <i class="fa-solid fa-location-dot"></i>
-
-                    <h3>
-                        شاورما وعصيرات جزيرة شاكر
-                    </h3>
-
-                    <p>
-                        الفيصلية، جدة
-                    </p>
-
-                    <a
-                        href="https://www.google.com/maps/search/?api=1&query=شاورما+وعصيرات+جزيرة+شاكر+جدة"
-                        target="_blank"
-                        rel="noopener"
-                        class="btn btn-primary"
-                    >
-                        فتح الخريطة
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer class="footer">
-
-    <div class="container footer-grid">
-
-        <div class="footer-brand">
-
-            <a href="#home" class="logo">
-
-                <span class="logo-icon">
-                    <i class="fa-solid fa-utensils"></i>
-                </span>
-
-                <div>
-                    <strong>جزيرة شاكر</strong>
-                    <small>شاورما وعصيرات</small>
-                </div>
-
-            </a>
-
-            <p>
-                شاورما وعصيرات بطعم يستحق التجربة.
-            </p>
-
-            <div class="socials">
-
-                <a href="#" aria-label="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-
-                <a
-                    href="https://wa.me/966539605065"
-                    target="_blank"
-                    rel="noopener"
-                    aria-label="WhatsApp"
-                >
-                    <i class="fa-brands fa-whatsapp"></i>
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <h3>روابط سريعة</h3>
-
-            <a href="#home">الرئيسية</a>
-            <a href="#about">عن المطعم</a>
-            <a href="#menu">المنيو</a>
-            <a href="#gallery">صورنا</a>
-            <a href="#contact">تواصل معنا</a>
-
-        </div>
-
-
-        <div class="footer-contact">
-
-            <h3>تواصل معنا</h3>
-
-            <a href="tel:+966539605065">
-                <i class="fa-solid fa-phone"></i>
-                +966 53 960 5065
-            </a>
-
-            <span>
-                <i class="fa-solid fa-location-dot"></i>
-                جدة، السعودية
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer-bottom">
-
-        <div class="container">
-
-            <p>
-                © <span id="year"></span>
-                جزيرة شاكر. جميع الحقوق محفوظة.
-            </p>
-
-            <p class="demo-note">
-                نموذج تجريبي
-            </p>
-
-        </div>
-
-    </div>
-
-</footer>
-
-
-<!-- ================= WHATSAPP ================= -->
-
-<a
-    href="https://wa.me/966539605065"
-    class="whatsapp"
-    target="_blank"
-    rel="noopener"
-    aria-label="واتساب"
->
-    <i class="fa-brands fa-whatsapp"></i>
-</a>
-
-
-<!-- ================= BACK TO TOP ================= -->
-
-<button
-    id="backTop"
-    class="back-top"
-    aria-label="العودة للأعلى"
->
-    <i class="fa-solid fa-arrow-up"></i>
-</button>
-
+  </div>
+</div>
 
 <script>
-    /* =====================================================
-   MOBILE MENU
-===================================================== */
+const STORAGE_KEY = 'restrooms_list';
+let userLat = null, userLng = null;
+let selectedLat = null, selectedLng = null;
+let map = null, markersLayer = null, tempMarker = null;
+let restrooms = [];
 
-const menuToggle = document.getElementById("menuToggle");
-const navbar = document.getElementById("navbar");
+function haversine(lat1, lng1, lat2, lng2){
+  const R = 6371;
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLng = (lng2-lng1) * Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
 
-menuToggle.addEventListener("click", () => {
+function fmtDist(km){
+  if(km < 1) return Math.round(km*1000) + ' م';
+  return km.toFixed(1) + ' كم';
+}
 
-    navbar.classList.toggle("show");
+function loadRestrooms(){
+  try{
+    const res = localStorage.getItem(STORAGE_KEY);
+    restrooms = res ? JSON.parse(res) : [];
+  }catch(e){
+    restrooms = [];
+  }
+}
 
-    const icon = menuToggle.querySelector("i");
+function saveRestrooms(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(restrooms));
+}
 
-    if (navbar.classList.contains("show")) {
+function renderList(){
+  const container = document.getElementById('listContainer');
+  const title = document.getElementById('listTitle');
+  container.innerHTML = '';
 
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-xmark");
+  if(restrooms.length === 0){
+    container.innerHTML = '<div class="empty">لسه ما فيه حمامات مضافة. كن أول واحد يضيف!</div>';
+    return;
+  }
 
-    } else {
+  let sorted = [...restrooms];
+  if(userLat !== null){
+    sorted.forEach(r => r._dist = haversine(userLat, userLng, r.lat, r.lng));
+    sorted.sort((a,b) => a._dist - b._dist);
+    title.textContent = 'أقرب الحمامات ليك';
+  } else {
+    title.textContent = 'الحمامات المضافة';
+  }
 
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
+  sorted.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const gmaps = `https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}`;
+    card.innerHTML = `
+      <div class="info">
+        <h3>${escapeHtml(r.name)}</h3>
+        ${r.notes ? `<p>${escapeHtml(r.notes)}</p>` : ''}
+        <a class="go" href="${gmaps}" target="_blank" rel="noopener">🧭 وديني هناك</a>
+      </div>
+      ${r._dist !== undefined ? `<div class="dist">${fmtDist(r._dist)}</div>` : ''}
+    `;
+    container.appendChild(card);
+  });
+}
 
-    }
+function escapeHtml(s){
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
 
-});
+function initMap(initialLat = 15.45, initialLng = 36.40, zoom = 12){
+  const mapEl = document.getElementById('map');
+  mapEl.style.display = 'block';
+  if(!map){
+    map = L.map('map').setView([initialLat, initialLng], zoom);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+    markersLayer = L.layerGroup().addTo(map);
 
-
-/* Close mobile menu after clicking link */
-
-document.querySelectorAll(".nav-link").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        navbar.classList.remove("show");
-
-        const icon = menuToggle.querySelector("i");
-
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-
+    // السماح بنقر الخريطة لاختيار موقع الحمام
+    map.on('click', (e) => {
+      openAddModalWithCoords(e.latlng.lat, e.latlng.lng);
     });
+  } else {
+    map.setView([initialLat, initialLng], zoom);
+  }
+  updateMarkers();
+}
 
+function updateMarkers(){
+  if(!map) return;
+  markersLayer.clearLayers();
+  if(userLat !== null){
+    L.circleMarker([userLat, userLng], {radius:8, color:'#E0A458', fillColor:'#E0A458', fillOpacity:1})
+      .addTo(markersLayer).bindPopup('موقعك الحالي');
+  }
+  restrooms.forEach(r => {
+    L.marker([r.lat, r.lng]).addTo(markersLayer).bindPopup(escapeHtml(r.name));
+  });
+}
+
+document.getElementById('locateBtn').addEventListener('click', () => {
+  const btn = document.getElementById('locateBtn');
+  const status = document.getElementById('status');
+  if(!navigator.geolocation){
+    status.textContent = 'المتصفح ما بيدعم تحديد الموقع';
+    return;
+  }
+  btn.disabled = true;
+  status.textContent = 'جاري تحديد موقعك...';
+  navigator.geolocation.getCurrentPosition((pos) => {
+    userLat = pos.coords.latitude;
+    userLng = pos.coords.longitude;
+    status.textContent = 'تم تحديد موقعك';
+    btn.disabled = false;
+    initMap(userLat, userLng, 14);
+    renderList();
+  }, (err) => {
+    status.textContent = 'ما قدرنا نحدد موقعك — يمكنك اختيار الموقع مباشرة من الخريطة';
+    btn.disabled = false;
+    initMap(); // فتح الخريطة بالموقع الافتراضي
+  }, {enableHighAccuracy:true, timeout:10000});
 });
 
+const modalBg = document.getElementById('modalBg');
+const addFab = document.getElementById('addFab');
+const coordHint = document.getElementById('coordHint');
 
-/* =====================================================
-   HEADER SCROLL
-===================================================== */
+function openAddModalWithCoords(lat, lng){
+  selectedLat = lat;
+  selectedLng = lng;
+  coordHint.textContent = `سيتم إضافة المكان بالحديثات (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+  modalBg.classList.add('open');
+}
 
-const header = document.querySelector(".header");
-
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 50) {
-
-        header.classList.add("scrolled");
-
-    } else {
-
-        header.classList.remove("scrolled");
-
-    }
-
+addFab.addEventListener('click', () => {
+  if(userLat !== null){
+    openAddModalWithCoords(userLat, userLng);
+  } else {
+    // فتح الخريطة للتحديد اليدوي
+    initMap();
+    document.getElementById('status').textContent = 'اضغط على أي نقطة في الخريطة لإضافة حمام هناك';
+    window.scrollTo({ top: document.getElementById('map').offsetTop - 20, behavior: 'smooth' });
+  }
 });
 
-
-/* =====================================================
-   ACTIVE NAVIGATION
-===================================================== */
-
-const sections = document.querySelectorAll("section[id]");
-
-window.addEventListener("scroll", () => {
-
-    const scrollPosition = window.scrollY + 150;
-
-    sections.forEach(section => {
-
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
-        const id = section.getAttribute("id");
-
-        if (
-            scrollPosition >= top &&
-            scrollPosition < top + height
-        ) {
-
-            document
-                .querySelectorAll(".nav-link")
-                .forEach(link => {
-
-                    link.classList.remove("active");
-
-                });
-
-            const activeLink = document.querySelector(
-                `.nav-link[href="#${id}"]`
-            );
-
-            if (activeLink) {
-                activeLink.classList.add("active");
-            }
-
-        }
-
-    });
-
+document.getElementById('cancelAdd').addEventListener('click', () => {
+  modalBg.classList.remove('open');
 });
 
-
-/* =====================================================
-   MENU FILTER
-===================================================== */
-
-const menuTabs = document.querySelectorAll(".menu-tab");
-const menuCards = document.querySelectorAll(".menu-card");
-
-menuTabs.forEach(tab => {
-
-    tab.addEventListener("click", () => {
-
-        menuTabs.forEach(item => {
-            item.classList.remove("active");
-        });
-
-        tab.classList.add("active");
-
-        const category = tab.dataset.category;
-
-        menuCards.forEach(card => {
-
-            const cardCategory = card.dataset.category;
-
-            if (
-                category === "all" ||
-                category === cardCategory
-            ) {
-
-                card.style.display = "block";
-
-                setTimeout(() => {
-                    card.style.opacity = "1";
-                    card.style.transform = "translateY(0)";
-                }, 10);
-
-            } else {
-
-                card.style.opacity = "0";
-                card.style.transform = "translateY(10px)";
-
-                setTimeout(() => {
-                    card.style.display = "none";
-                }, 200);
-
-            }
-
-        });
-
-    });
-
+document.getElementById('saveAdd').addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const notes = document.getElementById('notes').value.trim();
+  if(!name){
+    alert('من فضلك اكتب اسم المكان');
+    return;
+  }
+  const newEntry = {
+    id: Date.now().toString(),
+    name, notes,
+    lat: selectedLat, lng: selectedLng,
+    addedAt: new Date().toISOString()
+  };
+  restrooms.push(newEntry);
+  saveRestrooms();
+  document.getElementById('name').value = '';
+  document.getElementById('notes').value = '';
+  modalBg.classList.remove('open');
+  renderList();
+  if(map) updateMarkers();
 });
 
-
-/* =====================================================
-   ORDER BUTTONS
-===================================================== */
-
-const orderButtons = document.querySelectorAll(".order-item");
-
-orderButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        const item = button.dataset.item;
-
-        const message =
-            `السلام عليكم، أرغب في طلب: ${item}`;
-
-        const whatsappURL =
-            `https://wa.me/966539605065?text=${encodeURIComponent(message)}`;
-
-        window.open(
-            whatsappURL,
-            "_blank",
-            "noopener"
-        );
-
-    });
-
-});
-
-
-/* =====================================================
-   BACK TO TOP
-===================================================== */
-
-const backTop = document.getElementById("backTop");
-
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 600) {
-
-        backTop.classList.add("show");
-
-    } else {
-
-        backTop.classList.remove("show");
-
-    }
-
-});
-
-
-backTop.addEventListener("click", () => {
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-});
-
-
-/* =====================================================
-   FOOTER YEAR
-===================================================== */
-
-document.getElementById("year").textContent =
-    new Date().getFullYear();
-
-
-/* =====================================================
-   SIMPLE REVEAL ANIMATION
-===================================================== */
-
-const revealElements = document.querySelectorAll(
-    ".menu-card, .review-card, .feature, .gallery-item"
-);
-
-
-const observer = new IntersectionObserver(
-    entries => {
-
-        entries.forEach(entry => {
-
-            if (entry.isIntersecting) {
-
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-
-                observer.unobserve(entry.target);
-
-            }
-
-        });
-
-    },
-    {
-        threshold: 0.12
-    }
-);
-
-
-revealElements.forEach(element => {
-
-    element.style.opacity = "0";
-
-    element.style.transform =
-        "translateY(25px)";
-
-    element.style.transition =
-        "opacity 0.6s ease, transform 0.6s ease";
-
-    observer.observe(element);
-
-});
+function init(){
+  loadRestrooms();
+  renderList();
+}
+init();
 </script>
 
 </body>
