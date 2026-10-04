@@ -3,440 +3,1659 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ريحني — أقرب حمام عام ليك</title>
+
+<title>LeadMap — اكتشاف العملاء المحتملين</title>
+
+<meta name="description"
+      content="LeadMap أداة لاكتشاف وتحليل العملاء المحتملين للفريلانسرز ووكالات التسويق وتطوير المواقع.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --teal-dark:#10474C;
-    --teal:#166A6E;
-    --aqua:#35B0A7;
-    --sand:#F2E9D8;
-    --ink:#16242A;
-    --amber:#E0A458;
-    --white:#FFFFFF;
-    --line:#DCD0B8;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{
-    background:var(--sand);
-    color:var(--ink);
-    font-family:'IBM Plex Sans Arabic', sans-serif;
-    min-height:100vh;
-    line-height:1.6;
-  }
-  .wrap{max-width:640px; margin:0 auto; padding:0 20px 100px;}
+:root{
+  --ink:#18212f;
+  --ink-soft:#667085;
+  --paper:#f5f4f0;
+  --panel:#ffffff;
+  --line:#e2e0d9;
 
-  header.hero{
-    background:var(--teal-dark);
-    color:var(--white);
-    padding:36px 20px 44px;
-    border-radius:0 0 28px 28px;
-    text-align:center;
-  }
-  header.hero h1{
-    font-family:'Tajawal', sans-serif;
-    font-weight:900;
-    font-size:2.6rem;
-    color:var(--white);
-    letter-spacing:0.5px;
-  }
-  header.hero p{
-    margin-top:10px;
-    font-size:1.05rem;
-    color:#CFE8E4;
-    max-width:420px;
-    margin-inline:auto;
+  --gold:#b8862e;
+  --gold-bg:#fbf3e3;
+
+  --teal:#287568;
+  --teal-bg:#e5f2ef;
+
+  --red:#a8461f;
+  --red-bg:#fbeae2;
+
+  --hot:#9c3a26;
+  --hot-bg:#f8e7df;
+
+  --high:#b8862e;
+  --high-bg:#fbf3e3;
+
+  --medium:#356f67;
+  --medium-bg:#e6f2ef;
+
+  --low:#697386;
+  --low-bg:#ecebe7;
+
+  --broken:#8a2f7a;
+  --broken-bg:#f5e6f2;
+
+  --shadow:0 8px 30px rgba(24,33,47,.05);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;
+  line-height:1.6;
+}
+
+button,
+input,
+select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.wrap{
+  width:min(1120px, calc(100% - 32px));
+  margin:auto;
+  padding:26px 0 80px;
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:24px;
+}
+
+.brand{
+  font-family:'Cairo',sans-serif;
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-.5px;
+}
+
+.brand span{
+  color:var(--gold);
+}
+
+.tag{
+  color:var(--ink-soft);
+  font-size:13px;
+}
+
+.top-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+@media(max-width:600px){
+  .top{
+    align-items:flex-start;
+    flex-direction:column;
   }
 
-  .locate-btn{
-    display:block;
+  .top-right{
     width:100%;
-    max-width:420px;
-    margin:24px auto 0;
-    background:var(--amber);
-    color:var(--teal-dark);
-    font-family:'Tajawal', sans-serif;
-    font-weight:700;
-    font-size:1.15rem;
-    border:none;
-    border-radius:14px;
-    padding:16px;
-    cursor:pointer;
-    transition:transform .12s ease;
-  }
-  .locate-btn:active{transform:scale(0.98);}
-  .locate-btn:disabled{opacity:0.6; cursor:wait;}
-
-  .status{
-    text-align:center;
-    font-size:0.95rem;
-    color:var(--teal);
-    margin-top:14px;
-    min-height:1.2em;
-  }
-
-  #map{
-    height:260px;
-    border-radius:16px;
-    margin-top:24px;
-    border:1px solid var(--line);
-    display:none;
-  }
-
-  section.list{margin-top:28px;}
-  section.list h2{
-    font-family:'Tajawal', sans-serif;
-    font-weight:700;
-    font-size:1.2rem;
-    color:var(--teal-dark);
-    margin-bottom:12px;
-  }
-
-  .card{
-    background:var(--white);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:16px 18px;
-    margin-bottom:12px;
-    display:flex;
     justify-content:space-between;
-    align-items:center;
-    gap:12px;
   }
-  .card .info h3{
-    font-family:'Tajawal', sans-serif;
-    font-weight:700;
-    font-size:1.05rem;
-    color:var(--ink);
-  }
-  .card .info p{
-    font-size:0.88rem;
-    color:#5B6A6C;
-    margin-top:2px;
-  }
-  .card .dist{
-    font-family:'Tajawal', sans-serif;
-    font-weight:700;
-    color:var(--teal);
-    font-size:0.95rem;
-    white-space:nowrap;
-  }
-  .card a.go{
-    display:inline-block;
-    margin-top:6px;
-    font-size:0.85rem;
-    color:var(--aqua);
-    text-decoration:none;
-    font-weight:600;
+}
+
+.hero{
+  background:linear-gradient(135deg, #1c2636 0%, #253347 100%);
+  color:#f2f1ec;
+  border-radius:12px;
+  padding:26px 28px;
+  margin-bottom:20px;
+}
+
+.hero h2{
+  margin:0 0 8px;
+  font-family:'Cairo',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  line-height:1.4;
+}
+
+.hero p{
+  margin:0;
+  color:#c7cddb;
+  font-size:13.5px;
+  max-width:640px;
+}
+
+@media(max-width:600px){
+  .hero{
+    padding:20px;
   }
 
-  .empty{
-    text-align:center;
-    color:#5B6A6C;
-    padding:30px 10px;
-    font-size:0.95rem;
+  .hero h2{
+    font-size:18px;
+  }
+}
+
+.notice{
+  background:var(--teal-bg);
+  border:1px solid #b8ddd6;
+  color:var(--teal);
+  border-radius:8px;
+  padding:12px 15px;
+  margin-bottom:18px;
+  font-size:13px;
+}
+
+.notice strong{
+  color:#205c53;
+}
+
+.warning{
+  display:none;
+  background:var(--gold-bg);
+  border:1px solid #ead2a5;
+  color:#855b18;
+}
+
+.search-panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:24px;
+  box-shadow:var(--shadow);
+  margin-bottom:20px;
+}
+
+.search-title{
+  margin-bottom:20px;
+}
+
+.search-title h1{
+  margin:0 0 4px;
+  font-family:'Cairo',sans-serif;
+  font-size:20px;
+  font-weight:800;
+}
+
+.search-title p{
+  margin:0;
+  color:var(--ink-soft);
+  font-size:13px;
+}
+
+.fields{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-bottom:6px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  border:1px solid var(--line);
+  background:#faf9f6;
+  color:var(--ink);
+  border-radius:6px;
+  padding:11px 12px;
+  outline:none;
+  font-size:14px;
+  transition:.2s;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(184,134,46,.08);
+}
+
+.search-actions{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-top:17px;
+}
+
+.run{
+  border:none;
+  background:var(--ink);
+  color:#fff;
+  border-radius:6px;
+  padding:11px 20px;
+  font-size:14px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.run:hover{
+  background:#000;
+  transform:translateY(-1px);
+}
+
+.run:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.search-status{
+  color:var(--ink-soft);
+  font-size:12.5px;
+}
+
+@media(max-width:650px){
+  .fields{
+    grid-template-columns:1fr;
   }
 
-  .fab{
-    position:fixed;
-    left:20px;
-    bottom:20px;
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    background:var(--teal-dark);
-    color:var(--white);
-    font-size:1.8rem;
-    border:none;
-    box-shadow:0 6px 18px rgba(16,71,76,0.35);
-    cursor:pointer;
-    z-index: 1000;
+  .search-actions{
+    flex-direction:column;
+    align-items:stretch;
   }
 
-  .modal-bg{
-    display:none;
-    position:fixed; inset:0;
-    background:rgba(22,36,42,0.55);
-    align-items:flex-end;
-    justify-content:center;
-    z-index:1001;
-  }
-  .modal-bg.open{display:flex;}
-  .modal{
-    background:var(--white);
+  .run{
     width:100%;
-    max-width:640px;
-    border-radius:20px 20px 0 0;
-    padding:24px 20px 28px;
   }
-  .modal h3{
-    font-family:'Tajawal', sans-serif;
-    font-weight:700;
-    font-size:1.2rem;
-    color:var(--teal-dark);
-    margin-bottom:14px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:16px;
+}
+
+.stat-label{
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-bottom:4px;
+}
+
+.stat-value{
+  font-family:'Cairo',sans-serif;
+  font-size:23px;
+  font-weight:800;
+}
+
+.stat.hot .stat-value{
+  color:var(--hot);
+}
+
+.stat.no-web .stat-value{
+  color:var(--teal);
+}
+
+.stat.broken .stat-value{
+  color:var(--broken);
+}
+
+@media(max-width:700px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
   }
-  .modal label{
-    display:block;
-    font-size:0.88rem;
-    color:#5B6A6C;
-    margin-bottom:6px;
-  }
-  .modal input, .modal textarea{
+}
+
+.toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.results-title h2{
+  margin:0;
+  font-family:'Cairo',sans-serif;
+  font-size:17px;
+}
+
+.results-title p{
+  margin:2px 0 0;
+  color:var(--ink-soft);
+  font-size:12px;
+}
+
+.toolbar-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.small-btn{
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--ink);
+  border-radius:6px;
+  padding:8px 11px;
+  font-size:12px;
+}
+
+.small-btn:hover{
+  border-color:#c8c4b9;
+}
+
+.small-btn.primary{
+  background:var(--ink);
+  color:white;
+  border-color:var(--ink);
+}
+
+.sort-select{
+  border:1px solid var(--line);
+  background:white;
+  padding:8px 10px;
+  border-radius:6px;
+  font-size:12px;
+  color:var(--ink);
+}
+
+.filters{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:13px;
+  margin-bottom:18px;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.filter-btn{
+  border:1px solid var(--line);
+  background:#faf9f6;
+  color:var(--ink-soft);
+  border-radius:20px;
+  padding:7px 12px;
+  font-size:12px;
+}
+
+.filter-btn.active{
+  background:var(--ink);
+  color:white;
+  border-color:var(--ink);
+}
+
+.filter-info{
+  margin-right:auto;
+  font-size:11px;
+  color:var(--ink-soft);
+}
+
+@media(max-width:600px){
+  .filter-info{
     width:100%;
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:11px 12px;
-    font-family:inherit;
-    font-size:0.95rem;
-    margin-bottom:14px;
-    background:var(--sand);
+    margin-right:0;
   }
-  .modal .row{display:flex; gap:10px;}
-  .modal .row button{flex:1;}
-  .btn-primary{
-    background:var(--teal-dark);
-    color:var(--white);
-    border:none;
-    border-radius:10px;
-    padding:12px;
-    font-weight:700;
-    font-family:'Tajawal', sans-serif;
-    cursor:pointer;
+}
+
+.lead{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:18px;
+  margin-bottom:12px;
+  display:grid;
+  grid-template-columns:88px 1fr;
+  gap:18px;
+  box-shadow:0 4px 18px rgba(24,33,47,.025);
+  transition:.2s;
+}
+
+.lead:hover{
+  box-shadow:var(--shadow);
+  transform:translateY(-1px);
+}
+
+@media(max-width:650px){
+  .lead{
+    grid-template-columns:1fr;
   }
-  .btn-secondary{
-    background:transparent;
-    color:var(--teal-dark);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:12px;
-    font-weight:700;
-    font-family:'Tajawal', sans-serif;
-    cursor:pointer;
-  }
-  .hint{font-size:0.8rem; color:#8A8060; margin-top:-6px; margin-bottom:14px;}
+}
+
+.score-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  padding-top:2px;
+}
+
+.score-num{
+  font-family:'Cairo',sans-serif;
+  font-weight:800;
+  font-size:28px;
+  line-height:1;
+}
+
+.score-max{
+  color:var(--ink-soft);
+  font-size:10px;
+}
+
+.tier-badge{
+  font-size:10px;
+  font-weight:700;
+  border-radius:20px;
+  padding:4px 9px;
+  text-align:center;
+}
+
+.tier-hot .score-num{ color:var(--hot); }
+.tier-hot .tier-badge{ background:var(--hot-bg); color:var(--hot); }
+
+.tier-high .score-num{ color:var(--high); }
+.tier-high .tier-badge{ background:var(--high-bg); color:var(--high); }
+
+.tier-medium .score-num{ color:var(--medium); }
+.tier-medium .tier-badge{ background:var(--medium-bg); color:var(--medium); }
+
+.tier-low .score-num{ color:var(--low); }
+.tier-low .tier-badge{ background:var(--low-bg); color:var(--low); }
+
+.lead-body h3{
+  margin:0 0 5px;
+  font-family:'Cairo',sans-serif;
+  font-size:17px;
+  font-weight:800;
+}
+
+.website-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border-radius:20px;
+  padding:4px 10px;
+  font-size:11px;
+  font-weight:700;
+  margin-inline-start:8px;
+  vertical-align:middle;
+}
+
+.website-badge.no_website{ background:var(--teal-bg); color:var(--teal); }
+.website-badge.social_only{ background:var(--gold-bg); color:var(--gold); }
+.website-badge.broken{ background:var(--broken-bg); color:var(--broken); }
+.website-badge.website{ background:var(--low-bg); color:var(--low); }
+.website-badge.needs_verification{ background:var(--low-bg); color:var(--ink-soft); }
+
+.meta-line{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  color:var(--ink-soft);
+  font-size:12.5px;
+  margin-bottom:12px;
+}
+
+.signals{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:12px;
+}
+
+.sig{
+  display:inline-flex;
+  align-items:center;
+  border-radius:20px;
+  padding:5px 9px;
+  font-size:11px;
+  border:1px solid transparent;
+}
+
+.sig.pos{ background:var(--teal-bg); color:var(--teal); }
+.sig.neg{ background:var(--red-bg); color:var(--red); }
+.sig.neu{ background:var(--low-bg); color:var(--low); }
+.sig.strong-pos{ background:var(--broken-bg); color:var(--broken); }
+
+.sig.action{
+  background:var(--gold-bg);
+  color:var(--gold);
+  border-color:#ead5a9;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.reason{
+  border-right:2px solid var(--line);
+  padding-right:11px;
+  color:var(--ink-soft);
+  font-size:12.5px;
+  margin-bottom:14px;
+}
+
+.reason strong{
+  color:var(--ink);
+}
+
+.lead-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.lead-action{
+  border:1px solid var(--line);
+  background:#faf9f6;
+  color:var(--ink);
+  padding:7px 10px;
+  border-radius:5px;
+  font-size:11px;
+  text-decoration:none;
+}
+
+.lead-action:hover{
+  border-color:#c5c0b5;
+}
+
+.lead-action.main{
+  background:var(--ink);
+  color:white;
+  border-color:var(--ink);
+}
+
+.status-message{
+  text-align:center;
+  padding:48px 20px;
+  background:var(--panel);
+  border:1px dashed var(--line);
+  border-radius:8px;
+  color:var(--ink-soft);
+  font-size:13px;
+}
+
+.loader{
+  width:28px;
+  height:28px;
+  border:3px solid var(--line);
+  border-top-color:var(--ink);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 12px;
+}
+
+@keyframes spin{
+  to{ transform:rotate(360deg); }
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(15,20,28,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:9999;
+}
+
+.modal.show{ display:flex; }
+
+.modal-card{
+  width:min(600px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:white;
+  border-radius:12px;
+  padding:22px;
+  box-shadow:0 25px 80px rgba(0,0,0,.2);
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.modal-head h3{
+  margin:0;
+  font-family:'Cairo',sans-serif;
+}
+
+.close-modal{
+  border:none;
+  background:var(--low-bg);
+  width:32px;
+  height:32px;
+  border-radius:50%;
+}
+
+.saved-item{
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  margin-bottom:8px;
+}
+
+.saved-item h4{
+  margin:0 0 3px;
+  font-family:'Cairo',sans-serif;
+  font-size:14px;
+}
+
+.saved-item p{
+  margin:0;
+  color:var(--ink-soft);
+  font-size:11px;
+}
+
+.saved-actions{
+  display:flex;
+  gap:6px;
+  margin-top:8px;
+}
+
+.help-body{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.help-step{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+
+.help-num{
+  flex-shrink:0;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:var(--ink);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Cairo',sans-serif;
+  font-weight:800;
+  font-size:12px;
+}
+
+.help-step h4{
+  margin:0 0 3px;
+  font-family:'Cairo',sans-serif;
+  font-size:14px;
+}
+
+.help-step p{
+  margin:0;
+  color:var(--ink-soft);
+  font-size:12.5px;
+}
+
+.help-note{
+  background:var(--gold-bg);
+  border:1px solid #ead2a5;
+  color:#855b18;
+  border-radius:8px;
+  padding:11px 13px;
+  font-size:12px;
+}
+
+.toast{
+  position:fixed;
+  bottom:22px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--ink);
+  color:white;
+  padding:10px 16px;
+  border-radius:6px;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:10000;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+footer{
+  text-align:center;
+  color:var(--ink-soft);
+  font-size:11px;
+  margin-top:35px;
+}
 </style>
 </head>
+
 <body>
 
-<header class="hero">
-  <h1>ريحني</h1>
-  <p>محتاج حمام دلوقتي؟ اضغط الزر وشوف أقرب حمام عام ليك.</p>
-  <button class="locate-btn" id="locateBtn">📍 وين أقرب حمام مني؟</button>
-  <div class="status" id="status"></div>
-</header>
-
 <div class="wrap">
-  <div id="map"></div>
 
-  <section class="list">
-    <h2 id="listTitle">الحمامات المضافة</h2>
-    <div id="listContainer"></div>
+  <header class="top">
+    <div class="brand">📍 LeadMap<span>.</span></div>
+    <div class="top-right">
+      <button class="small-btn" onclick="openHelp()">❔ كيف يعمل الموقع</button>
+      <div class="tag">Lead Generation Platform — V2</div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h2>حوّل خرائط Google لقائمة عملاء محتملين جاهزة</h2>
+    <p>ابحث بنشاط ومدينة، ولاقي مين محتاج موقع فعلاً — بدرجة ثقة واضحة لكل نتيجة، مش تخمين.</p>
+  </div>
+
+  <div class="notice">
+    🔒 <strong>الاتصال الآمن:</strong>
+    مفتاح SerpAPI لا يظهر في الواجهة الأمامية، ودلوقتي الـWorker كمان بيتحقق فعلياً من كل موقع (شغال / معطّل / غير موجود).
+  </div>
+
+  <div class="notice warning" id="worker-warning">
+    ⚠️ تأكد من إعداد رابط الـWorker قبل استخدام البحث.
+  </div>
+
+  <section class="search-panel">
+
+    <div class="search-title">
+      <h1>اكتشف عملاء يحتاجون خدماتك</h1>
+      <p>ابحث عن الأنشطة التجارية وحلل مدى احتمالية كونها Lead مناسبة لخدمات المواقع.</p>
+    </div>
+
+    <div class="fields">
+
+      <div class="field">
+        <label for="f-city">المدينة</label>
+        <select id="f-city">
+          <option value="جدة">جدة</option>
+          <option value="الرياض">الرياض</option>
+          <option value="الدمام">الدمام</option>
+          <option value="مكة">مكة</option>
+          <option value="المدينة المنورة">المدينة المنورة</option>
+          <option value="الخبر">الخبر</option>
+          <option value="أبها">أبها</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="f-business">النشاط التجاري</label>
+        <input id="f-business" type="text" value="حلويات" placeholder="مثال: مطاعم، صالونات، عيادات...">
+      </div>
+
+    </div>
+
+    <div class="search-actions">
+      <button class="run" id="search-btn" onclick="runSearch()">🔎 بحث واستخراج الأنشطة</button>
+      <span class="search-status" id="search-status">جاهز للبدء</span>
+    </div>
+
   </section>
+
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-label">إجمالي النتائج</div>
+      <div class="stat-value" id="stat-total">0</div>
+    </div>
+
+    <div class="stat hot">
+      <div class="stat-label">فرص قوية</div>
+      <div class="stat-value" id="stat-hot">0</div>
+    </div>
+
+    <div class="stat no-web">
+      <div class="stat-label">بدون موقع</div>
+      <div class="stat-value" id="stat-no-web">0</div>
+    </div>
+
+    <div class="stat broken">
+      <div class="stat-label">مواقع معطّلة</div>
+      <div class="stat-value" id="stat-broken">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">محفوظة</div>
+      <div class="stat-value" id="stat-saved">0</div>
+    </div>
+
+  </section>
+
+  <div class="toolbar">
+
+    <div class="results-title">
+      <h2>النتائج المباشرة</h2>
+      <p id="result-count">0 نشاط تم تحليله</p>
+    </div>
+
+    <div class="toolbar-actions">
+
+      <button class="small-btn" onclick="openSaved()">⭐ العملاء المحفوظون</button>
+      <button class="small-btn primary" onclick="exportCSV()">📥 تصدير CSV</button>
+
+      <select class="sort-select" id="sort-select" onchange="render()">
+        <option value="score-desc">الأعلى فرصة أولاً</option>
+        <option value="score-asc">الأقل فرصة أولاً</option>
+        <option value="reviews-desc">الأكثر مراجعات</option>
+        <option value="rating-desc">الأعلى تقييمًا</option>
+      </select>
+
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">الكل</button>
+    <button class="filter-btn" data-filter="no-website" onclick="setFilter('no-website', this)">🌐 بدون موقع</button>
+    <button class="filter-btn" data-filter="social" onclick="setFilter('social', this)">📱 سوشيال فقط</button>
+    <button class="filter-btn" data-filter="broken" onclick="setFilter('broken', this)">💥 موقع معطّل</button>
+    <button class="filter-btn" data-filter="hot" onclick="setFilter('hot', this)">🔥 HOT</button>
+    <button class="filter-btn" data-filter="high" onclick="setFilter('high', this)">⭐ HIGH</button>
+    <button class="filter-btn" data-filter="saved" onclick="setFilter('saved', this)">💾 المحفوظة</button>
+
+    <span class="filter-info" id="filter-info">جميع النتائج</span>
+
+  </div>
+
+  <main id="results">
+    <div class="status-message">اضغط على زر البحث للبدء.</div>
+  </main>
+
+  <footer>LeadMap © 2026 — نسخة تجريبية V2</footer>
+
 </div>
 
-<button class="fab" id="addFab" title="أضف حمام">+</button>
+<div class="modal" id="saved-modal" onclick="closeModalOutside(event)">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>⭐ العملاء المحفوظون</h3>
+      <button class="close-modal" onclick="closeSaved()">✕</button>
+    </div>
+    <div id="saved-list"></div>
+  </div>
+</div>
 
-<div class="modal-bg" id="modalBg">
-  <div class="modal">
-    <h3>إضافة حمام جديد</h3>
-    <label for="name">اسم المكان</label>
-    <input id="name" type="text" placeholder="مثال: محطة بنزين شرق كسلا">
-    <div class="hint" id="coordHint">سيتم تحديد الإحداثيات للمكان المختار</div>
-    <label for="notes">ملاحظات (اختياري)</label>
-    <textarea id="notes" rows="2" placeholder="مثال: مجاني، متاح ٢٤ ساعة"></textarea>
-    <div class="row">
-      <button class="btn-secondary" id="cancelAdd">إلغاء</button>
-      <button class="btn-primary" id="saveAdd">حفظ</button>
+<div class="modal" id="help-modal" onclick="closeHelpOutside(event)">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>❔ إزاي تستخدم LeadMap</h3>
+      <button class="close-modal" onclick="closeHelp()">✕</button>
+    </div>
+
+    <div class="help-body">
+
+      <div class="help-step">
+        <span class="help-num">1</span>
+        <div>
+          <h4>اختار المدينة ونوع النشاط</h4>
+          <p>مثال: "حلويات" في "جدة". كل ما كان النشاط محدد أكتر، كانت النتائج أدق.</p>
+        </div>
+      </div>
+
+      <div class="help-step">
+        <span class="help-num">2</span>
+        <div>
+          <h4>دوس بحث واستنى التحقق</h4>
+          <p>الأداة بتجيب النتائج من خرائط Google، وبتزور كل موقع فعلياً عشان تتأكد هل شغال، معطّل، أو مش موجود أصلاً. ده بياخد كام ثانية زيادة، عادي.</p>
+        </div>
+      </div>
+
+      <div class="help-step">
+        <span class="help-num">3</span>
+        <div>
+          <h4>افهم الـ Lead Score</h4>
+          <p>كل نتيجة بتاخد درجة من 100 حسب: حالة الموقع (مفيش/سوشيال بس/معطّل/شغال)، عدد المراجعات، التقييم، وتوفر رقم هاتف. الأعلى درجة = أقرب فرصة تحتاج خدماتك.</p>
+        </div>
+      </div>
+
+      <div class="help-step">
+        <span class="help-num">4</span>
+        <div>
+          <h4>فلتر واحفظ اللي يهمك</h4>
+          <p>استخدم الفلاتر فوق (بدون موقع، موقع معطّل، HOT...) عشان تضيّق النتائج، واحفظ أي عميل يهمك بزرار "☆ حفظ Lead" عشان ترجع له بعدين.</p>
+        </div>
+      </div>
+
+      <div class="help-step">
+        <span class="help-num">5</span>
+        <div>
+          <h4>صدّر أو انسخ</h4>
+          <p>"📥 تصدير CSV" بيديك ملف بكل النتايج تشتغل عليه في إكسل، و"📋 نسخ البيانات" بينسخلك بيانات عميل واحد جاهزة تلصقها في رسالة تواصل.</p>
+        </div>
+      </div>
+
+      <div class="help-note">
+        ⚠️ النسخة دي تجريبية: عدد البحثات محدود شهرياً، والعملاء المحفوظين متخزنين في متصفحك أنت بس (لو غيّرت جهاز أو متصفح، هتفقدهم).
+      </div>
+
     </div>
   </div>
 </div>
 
+<div class="toast" id="toast">تم</div>
+
 <script>
-const STORAGE_KEY = 'restrooms_list';
-let userLat = null, userLng = null;
-let selectedLat = null, selectedLng = null;
-let map = null, markersLayer = null, tempMarker = null;
-let restrooms = [];
 
-function haversine(lat1, lng1, lat2, lng2){
-  const R = 6371;
-  const dLat = (lat2-lat1) * Math.PI/180;
-  const dLng = (lng2-lng1) * Math.PI/180;
-  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+const WORKER_URL =
+  "https://plain-leaf-9c79.mohamedtwfeeg7762.workers.dev";
+
+let fetchedBusinesses = [];
+let currentFilter = "all";
+let savedLeads =
+  JSON.parse(localStorage.getItem("leadmap_saved_leads") || "[]");
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateSavedCount();
+
+  if (!WORKER_URL || WORKER_URL.includes("YOUR-SUBDOMAIN")) {
+    document.getElementById("worker-warning").style.display = "block";
+  }
+
+  if (!localStorage.getItem("leadmap_seen_help")) {
+    openHelp();
+    localStorage.setItem("leadmap_seen_help", "1");
+  }
+});
+
+function openHelp(){
+  document.getElementById("help-modal").classList.add("show");
 }
 
-function fmtDist(km){
-  if(km < 1) return Math.round(km*1000) + ' م';
-  return km.toFixed(1) + ' كم';
+function closeHelp(){
+  document.getElementById("help-modal").classList.remove("show");
 }
 
-function loadRestrooms(){
+function closeHelpOutside(event){
+  if(event.target.id === "help-modal"){
+    closeHelp();
+  }
+}
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function escapeJS(value){
+  return String(value ?? "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,'\\"')
+    .replace(/\n/g,"\\n")
+    .replace(/\r/g,"\\r");
+}
+
+/* =========================================================
+   WEBSITE STATUS LABELS (من بيانات الـ Worker الجديدة)
+========================================================= */
+
+const WEBSITE_STATUS_LABELS = {
+  no_website: "لا يوجد موقع مستقل",
+  social_only: "سوشيال ميديا فقط",
+  broken: "موقع مسجّل لكنه معطّل",
+  website: "لديه موقع يعمل",
+  needs_verification: "لم يتم التحقق بعد"
+};
+
+function websiteStatusLabel(status){
+  return WEBSITE_STATUS_LABELS[status] || "غير معروف";
+}
+
+/* =========================================================
+   SCORE ENGINE — مبني على website_status الحقيقي من الـWorker
+========================================================= */
+
+function calculateScore(place){
+
+  let score = 0;
+  const reasons = [];
+
+  const reviews = Number(place.reviews || 0);
+  const rating = Number(place.rating || 0);
+  const status = place.website_status || "needs_verification";
+
+  /* WEBSITE STATUS */
+
+  if(status === "no_website"){
+    score += 45;
+    reasons.push({ text:"لا يوجد موقع إلكتروني مستقل", type:"pos" });
+
+  }else if(status === "social_only"){
+    score += 35;
+    reasons.push({ text:"الرابط الموجود سوشيال ميديا فقط", type:"pos" });
+
+  }else if(status === "broken"){
+    // فرصة ذهبية: عنده موقع لكنه معطّل فعلياً (تم التحقق)
+    score += 55;
+    reasons.push({ text:"⚠️ الموقع الحالي معطّل (تم التحقق فعلياً)", type:"strong-pos" });
+
+  }else if(status === "website"){
+    score -= 25;
+    reasons.push({ text:"لديه موقع يعمل بنجاح (تم التحقق)", type:"neg" });
+
+  }else{
+    reasons.push({ text:"لم يتم التحقق من حالة الموقع بعد", type:"neu" });
+  }
+
+  /* REVIEWS */
+
+  if(reviews >= 2000){
+    score += 30;
+    reasons.push({ text:`${reviews.toLocaleString()} مراجعة — نشاط قوي جدًا`, type:"pos" });
+  }else if(reviews >= 1000){
+    score += 27;
+    reasons.push({ text:`${reviews.toLocaleString()} مراجعة — إقبال مرتفع`, type:"pos" });
+  }else if(reviews >= 500){
+    score += 22;
+    reasons.push({ text:`${reviews.toLocaleString()} مراجعة — نشاط نشط`, type:"pos" });
+  }else if(reviews >= 250){
+    score += 17;
+    reasons.push({ text:`${reviews.toLocaleString()} مراجعة`, type:"pos" });
+  }else if(reviews >= 50){
+    score += 10;
+    reasons.push({ text:`${reviews.toLocaleString()} مراجعة`, type:"neu" });
+  }else{
+    reasons.push({ text:`${reviews.toLocaleString()} مراجعة فقط`, type:"neg" });
+  }
+
+  /* RATING */
+
+  if(rating >= 4.5){
+    score += 18;
+    reasons.push({ text:`تقييم ممتاز ${rating} ⭐`, type:"pos" });
+  }else if(rating >= 4.0){
+    score += 12;
+    reasons.push({ text:`تقييم جيد ${rating} ⭐`, type:"pos" });
+  }else if(rating > 0){
+    score += 4;
+    reasons.push({ text:`التقييم ${rating} ⭐`, type:"neu" });
+  }
+
+  /* PHONE */
+
+  if(place.phone){
+    score += 10;
+    reasons.push({ text:"رقم الهاتف متوفر", type:"pos" });
+  }else{
+    reasons.push({ text:"لا يوجد رقم هاتف في البيانات", type:"neg" });
+  }
+
+  /* BUSINESS TYPE */
+
+  if(place.type){
+    reasons.push({ text:`النشاط: ${place.type}`, type:"neu" });
+  }
+
+  score = Math.max(0, Math.min(100, Math.round(score)));
+
+  return { score, reasons, websiteStatus: status };
+}
+
+/* =========================================================
+   TIER
+========================================================= */
+
+function tierOf(score){
+  if(score >= 80) return { key:"hot", cls:"tier-hot", label:"فرصة قوية جدًا" };
+  if(score >= 65) return { key:"high", cls:"tier-high", label:"فرصة قوية" };
+  if(score >= 45) return { key:"medium", cls:"tier-medium", label:"فرصة متوسطة" };
+  return { key:"low", cls:"tier-low", label:"فرصة ضعيفة" };
+}
+
+/* =========================================================
+   WORKER REQUEST
+========================================================= */
+
+async function fetchFromWorker(query){
+
+  const url = `${WORKER_URL}?q=${encodeURIComponent(query)}`;
+
+  const response = await fetch(url, {
+    method:"GET",
+    headers:{ "Accept":"application/json" }
+  });
+
+  if(!response.ok){
+    throw new Error(`الخادم رجّع خطأ HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  if(data.error){
+    throw new Error(data.error);
+  }
+
+  return data.local_results || [];
+}
+
+/* =========================================================
+   RUN SEARCH
+========================================================= */
+
+async function runSearch(){
+
+  const city = document.getElementById("f-city").value;
+  const business = document.getElementById("f-business").value.trim();
+  const button = document.getElementById("search-btn");
+  const status = document.getElementById("search-status");
+  const results = document.getElementById("results");
+
+  if(!business){
+    alert("اكتب نوع النشاط التجاري أولاً.");
+    return;
+  }
+
+  button.disabled = true;
+  status.textContent = "جاري البحث والتحقق من المواقع (قد يستغرق بضع ثوانٍ)...";
+
+  results.innerHTML = `
+    <div class="status-message">
+      <div class="loader"></div>
+      جاري استخراج وتحليل الأنشطة والتحقق من حالة مواقعها...
+    </div>
+  `;
+
   try{
-    const res = localStorage.getItem(STORAGE_KEY);
-    restrooms = res ? JSON.parse(res) : [];
-  }catch(e){
-    restrooms = [];
-  }
-}
 
-function saveRestrooms(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(restrooms));
-}
+    const query = `${business} في ${city}`;
+    const places = await fetchFromWorker(query);
 
-function renderList(){
-  const container = document.getElementById('listContainer');
-  const title = document.getElementById('listTitle');
-  container.innerHTML = '';
+    fetchedBusinesses = places.map((place, index) => {
 
-  if(restrooms.length === 0){
-    container.innerHTML = '<div class="empty">لسه ما فيه حمامات مضافة. كن أول واحد يضيف!</div>';
-    return;
-  }
+      const scoreData = calculateScore(place);
+      const tier = tierOf(scoreData.score);
 
-  let sorted = [...restrooms];
-  if(userLat !== null){
-    sorted.forEach(r => r._dist = haversine(userLat, userLng, r.lat, r.lng));
-    sorted.sort((a,b) => a._dist - b._dist);
-    title.textContent = 'أقرب الحمامات ليك';
-  } else {
-    title.textContent = 'الحمامات المضافة';
-  }
+      return {
 
-  sorted.forEach(r => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    const gmaps = `https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}`;
-    card.innerHTML = `
-      <div class="info">
-        <h3>${escapeHtml(r.name)}</h3>
-        ${r.notes ? `<p>${escapeHtml(r.notes)}</p>` : ''}
-        <a class="go" href="${gmaps}" target="_blank" rel="noopener">🧭 وديني هناك</a>
-      </div>
-      ${r._dist !== undefined ? `<div class="dist">${fmtDist(r._dist)}</div>` : ''}
-    `;
-    container.appendChild(card);
-  });
-}
+        id: place.place_id || `${place.title || "lead"}-${index}-${Date.now()}`,
+        name: place.title || "بدون اسم",
+        city: place.address || city,
+        rating: Number(place.rating || 0),
+        reviews: Number(place.reviews || 0),
+        website: place.website || "",
+        phone: place.phone || "",
+        type: place.type || "",
+        maps: place.maps_url || place.google_maps_url || "",
 
-function escapeHtml(s){
-  const d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
+        websiteStatus: scoreData.websiteStatus,
+        websiteStatusLabel: websiteStatusLabel(scoreData.websiteStatus),
+        websiteCheckReason: place.website_check_reason || "",
 
-function initMap(initialLat = 15.45, initialLng = 36.40, zoom = 12){
-  const mapEl = document.getElementById('map');
-  mapEl.style.display = 'block';
-  if(!map){
-    map = L.map('map').setView([initialLat, initialLng], zoom);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
-    markersLayer = L.layerGroup().addTo(map);
+        score: scoreData.score,
+        reasons: scoreData.reasons,
+        tier: tier.key
+      };
 
-    // السماح بنقر الخريطة لاختيار موقع الحمام
-    map.on('click', (e) => {
-      openAddModalWithCoords(e.latlng.lat, e.latlng.lng);
     });
-  } else {
-    map.setView([initialLat, initialLng], zoom);
+
+    status.textContent = `تم تحليل ${fetchedBusinesses.length} نشاط`;
+
+    updateStats();
+    render();
+
+  }catch(error){
+
+    console.error(error);
+    status.textContent = "فشل البحث";
+
+    results.innerHTML = `
+      <div class="status-message" style="color:var(--red);">
+        ❌ حدث خطأ أثناء البحث
+        <br><br>
+        ${escapeHTML(error.message)}
+      </div>
+    `;
+
+  }finally{
+    button.disabled = false;
   }
-  updateMarkers();
+
 }
 
-function updateMarkers(){
-  if(!map) return;
-  markersLayer.clearLayers();
-  if(userLat !== null){
-    L.circleMarker([userLat, userLng], {radius:8, color:'#E0A458', fillColor:'#E0A458', fillOpacity:1})
-      .addTo(markersLayer).bindPopup('موقعك الحالي');
-  }
-  restrooms.forEach(r => {
-    L.marker([r.lat, r.lng]).addTo(markersLayer).bindPopup(escapeHtml(r.name));
+/* =========================================================
+   FILTER
+========================================================= */
+
+function setFilter(filter, button){
+  currentFilter = filter;
+
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.classList.remove("active");
   });
+
+  button.classList.add("active");
+  render();
 }
 
-document.getElementById('locateBtn').addEventListener('click', () => {
-  const btn = document.getElementById('locateBtn');
-  const status = document.getElementById('status');
-  if(!navigator.geolocation){
-    status.textContent = 'المتصفح ما بيدعم تحديد الموقع';
-    return;
+function applyFilter(items){
+  switch(currentFilter){
+
+    case "no-website":
+      return items.filter(item => item.websiteStatus === "no_website");
+
+    case "social":
+      return items.filter(item => item.websiteStatus === "social_only");
+
+    case "broken":
+      return items.filter(item => item.websiteStatus === "broken");
+
+    case "hot":
+      return items.filter(item => item.tier === "hot");
+
+    case "high":
+      return items.filter(item => item.tier === "hot" || item.tier === "high");
+
+    case "saved":
+      return items.filter(item => isSaved(item.id));
+
+    default:
+      return items;
   }
-  btn.disabled = true;
-  status.textContent = 'جاري تحديد موقعك...';
-  navigator.geolocation.getCurrentPosition((pos) => {
-    userLat = pos.coords.latitude;
-    userLng = pos.coords.longitude;
-    status.textContent = 'تم تحديد موقعك';
-    btn.disabled = false;
-    initMap(userLat, userLng, 14);
-    renderList();
-  }, (err) => {
-    status.textContent = 'ما قدرنا نحدد موقعك — يمكنك اختيار الموقع مباشرة من الخريطة';
-    btn.disabled = false;
-    initMap(); // فتح الخريطة بالموقع الافتراضي
-  }, {enableHighAccuracy:true, timeout:10000});
-});
-
-const modalBg = document.getElementById('modalBg');
-const addFab = document.getElementById('addFab');
-const coordHint = document.getElementById('coordHint');
-
-function openAddModalWithCoords(lat, lng){
-  selectedLat = lat;
-  selectedLng = lng;
-  coordHint.textContent = `سيتم إضافة المكان بالحديثات (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
-  modalBg.classList.add('open');
 }
 
-addFab.addEventListener('click', () => {
-  if(userLat !== null){
-    openAddModalWithCoords(userLat, userLng);
-  } else {
-    // فتح الخريطة للتحديد اليدوي
-    initMap();
-    document.getElementById('status').textContent = 'اضغط على أي نقطة في الخريطة لإضافة حمام هناك';
-    window.scrollTo({ top: document.getElementById('map').offsetTop - 20, behavior: 'smooth' });
-  }
-});
+/* =========================================================
+   RENDER
+========================================================= */
 
-document.getElementById('cancelAdd').addEventListener('click', () => {
-  modalBg.classList.remove('open');
-});
+function render(){
 
-document.getElementById('saveAdd').addEventListener('click', () => {
-  const name = document.getElementById('name').value.trim();
-  const notes = document.getElementById('notes').value.trim();
-  if(!name){
-    alert('من فضلك اكتب اسم المكان');
+  const container = document.getElementById("results");
+  const sort = document.getElementById("sort-select").value;
+
+  let items = [...fetchedBusinesses];
+
+  if(sort === "score-desc") items.sort((a,b) => b.score - a.score);
+  if(sort === "score-asc") items.sort((a,b) => a.score - b.score);
+  if(sort === "reviews-desc") items.sort((a,b) => b.reviews - a.reviews);
+  if(sort === "rating-desc") items.sort((a,b) => b.rating - a.rating);
+
+  items = applyFilter(items);
+
+  document.getElementById("result-count").textContent =
+    `${items.length} نتيجة ظاهرة من ${fetchedBusinesses.length}`;
+
+  document.getElementById("filter-info").textContent = filterLabel(currentFilter);
+
+  if(!items.length){
+    container.innerHTML = `<div class="status-message">لا توجد نتائج ضمن الفلتر الحالي.</div>`;
     return;
   }
-  const newEntry = {
-    id: Date.now().toString(),
-    name, notes,
-    lat: selectedLat, lng: selectedLng,
-    addedAt: new Date().toISOString()
+
+  container.innerHTML = items.map(renderLead).join("");
+}
+
+function filterLabel(filter){
+  const labels = {
+    all:"جميع النتائج",
+    "no-website":"عرض الأنشطة التي لا يظهر لها موقع مستقل",
+    social:"عرض الأنشطة التي لديها سوشيال فقط",
+    broken:"عرض الأنشطة التي عندها موقع معطّل",
+    hot:"عرض الفرص القوية جدًا",
+    high:"عرض الفرص القوية وما فوق",
+    saved:"عرض العملاء المحفوظين"
   };
-  restrooms.push(newEntry);
-  saveRestrooms();
-  document.getElementById('name').value = '';
-  document.getElementById('notes').value = '';
-  modalBg.classList.remove('open');
-  renderList();
-  if(map) updateMarkers();
-});
-
-function init(){
-  loadRestrooms();
-  renderList();
+  return labels[filter] || "جميع النتائج";
 }
-init();
+
+/* =========================================================
+   RENDER LEAD
+========================================================= */
+
+function renderLead(lead){
+
+  const tier = tierOf(lead.score);
+  const saved = isSaved(lead.id);
+
+  const reasons = lead.reasons.slice(0,6).map(reason => `
+    <span class="sig ${reason.type}">${escapeHTML(reason.text)}</span>
+  `).join("");
+
+  const phone = lead.phone
+    ? `<span>📞 ${escapeHTML(lead.phone)}</span>`
+    : "";
+
+  const websiteButton = lead.website
+    ? `
+      <a href="${escapeHTML(lead.website)}" target="_blank" rel="noopener noreferrer" class="lead-action">
+        🌐 الموقع${lead.websiteStatus === "broken" ? " (معطّل)" : ""}
+      </a>
+    `
+    : "";
+
+  return `
+
+    <article class="lead ${tier.cls}">
+
+      <div class="score-col">
+        <div class="score-num">${lead.score}</div>
+        <div class="score-max">من 100</div>
+        <div class="tier-badge">${tier.label}</div>
+      </div>
+
+      <div class="lead-body">
+
+        <h3>
+          ${escapeHTML(lead.name)}
+          <span class="website-badge ${lead.websiteStatus}">${escapeHTML(lead.websiteStatusLabel)}</span>
+        </h3>
+
+        <div class="meta-line">
+          <span>📍 ${escapeHTML(lead.city)}</span>
+          <span>⭐ ${lead.rating || "غير متوفر"}</span>
+          <span>💬 ${lead.reviews.toLocaleString()} مراجعة</span>
+          ${phone}
+        </div>
+
+        <div class="signals">
+          ${reasons}
+        </div>
+
+        <div class="reason">
+          <strong>لماذا هذه الفرصة؟</strong>
+          ${generateWhy(lead)}
+        </div>
+
+        <div class="lead-actions">
+
+          ${lead.maps ? `
+            <a href="${escapeHTML(lead.maps)}" target="_blank" rel="noopener noreferrer" class="lead-action main">
+              📍 Google Maps
+            </a>
+          ` : ""}
+
+          ${lead.phone ? `
+            <a href="tel:${escapeHTML(lead.phone)}" class="lead-action">📞 اتصال</a>
+          ` : ""}
+
+          ${websiteButton}
+
+          <button class="lead-action" onclick="copyLead('${escapeJS(lead.id)}')">📋 نسخ البيانات</button>
+
+          <button class="lead-action" onclick="toggleSave('${escapeJS(lead.id)}')">
+            ${saved ? "★ محفوظ" : "☆ حفظ Lead"}
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+}
+
+function generateWhy(lead){
+  const positive = lead.reasons
+    .filter(reason => reason.type === "pos" || reason.type === "strong-pos")
+    .map(reason => reason.text);
+
+  if(positive.length){
+    return escapeHTML(positive.slice(0,3).join("، "));
+  }
+
+  return "تحتاج هذه النتيجة إلى مراجعة إضافية قبل التواصل.";
+}
+
+/* =========================================================
+   SAVE SYSTEM
+========================================================= */
+
+function isSaved(id){
+  return savedLeads.some(lead => lead.id === id);
+}
+
+function toggleSave(id){
+
+  const lead = fetchedBusinesses.find(item => item.id === id);
+  if(!lead) return;
+
+  if(isSaved(id)){
+    savedLeads = savedLeads.filter(item => item.id !== id);
+    showToast("تمت إزالة العميل من المحفوظات.");
+  }else{
+    savedLeads.push(lead);
+    showToast("⭐ تم حفظ العميل.");
+  }
+
+  localStorage.setItem("leadmap_saved_leads", JSON.stringify(savedLeads));
+
+  updateSavedCount();
+  render();
+}
+
+/* =========================================================
+   COPY LEAD
+========================================================= */
+
+async function copyLead(id){
+
+  const lead = fetchedBusinesses.find(item => item.id === id);
+  if(!lead) return;
+
+  const text = `
+اسم النشاط: ${lead.name}
+المدينة/العنوان: ${lead.city}
+التقييم: ${lead.rating}
+المراجعات: ${lead.reviews}
+الهاتف: ${lead.phone || "غير متوفر"}
+حالة الموقع: ${lead.websiteStatusLabel}
+الموقع: ${lead.website || "لا يوجد"}
+
+Google Maps:
+${lead.maps}
+
+Lead Score:
+${lead.score}/100
+
+التصنيف:
+${tierOf(lead.score).label}
+`.trim();
+
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast("📋 تم نسخ بيانات العميل.");
+  }catch(error){
+    showToast("تعذر النسخ تلقائيًا.");
+  }
+}
+
+/* =========================================================
+   CSV EXPORT
+========================================================= */
+
+function exportCSV(){
+
+  const items = applyFilter([...fetchedBusinesses]);
+
+  if(!items.length){
+    alert("لا توجد نتائج لتصديرها.");
+    return;
+  }
+
+  const headers = [
+    "Name","Address","Rating","Reviews","Phone",
+    "Website","Website Status","Google Maps","Score","Tier"
+  ];
+
+  const rows = items.map(item => [
+    item.name,
+    item.city,
+    item.rating,
+    item.reviews,
+    item.phone,
+    item.website,
+    item.websiteStatusLabel,
+    item.maps,
+    item.score,
+    tierOf(item.score).label
+  ]);
+
+  const csv = [headers, ...rows]
+    .map(row => row.map(csvEscape).join(","))
+    .join("\n");
+
+  const blob = new Blob(["\uFEFF" + csv], { type:"text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = `leadmap-leads-${Date.now()}.csv`;
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+
+  showToast("📥 تم تصدير CSV.");
+}
+
+function csvEscape(value){
+  const text = String(value ?? "");
+  return `"${text.replace(/"/g,'""')}"`;
+}
+
+/* =========================================================
+   SAVED MODAL
+========================================================= */
+
+function openSaved(){
+  renderSaved();
+  document.getElementById("saved-modal").classList.add("show");
+}
+
+function closeSaved(){
+  document.getElementById("saved-modal").classList.remove("show");
+}
+
+function closeModalOutside(event){
+  if(event.target.id === "saved-modal"){
+    closeSaved();
+  }
+}
+
+function renderSaved(){
+
+  const container = document.getElementById("saved-list");
+
+  if(!savedLeads.length){
+    container.innerHTML = `<div class="status-message">لا توجد Leads محفوظة حتى الآن.</div>`;
+    return;
+  }
+
+  container.innerHTML = savedLeads.map(lead => `
+    <div class="saved-item">
+      <h4>${escapeHTML(lead.name)}</h4>
+      <p>${escapeHTML(lead.city)} · ⭐ ${lead.rating} · ${lead.score}/100 · ${escapeHTML(lead.websiteStatusLabel || "")}</p>
+      <div class="saved-actions">
+        ${lead.maps ? `
+          <a class="lead-action main" href="${escapeHTML(lead.maps)}" target="_blank" rel="noopener noreferrer">📍 Maps</a>
+        ` : ""}
+        <button class="lead-action" onclick="copyLead('${escapeJS(lead.id)}')">📋 نسخ</button>
+        <button class="lead-action" onclick="removeSaved('${escapeJS(lead.id)}')">حذف</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function removeSaved(id){
+
+  savedLeads = savedLeads.filter(lead => lead.id !== id);
+
+  localStorage.setItem("leadmap_saved_leads", JSON.stringify(savedLeads));
+
+  updateSavedCount();
+  renderSaved();
+  render();
+  showToast("تم حذف العميل.");
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+  const total = fetchedBusinesses.length;
+
+  const hot = fetchedBusinesses.filter(lead => lead.tier === "hot").length;
+
+  const noWebsite = fetchedBusinesses.filter(
+    lead => lead.websiteStatus === "no_website"
+  ).length;
+
+  const broken = fetchedBusinesses.filter(
+    lead => lead.websiteStatus === "broken"
+  ).length;
+
+  document.getElementById("stat-total").textContent = total;
+  document.getElementById("stat-hot").textContent = hot;
+  document.getElementById("stat-no-web").textContent = noWebsite;
+  document.getElementById("stat-broken").textContent = broken;
+
+  updateSavedCount();
+}
+
+function updateSavedCount(){
+  document.getElementById("stat-saved").textContent = savedLeads.length;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+}
+
 </script>
 
 </body>
