@@ -10,14 +10,22 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        LeadMap — اكتشاف العملاء المحتملين
-    </title>
+    <meta
+        name="theme-color"
+        content="#f6f1e8"
+    >
 
     <meta
         name="description"
-        content="LeadMap — أداة احترافية لاكتشاف وتحليل الأنشطة التجارية والعملاء المحتملين."
+        content="LeadMap — منصة ذكية لاكتشاف العملاء المحتملين وتحليل حضورهم الرقمي."
     >
+
+    <title>
+        LeadMap | اكتشاف العملاء المحتملين
+    </title>
+
+
+    <!-- Google Fonts -->
 
     <link
         rel="preconnect"
@@ -35,76 +43,92 @@
         rel="stylesheet"
     >
 
+
     <style>
 
-        :root{
+        /* =====================================================
+           ROOT
+        ===================================================== */
 
-            --bg:#f5f3ee;
+        :root {
 
-            --surface:#ffffff;
+            --bg:
+                #f6f1e8;
 
-            --surface-soft:#faf9f6;
+            --surface:
+                #fffdf8;
 
-            --text:#18221f;
+            --surface-2:
+                #f1eadf;
 
-            --muted:#69736f;
+            --text:
+                #1d2a2e;
 
-            --border:#e4e2dc;
+            --muted:
+                #718083;
 
-            --primary:#1f5c56;
+            --primary:
+                #1e6860;
 
-            --primary-dark:#174842;
+            --primary-dark:
+                #155149;
 
-            --gold:#b48a4a;
+            --gold:
+                #b48a4a;
 
-            --gold-soft:#f4ead9;
+            --border:
+                #e5ddd0;
 
-            --green:#21865a;
+            --danger:
+                #b94b4b;
 
-            --green-soft:#e8f6ee;
+            --success:
+                #3e8060;
 
-            --red:#c84b4b;
-
-            --red-soft:#fbeaea;
-
-            --orange:#d87b32;
-
-            --orange-soft:#fff1e5;
-
-            --blue:#356ea8;
-
-            --blue-soft:#eaf2fb;
+            --warning:
+                #bd8a3c;
 
             --shadow:
-                0 10px 35px rgba(24,34,31,.07);
+                0 15px 40px rgba(
+                    40,
+                    35,
+                    25,
+                    .08
+                );
 
-            --shadow-hover:
-                0 18px 45px rgba(24,34,31,.12);
-
-            --radius:18px;
-
-        }
-
-
-        *{
-
-            margin:0;
-
-            padding:0;
-
-            box-sizing:border-box;
+            --radius:
+                18px;
 
         }
 
 
-        html{
+        /* =====================================================
+           RESET
+        ===================================================== */
 
-            scroll-behavior:smooth;
+        * {
+
+            margin:
+                0;
+
+            padding:
+                0;
+
+            box-sizing:
+                border-box;
 
         }
 
 
-        body{
+        html {
+
+            scroll-behavior:
+                smooth;
+
+        }
+
+
+        body {
 
             font-family:
                 "Cairo",
@@ -117,62 +141,66 @@
             color:
                 var(--text);
 
-            min-height:100vh;
+            min-height:
+                100vh;
+
+            line-height:
+                1.7;
 
         }
 
 
         button,
         input,
-        select{
+        select {
 
-            font-family:inherit;
-
-        }
-
-
-        button{
-
-            cursor:pointer;
+            font:
+                inherit;
 
         }
 
 
-        a{
+        button {
 
-            color:inherit;
-
-            text-decoration:none;
-
-        }
-
-
-        .container{
-
-            width:
-                min(1400px, 94%);
-
-            margin:
-                auto;
+            cursor:
+                pointer;
 
         }
 
 
-        /* ==================================================
+        a {
+
+            color:
+                inherit;
+
+            text-decoration:
+                none;
+
+        }
+
+
+        /* =====================================================
            HEADER
-        ================================================== */
+        ===================================================== */
 
-        .header{
+        .topbar {
 
             position:
                 sticky;
 
-            top:0;
+            top:
+                0;
 
-            z-index:100;
+            z-index:
+                100;
 
             background:
-                rgba(245,243,238,.92);
+                rgba(
+                    255,
+                    253,
+                    248,
+                    .92
+                );
 
             backdrop-filter:
                 blur(18px);
@@ -183,189 +211,208 @@
         }
 
 
-        .header-inner{
+        .topbar-inner {
 
-            min-height:
-                76px;
-
-            display:flex;
-
-            align-items:center;
-
-            justify-content:space-between;
-
-            gap:25px;
-
-        }
-
-
-        .brand{
-
-            display:flex;
-
-            align-items:center;
-
-            gap:12px;
-
-        }
-
-
-        .brand-icon{
-
-            width:44px;
-
-            height:44px;
-
-            border-radius:14px;
-
-            display:flex;
-
-            align-items:center;
-
-            justify-content:center;
-
-            color:#fff;
-
-            font-size:20px;
-
-            font-weight:800;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--primary),
-                    #2f766e
+            width:
+                min(
+                    1180px,
+                    calc(
+                        100% - 32px
+                    )
                 );
 
+            min-height:
+                74px;
+
+            margin:
+                auto;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                20px;
+
+        }
+
+
+        .brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+        }
+
+
+        .brand-mark {
+
+            width:
+                44px;
+
+            height:
+                44px;
+
+            border-radius:
+                14px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            background:
+                var(--primary);
+
+            color:
+                white;
+
+            font-weight:
+                800;
+
+            font-size:
+                18px;
+
             box-shadow:
-                0 8px 20px
-                rgba(31,92,86,.18);
+                0 8px 20px rgba(
+                    30,
+                    104,
+                    96,
+                    .18
+                );
 
         }
 
 
-        .brand-text{
+        .brand-text strong {
 
-            display:flex;
+            display:
+                block;
 
-            flex-direction:column;
+            font-size:
+                18px;
 
-            line-height:1.2;
-
-        }
-
-
-        .brand-text strong{
-
-            font-size:18px;
-
-            font-weight:800;
+            line-height:
+                1.2;
 
         }
 
 
-        .brand-text span{
+        .brand-text span {
+
+            display:
+                block;
 
             color:
                 var(--muted);
 
-            font-size:11px;
-
-            margin-top:4px;
-
-        }
-
-
-        .header-actions{
-
-            display:flex;
-
-            align-items:center;
-
-            gap:10px;
-
-        }
-
-
-        .header-btn{
-
-            border:
-                1px solid var(--border);
-
-            background:
-                var(--surface);
-
-            color:
-                var(--text);
-
-            border-radius:
+            font-size:
                 12px;
 
-            min-height:
-                42px;
+        }
+
+
+        .topbar-badge {
 
             padding:
-                0 15px;
-
-            transition:
-                .25s ease;
-
-        }
-
-
-        .header-btn:hover{
-
-            border-color:
-                var(--primary);
-
-            color:
-                var(--primary);
-
-            transform:
-                translateY(-2px);
-
-        }
-
-
-        /* ==================================================
-           HERO
-        ================================================== */
-
-        .hero{
-
-            padding:
-                48px 0 25px;
-
-        }
-
-
-        .hero-content{
-
-            max-width:
-                900px;
-
-        }
-
-
-        .eyebrow{
-
-            display:inline-flex;
-
-            align-items:center;
-
-            gap:7px;
-
-            padding:
-                7px 12px;
+                7px 13px;
 
             border-radius:
                 999px;
 
             background:
-                var(--gold-soft);
+                #edf5f2;
 
             color:
-                #8b6733;
+                var(--primary);
+
+            font-size:
+                12px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        main {
+
+            width:
+                min(
+                    1180px,
+                    calc(
+                        100% - 32px
+                    )
+                );
+
+            margin:
+                auto;
+
+            padding:
+                45px 0 70px;
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            text-align:
+                center;
+
+            max-width:
+                760px;
+
+            margin:
+                0 auto 34px;
+
+        }
+
+
+        .hero-label {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                7px 13px;
+
+            background:
+                #eee8dc;
+
+            color:
+                var(--primary);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                999px;
 
             font-size:
                 12px;
@@ -374,49 +421,33 @@
                 700;
 
             margin-bottom:
-                14px;
+                16px;
 
         }
 
 
-        .eyebrow::before{
-
-            content:"";
-
-            width:7px;
-
-            height:7px;
-
-            border-radius:50%;
-
-            background:
-                var(--gold);
-
-            box-shadow:
-                0 0 0 5px
-                rgba(180,138,74,.1);
-
-        }
-
-
-        .hero h1{
+        .hero h1 {
 
             font-size:
-                clamp(30px, 4vw, 52px);
+                clamp(
+                    30px,
+                    5vw,
+                    48px
+                );
 
             line-height:
-                1.2;
+                1.25;
 
             letter-spacing:
                 -.8px;
 
-            font-weight:
-                800;
+            margin-bottom:
+                12px;
 
         }
 
 
-        .hero h1 span{
+        .hero h1 span {
 
             color:
                 var(--primary);
@@ -424,31 +455,28 @@
         }
 
 
-        .hero p{
+        .hero p {
 
             color:
                 var(--muted);
 
-            margin-top:
-                14px;
-
             font-size:
-                16px;
-
-            line-height:
-                1.9;
+                15px;
 
             max-width:
-                760px;
+                650px;
+
+            margin:
+                auto;
 
         }
 
 
-        /* ==================================================
+        /* =====================================================
            SEARCH PANEL
-        ================================================== */
+        ===================================================== */
 
-        .search-panel{
+        .search-panel {
 
             background:
                 var(--surface);
@@ -465,38 +493,44 @@
             box-shadow:
                 var(--shadow);
 
-            margin:
-                20px 0 24px;
+            margin-bottom:
+                25px;
 
         }
 
 
-        .search-grid{
+        .search-grid {
 
-            display:grid;
+            display:
+                grid;
 
             grid-template-columns:
-                220px 1fr auto;
+                1fr 1fr auto;
 
-            gap:14px;
+            gap:
+                12px;
 
-            align-items:end;
-
-        }
-
-
-        .field{
-
-            display:flex;
-
-            flex-direction:column;
-
-            gap:7px;
+            align-items:
+                end;
 
         }
 
 
-        .field label{
+        .field {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                7px;
+
+        }
+
+
+        .field label {
 
             font-size:
                 12px;
@@ -511,12 +545,16 @@
 
 
         .field input,
-        .field select{
+        .field select {
 
-            width:100%;
+            width:
+                100%;
 
             height:
                 50px;
+
+            padding:
+                0 15px;
 
             border:
                 1px solid var(--border);
@@ -525,10 +563,7 @@
                 13px;
 
             background:
-                var(--surface-soft);
-
-            padding:
-                0 15px;
+                #fff;
 
             color:
                 var(--text);
@@ -537,59 +572,54 @@
                 none;
 
             transition:
-                .25s ease;
+                .2s ease;
 
         }
 
 
         .field input:focus,
-        .field select:focus{
+        .field select:focus {
 
             border-color:
                 var(--primary);
 
-            background:
-                #fff;
-
             box-shadow:
                 0 0 0 4px
-                rgba(31,92,86,.08);
+                rgba(
+                    30,
+                    104,
+                    96,
+                    .08
+                );
 
         }
 
 
-        .run{
+        .search-button {
 
             height:
                 50px;
 
             padding:
-                0 24px;
+                0 27px;
 
             border:
-                none;
+                0;
 
             border-radius:
                 13px;
 
-            color:#fff;
+            background:
+                var(--primary);
+
+            color:
+                white;
 
             font-weight:
-                800;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--primary),
-                    #2f766e
-                );
-
-            box-shadow:
-                0 9px 20px
-                rgba(31,92,86,.18);
+                700;
 
             transition:
-                .25s ease;
+                .2s ease;
 
             white-space:
                 nowrap;
@@ -597,31 +627,21 @@
         }
 
 
-        .run:hover{
+        .search-button:hover {
+
+            background:
+                var(--primary-dark);
 
             transform:
                 translateY(-2px);
 
-            box-shadow:
-                0 14px 28px
-                rgba(31,92,86,.24);
-
         }
 
 
-        .run:active{
-
-            transform:
-                translateY(0)
-                scale(.98);
-
-        }
-
-
-        .run:disabled{
+        .search-button:disabled {
 
             opacity:
-                .65;
+                .6;
 
             cursor:
                 not-allowed;
@@ -632,101 +652,45 @@
         }
 
 
-        .search-info{
-
-            display:flex;
-
-            align-items:center;
-
-            justify-content:space-between;
-
-            gap:15px;
+        .search-hint {
 
             margin-top:
-                15px;
-
-            padding-top:
-                14px;
-
-            border-top:
-                1px solid var(--border);
-
-        }
-
-
-        #search-status{
+                12px;
 
             color:
                 var(--muted);
 
             font-size:
-                12px;
-
-            min-height:
-                20px;
-
-        }
-
-
-        .pagination-hint{
-
-            color:
-                var(--primary);
-
-            font-size:
                 11px;
 
-            font-weight:
-                700;
-
         }
 
 
-        #worker-warning{
-
-            display:none;
-
-            margin-top:
-                12px;
-
-            padding:
-                11px 13px;
-
-            border-radius:
-                10px;
-
-            background:
-                var(--red-soft);
-
-            color:
-                var(--red);
-
-            font-size:
-                12px;
-
-        }
-
-
-        /* ==================================================
+        /* =====================================================
            STATS
-        ================================================== */
+        ===================================================== */
 
-        .stats{
+        .stats {
 
-            display:grid;
+            display:
+                grid;
 
             grid-template-columns:
-                repeat(5, 1fr);
+                repeat(
+                    5,
+                    1fr
+                );
 
-            gap:13px;
+            gap:
+                12px;
 
             margin-bottom:
-                22px;
+                25px;
 
         }
 
 
-        .stat{
+        .stat {
 
             background:
                 var(--surface);
@@ -740,14 +704,13 @@
             padding:
                 17px;
 
-            box-shadow:
-                0 5px 20px
-                rgba(24,34,31,.035);
-
         }
 
 
-        .stat-label{
+        .stat span {
+
+            display:
+                block;
 
             color:
                 var(--muted);
@@ -755,202 +718,65 @@
             font-size:
                 11px;
 
-            font-weight:
-                600;
-
-        }
-
-
-        .stat-value{
-
-            margin-top:
+            margin-bottom:
                 5px;
 
+        }
+
+
+        .stat strong {
+
             font-size:
-                27px;
+                25px;
 
-            font-weight:
-                800;
-
-        }
-
-
-        .stat-value.gold{
-
-            color:
-                var(--gold);
+            line-height:
+                1;
 
         }
 
 
-        .stat-value.green{
-
-            color:
-                var(--green);
-
-        }
-
-
-        .stat-value.red{
-
-            color:
-                var(--red);
-
-        }
-
-
-        .stat-value.blue{
-
-            color:
-                var(--blue);
-
-        }
-
-
-        /* ==================================================
+        /* =====================================================
            TOOLBAR
-        ================================================== */
+        ===================================================== */
 
-        .toolbar{
+        .toolbar {
 
-            display:flex;
+            display:
+                flex;
 
-            justify-content:space-between;
+            align-items:
+                center;
 
-            align-items:center;
+            justify-content:
+                space-between;
 
-            gap:15px;
+            gap:
+                15px;
 
-            flex-wrap:wrap;
-
-            margin-bottom:
-                14px;
-
-        }
-
-
-        .toolbar-left,
-        .toolbar-right{
-
-            display:flex;
-
-            align-items:center;
-
-            gap:8px;
-
-            flex-wrap:wrap;
-
-        }
-
-
-        .tool-btn{
-
-            border:
-                1px solid var(--border);
-
-            background:
-                var(--surface);
-
-            color:
-                var(--text);
-
-            min-height:
-                40px;
-
-            padding:
-                0 13px;
-
-            border-radius:
-                11px;
-
-            font-size:
-                12px;
-
-            transition:
-                .22s ease;
-
-        }
-
-
-        .tool-btn:hover{
-
-            border-color:
-                var(--primary);
-
-            color:
-                var(--primary);
-
-        }
-
-
-        .tool-btn.primary{
-
-            background:
-                var(--primary);
-
-            color:#fff;
-
-            border-color:
-                var(--primary);
-
-        }
-
-
-        .tool-btn.primary:hover{
-
-            color:#fff;
-
-            background:
-                var(--primary-dark);
-
-        }
-
-
-        .sort-select{
-
-            min-height:
-                40px;
-
-            border:
-                1px solid var(--border);
-
-            background:
-                var(--surface);
-
-            border-radius:
-                11px;
-
-            padding:
-                0 11px;
-
-            outline:
-                none;
-
-            color:
-                var(--text);
-
-        }
-
-
-        /* ==================================================
-           FILTERS
-        ================================================== */
-
-        .filters{
-
-            display:flex;
-
-            gap:8px;
-
-            flex-wrap:wrap;
+            flex-wrap:
+                wrap;
 
             margin-bottom:
-                20px;
+                18px;
 
         }
 
 
-        .filter{
+        .filters {
+
+            display:
+                flex;
+
+            gap:
+                7px;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .filter-btn {
 
             border:
                 1px solid var(--border);
@@ -965,13 +791,10 @@
                 999px;
 
             padding:
-                8px 14px;
+                8px 13px;
 
             font-size:
                 11px;
-
-            font-weight:
-                700;
 
             transition:
                 .2s ease;
@@ -979,494 +802,48 @@
         }
 
 
-        .filter:hover{
-
-            color:
-                var(--primary);
-
-            border-color:
-                var(--primary);
-
-        }
-
-
-        .filter.active{
-
-            color:#fff;
-
-            border-color:
-                var(--primary);
+        .filter-btn:hover,
+        .filter-btn.active {
 
             background:
+                var(--primary);
+
+            color:
+                white;
+
+            border-color:
                 var(--primary);
 
         }
 
 
-        /* ==================================================
-           RESULTS
-        ================================================== */
+        .toolbar-actions {
 
-        #results{
+            display:
+                flex;
 
-            display:grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap:15px;
-
-        }
-
-
-        .lead-card{
-
-            background:
-                var(--surface);
-
-            border:
-                1px solid var(--border);
-
-            border-radius:
-                var(--radius);
-
-            padding:
-                19px;
-
-            box-shadow:
-                0 6px 22px
-                rgba(24,34,31,.045);
-
-            transition:
-                .28s ease;
-
-            position:
-                relative;
-
-            overflow:
-                hidden;
-
-        }
-
-
-        .lead-card::before{
-
-            content:"";
-
-            position:absolute;
-
-            top:0;
-
-            right:0;
-
-            left:0;
-
-            height:3px;
-
-            background:
-                var(--border);
-
-        }
-
-
-        .lead-card:hover{
-
-            transform:
-                translateY(-4px);
-
-            box-shadow:
-                var(--shadow-hover);
-
-        }
-
-
-        .lead-card.hot::before{
-
-            background:
-                var(--red);
-
-        }
-
-
-        .lead-card.high::before{
-
-            background:
-                var(--orange);
-
-        }
-
-
-        .lead-card.medium::before{
-
-            background:
-                var(--gold);
-
-        }
-
-
-        .lead-top{
-
-            display:flex;
-
-            align-items:flex-start;
-
-            justify-content:space-between;
-
-            gap:15px;
-
-        }
-
-
-        .lead-title{
-
-            min-width:0;
-
-        }
-
-
-        .lead-title h3{
-
-            font-size:
-                17px;
-
-            font-weight:
-                800;
-
-            line-height:
-                1.5;
-
-        }
-
-
-        .lead-address{
-
-            color:
-                var(--muted);
-
-            font-size:
-                11px;
-
-            margin-top:
-                5px;
-
-            line-height:
-                1.7;
-
-        }
-
-
-        .score{
-
-            min-width:
-                62px;
-
-            height:
-                62px;
-
-            border-radius:
-                17px;
-
-            display:flex;
-
-            flex-direction:column;
-
-            align-items:center;
-
-            justify-content:center;
-
-            background:
-                var(--surface-soft);
-
-            border:
-                1px solid var(--border);
-
-            flex-shrink:0;
-
-        }
-
-
-        .score strong{
-
-            font-size:
-                21px;
-
-            font-weight:
-                800;
-
-            line-height:
-                1;
-
-        }
-
-
-        .score span{
-
-            font-size:
-                9px;
-
-            color:
-                var(--muted);
-
-            margin-top:
-                4px;
-
-        }
-
-
-        .tier-hot .score strong{
-
-            color:
-                var(--red);
-
-        }
-
-
-        .tier-high .score strong{
-
-            color:
-                var(--orange);
-
-        }
-
-
-        .tier-medium .score strong{
-
-            color:
-                var(--gold);
-
-        }
-
-
-        .tier-low .score strong{
-
-            color:
-                var(--muted);
-
-        }
-
-
-        .lead-meta{
-
-            display:flex;
-
-            flex-wrap:wrap;
-
-            gap:7px;
-
-            margin-top:
-                15px;
-
-        }
-
-
-        .meta{
-
-            display:inline-flex;
-
-            align-items:center;
-
-            gap:5px;
-
-            padding:
-                6px 9px;
-
-            border-radius:
-                9px;
-
-            background:
-                var(--surface-soft);
-
-            border:
-                1px solid var(--border);
-
-            color:
-                var(--muted);
-
-            font-size:
-                10px;
-
-        }
-
-
-        .status{
-
-            font-weight:
-                700;
-
-        }
-
-
-        .status.no_website{
-
-            background:
-                var(--green-soft);
-
-            border-color:
-                #cdebd9;
-
-            color:
-                var(--green);
-
-        }
-
-
-        .status.social_only{
-
-            background:
-                var(--blue-soft);
-
-            border-color:
-                #d1e1f3;
-
-            color:
-                var(--blue);
-
-        }
-
-
-        .status.broken{
-
-            background:
-                var(--red-soft);
-
-            border-color:
-                #f2caca;
-
-            color:
-                var(--red);
-
-        }
-
-
-        .status.website{
-
-            background:
-                #edf5ef;
-
-            color:
-                #477353;
-
-        }
-
-
-        .status.needs_verification{
-
-            background:
-                var(--orange-soft);
-
-            color:
-                var(--orange);
-
-        }
-
-
-        .reasons{
-
-            margin-top:
-                15px;
-
-            padding-top:
-                14px;
-
-            border-top:
-                1px solid var(--border);
-
-        }
-
-
-        .reasons-title{
-
-            font-size:
-                10px;
-
-            color:
-                var(--muted);
-
-            font-weight:
-                700;
-
-            margin-bottom:
+            gap:
                 8px;
 
-        }
-
-
-        .reason-list{
-
-            display:flex;
-
-            flex-direction:column;
-
-            gap:6px;
+            align-items:
+                center;
 
         }
 
 
-        .reason{
+        .toolbar-select {
 
-            font-size:
-                10px;
-
-            color:
-                var(--muted);
-
-            line-height:
-                1.6;
-
-        }
-
-
-        .reason.pos{
-
-            color:
-                var(--green);
-
-        }
-
-
-        .reason.strong-pos{
-
-            color:
-                var(--red);
-
-            font-weight:
-                700;
-
-        }
-
-
-        .reason.neg{
-
-            color:
-                #9a6a4b;
-
-        }
-
-
-        .lead-actions{
-
-            display:flex;
-
-            gap:8px;
-
-            flex-wrap:wrap;
-
-            margin-top:
-                16px;
-
-        }
-
-
-        .lead-action{
-
-            min-height:
+            height:
                 38px;
 
             padding:
-                0 12px;
+                0 10px;
 
             border:
                 1px solid var(--border);
+
+            border-radius:
+                10px;
 
             background:
                 var(--surface);
@@ -1474,11 +851,577 @@
             color:
                 var(--text);
 
+            font-size:
+                11px;
+
+        }
+
+
+        .export-btn {
+
+            height:
+                38px;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                10px;
+
+            background:
+                var(--surface);
+
+            color:
+                var(--primary);
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .export-btn:hover {
+
+            border-color:
+                var(--primary);
+
+        }
+
+
+        /* =====================================================
+           RESULTS
+        ===================================================== */
+
+        .results {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
+
+            gap:
+                15px;
+
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .business-card {
+
+            background:
+                var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                19px;
+
+            padding:
+                18px;
+
+            transition:
+                .25s ease;
+
+            position:
+                relative;
+
+        }
+
+
+        .business-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                var(--shadow);
+
+            border-color:
+                #d8cdbd;
+
+        }
+
+
+        .card-top {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            gap:
+                12px;
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .card-top h3 {
+
+            font-size:
+                16px;
+
+            line-height:
+                1.5;
+
+            margin-top:
+                8px;
+
+        }
+
+
+        .lead-tier {
+
+            display:
+                inline-flex;
+
+            padding:
+                4px 8px;
+
+            border-radius:
+                999px;
+
+            font-size:
+                9px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .lead-tier.hot {
+
+            background:
+                #f8e5df;
+
+            color:
+                #a84535;
+
+        }
+
+
+        .lead-tier.high {
+
+            background:
+                #f6ecd8;
+
+            color:
+                #9b6c22;
+
+        }
+
+
+        .lead-tier.medium {
+
+            background:
+                #e6f0ed;
+
+            color:
+                #397466;
+
+        }
+
+
+        .lead-tier.low {
+
+            background:
+                #edf0f0;
+
+            color:
+                #687476;
+
+        }
+
+
+        .save-btn {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            flex:
+                0 0 38px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                11px;
+
+            background:
+                white;
+
+            color:
+                var(--gold);
+
+            font-size:
+                21px;
+
+            transition:
+                .2s ease;
+
+        }
+
+
+        .save-btn:hover,
+        .save-btn.saved {
+
+            background:
+                #f8f0df;
+
+            border-color:
+                #decba8;
+
+        }
+
+
+        /* =====================================================
+           CARD INFO
+        ===================================================== */
+
+        .card-info {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                8px;
+
+            margin-bottom:
+                14px;
+
+        }
+
+
+        .info-row {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            gap:
+                8px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                11px;
+
+        }
+
+
+        .info-row span:first-child {
+
+            width:
+                18px;
+
+            flex:
+                0 0 18px;
+
+        }
+
+
+        .website-status {
+
+            margin-top:
+                3px;
+
+        }
+
+
+        .status-badge {
+
+            display:
+                inline-flex;
+
+            padding:
+                5px 9px;
+
+            border-radius:
+                999px;
+
+            font-size:
+                10px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .status-badge.no-website {
+
+            background:
+                #f8e7df;
+
+            color:
+                #a74735;
+
+        }
+
+
+        .status-badge.social {
+
+            background:
+                #f6eddc;
+
+            color:
+                #9b702d;
+
+        }
+
+
+        .status-badge.broken {
+
+            background:
+                #f7dddd;
+
+            color:
+                #a53838;
+
+        }
+
+
+        .status-badge.website {
+
+            background:
+                #e5f1ec;
+
+            color:
+                #3b725d;
+
+        }
+
+
+        .status-badge.unknown {
+
+            background:
+                #edf0ef;
+
+            color:
+                #657473;
+
+        }
+
+
+        /* =====================================================
+           SCORE
+        ===================================================== */
+
+        .score-row {
+
+            padding:
+                12px 0;
+
+            border-top:
+                1px solid var(--border);
+
+            border-bottom:
+                1px solid var(--border);
+
+            margin-bottom:
+                13px;
+
+        }
+
+
+        .score {
+
+            display:
+                flex;
+
+            align-items:
+                baseline;
+
+            gap:
+                5px;
+
+        }
+
+
+        .score strong {
+
+            font-size:
+                25px;
+
+            color:
+                var(--primary);
+
+        }
+
+
+        .score span {
+
+            color:
+                var(--muted);
+
+            font-size:
+                10px;
+
+        }
+
+
+        /* =====================================================
+           CARD ACTIONS
+        ===================================================== */
+
+        .card-actions {
+
+            display:
+                flex;
+
+            gap:
+                7px;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .card-action {
+
+            flex:
+                1;
+
+            min-width:
+                110px;
+
+            height:
+                38px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--border);
+
             border-radius:
                 10px;
 
             font-size:
-                11px;
+                10px;
+
+            font-weight:
+                700;
+
+            color:
+                var(--primary);
+
+            background:
+                white;
+
+            transition:
+                .2s ease;
+
+        }
+
+
+        .card-action:hover {
+
+            border-color:
+                var(--primary);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        .card-action.primary {
+
+            background:
+                var(--primary);
+
+            color:
+                white;
+
+            border-color:
+                var(--primary);
+
+        }
+
+
+        .card-action.primary:hover {
+
+            background:
+                var(--primary-dark);
+
+        }
+
+
+        /* =====================================================
+           LOAD MORE
+        ===================================================== */
+
+        .load-more-wrapper {
+
+            grid-column:
+                1 / -1;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            padding:
+                15px 0;
+
+        }
+
+
+        .load-more-btn {
+
+            border:
+                1px solid var(--primary);
+
+            background:
+                var(--surface);
+
+            color:
+                var(--primary);
+
+            padding:
+                11px 25px;
+
+            border-radius:
+                12px;
+
+            font-size:
+                12px;
 
             font-weight:
                 700;
@@ -1489,107 +1432,89 @@
         }
 
 
-        .lead-action:hover{
+        .load-more-btn:hover {
 
-            transform:
-                translateY(-2px);
-
-            border-color:
+            background:
                 var(--primary);
 
             color:
-                var(--primary);
+                white;
 
         }
 
 
-        .lead-action.maps{
+        .load-more-btn:disabled {
 
-            background:
-                var(--primary);
+            opacity:
+                .6;
 
-            color:#fff;
-
-            border-color:
-                var(--primary);
+            cursor:
+                not-allowed;
 
         }
 
 
-        .lead-action.maps:hover{
+        /* =====================================================
+           EMPTY
+        ===================================================== */
 
-            background:
-                var(--primary-dark);
-
-            color:#fff;
-
-        }
-
-
-        .lead-action.saved{
-
-            background:
-                var(--gold-soft);
-
-            color:
-                #8b6733;
-
-            border-color:
-                #ead9bc;
-
-        }
-
-
-        .empty{
+        .empty {
 
             grid-column:
                 1 / -1;
+
+            min-height:
+                280px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            text-align:
+                center;
+
+            padding:
+                35px;
 
             background:
                 var(--surface);
 
             border:
-                1px dashed
-                var(--border);
+                1px dashed var(--border);
 
             border-radius:
-                18px;
-
-            min-height:
-                240px;
-
-            display:flex;
-
-            flex-direction:column;
-
-            align-items:center;
-
-            justify-content:center;
-
-            text-align:center;
-
-            padding:
-                30px;
+                20px;
 
         }
 
 
-        .empty-icon{
+        .empty-icon {
 
-            width:58px;
+            width:
+                58px;
 
-            height:58px;
+            height:
+                58px;
 
-            border-radius:18px;
+            border-radius:
+                18px;
 
-            display:flex;
+            display:
+                grid;
 
-            align-items:center;
-
-            justify-content:center;
+            place-items:
+                center;
 
             background:
-                var(--gold-soft);
+                var(--surface-2);
 
             font-size:
                 25px;
@@ -1600,406 +1525,166 @@
         }
 
 
-        .empty h3{
+        .empty h3 {
 
             font-size:
                 17px;
 
+            margin-bottom:
+                6px;
+
         }
 
 
-        .empty p{
-
-            color:
-                var(--muted);
-
-            font-size:
-                12px;
-
-            margin-top:
-                6px;
+        .empty p {
 
             max-width:
                 500px;
 
-            line-height:
-                1.8;
-
-        }
-
-
-        /* ==================================================
-           LOADER
-        ================================================== */
-
-        .status-message{
-
-            grid-column:
-                1 / -1;
-
-            background:
-                var(--surface);
-
-            border:
-                1px solid var(--border);
-
-            border-radius:
-                18px;
-
-            min-height:
-                220px;
-
-            display:flex;
-
-            flex-direction:column;
-
-            align-items:center;
-
-            justify-content:center;
-
-            text-align:center;
-
             color:
                 var(--muted);
-
-            font-size:
-                13px;
-
-            line-height:
-                1.9;
-
-        }
-
-
-        .loader{
-
-            width:
-                40px;
-
-            height:
-                40px;
-
-            border:
-                3px solid
-                #e3e7e4;
-
-            border-top-color:
-                var(--primary);
-
-            border-radius:
-                50%;
-
-            animation:
-                spin .8s linear infinite;
-
-            margin-bottom:
-                14px;
-
-        }
-
-
-        @keyframes spin{
-
-            to{
-
-                transform:
-                    rotate(360deg);
-
-            }
-
-        }
-
-
-        /* ==================================================
-           MODAL
-        ================================================== */
-
-        .modal{
-
-            position:fixed;
-
-            inset:0;
-
-            z-index:500;
-
-            display:none;
-
-            align-items:center;
-
-            justify-content:center;
-
-            padding:20px;
-
-            background:
-                rgba(20,28,26,.55);
-
-            backdrop-filter:
-                blur(7px);
-
-        }
-
-
-        .modal.show{
-
-            display:flex;
-
-        }
-
-
-        .modal-card{
-
-            width:
-                min(700px, 100%);
-
-            max-height:
-                88vh;
-
-            overflow:auto;
-
-            background:
-                var(--surface);
-
-            border-radius:
-                22px;
-
-            box-shadow:
-                0 30px 90px
-                rgba(0,0,0,.2);
-
-            padding:
-                23px;
-
-        }
-
-
-        .modal-head{
-
-            display:flex;
-
-            align-items:center;
-
-            justify-content:space-between;
-
-            gap:15px;
-
-            margin-bottom:
-                18px;
-
-        }
-
-
-        .modal-head h2{
-
-            font-size:
-                19px;
-
-        }
-
-
-        .close{
-
-            width:
-                38px;
-
-            height:
-                38px;
-
-            border:
-                1px solid var(--border);
-
-            background:
-                var(--surface-soft);
-
-            border-radius:
-                11px;
-
-            font-size:
-                20px;
-
-            color:
-                var(--muted);
-
-        }
-
-
-        .close:hover{
-
-            color:
-                var(--red);
-
-            border-color:
-                var(--red);
-
-        }
-
-
-        .saved-list{
-
-            display:flex;
-
-            flex-direction:column;
-
-            gap:9px;
-
-        }
-
-
-        .saved-item{
-
-            display:flex;
-
-            align-items:center;
-
-            justify-content:space-between;
-
-            gap:15px;
-
-            padding:
-                13px;
-
-            border:
-                1px solid var(--border);
-
-            border-radius:
-                13px;
-
-            background:
-                var(--surface-soft);
-
-        }
-
-
-        .saved-item strong{
-
-            font-size:
-                13px;
-
-        }
-
-
-        .saved-item small{
-
-            display:block;
-
-            color:
-                var(--muted);
-
-            margin-top:
-                3px;
-
-            font-size:
-                10px;
-
-        }
-
-
-        .help-content{
-
-            color:
-                var(--muted);
-
-            line-height:
-                2;
-
-            font-size:
-                13px;
-
-        }
-
-
-        .help-content h3{
-
-            color:
-                var(--text);
-
-            margin:
-                16px 0 5px;
-
-            font-size:
-                14px;
-
-        }
-
-
-        .help-content ul{
-
-            padding-right:
-                20px;
-
-        }
-
-
-        /* ==================================================
-           TOAST
-        ================================================== */
-
-        .toast{
-
-            position:fixed;
-
-            bottom:
-                22px;
-
-            left:
-                22px;
-
-            z-index:900;
-
-            min-width:
-                250px;
-
-            max-width:
-                380px;
-
-            padding:
-                13px 16px;
-
-            background:
-                #1c2926;
-
-            color:#fff;
-
-            border-radius:
-                13px;
-
-            box-shadow:
-                0 15px 40px
-                rgba(0,0,0,.18);
 
             font-size:
                 12px;
 
-            transform:
-                translateY(20px);
+        }
 
-            opacity:0;
 
-            pointer-events:none;
+        /* =====================================================
+           LOADING
+        ===================================================== */
 
-            transition:
-                .3s ease;
+        .loading-state {
+
+            border-style:
+                solid;
 
         }
 
 
-        .toast.show{
+        .loading-state .empty-icon {
 
-            opacity:1;
-
-            transform:
-                translateY(0);
+            animation:
+                pulse 1.3s
+                infinite ease-in-out;
 
         }
 
 
-        /* ==================================================
-           FOOTER
-        ================================================== */
+        @keyframes pulse {
 
-        footer{
+            0%,
+            100% {
+
+                transform:
+                    scale(1);
+
+                opacity:
+                    .7;
+
+            }
+
+            50% {
+
+                transform:
+                    scale(1.08);
+
+                opacity:
+                    1;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position:
+                fixed;
+
+            left:
+                50%;
+
+            bottom:
+                25px;
+
+            transform:
+                translate(
+                    -50%,
+                    20px
+                );
+
+            background:
+                #1d2a2e;
+
+            color:
+                white;
 
             padding:
-                45px 0 30px;
+                11px 17px;
+
+            border-radius:
+                12px;
+
+            font-size:
+                12px;
+
+            z-index:
+                9999;
+
+            opacity:
+                0;
+
+            pointer-events:
+                none;
+
+            transition:
+                .25s ease;
+
+            box-shadow:
+                0 10px 30px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    .18
+                );
+
+        }
+
+
+        .toast.show {
+
+            opacity:
+                1;
+
+            transform:
+                translate(
+                    -50%,
+                    0
+                );
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            border-top:
+                1px solid var(--border);
+
+            padding:
+                25px 16px;
+
+            text-align:
+                center;
 
             color:
                 var(--muted);
@@ -2007,227 +1692,193 @@
             font-size:
                 11px;
 
-            text-align:center;
-
         }
 
 
-        /* ==================================================
+        /* =====================================================
            RESPONSIVE
-        ================================================== */
+        ===================================================== */
 
-        @media(
-            max-width:1000px
-        ){
+        @media (
+            max-width: 1000px
+        ) {
 
-            .search-grid{
+            .results {
 
                 grid-template-columns:
-                    1fr 1fr;
+                    repeat(
+                        2,
+                        1fr
+                    );
 
             }
 
-            .run{
-
-                width:100%;
-
-            }
-
-            #results{
+            .stats {
 
                 grid-template-columns:
-                    1fr;
-
-            }
-
-            .stats{
-
-                grid-template-columns:
-                    repeat(3,1fr);
+                    repeat(
+                        3,
+                        1fr
+                    );
 
             }
 
         }
 
 
-        @media(
-            max-width:650px
-        ){
+        @media (
+            max-width: 760px
+        ) {
 
-            .header-inner{
-
-                min-height:
-                    68px;
-
-            }
-
-            .brand-text span{
-
-                display:none;
-
-            }
-
-            .header-btn{
-
-                padding:
-                    0 10px;
-
-                font-size:
-                    11px;
-
-            }
-
-            .hero{
+            main {
 
                 padding-top:
                     30px;
 
             }
 
-            .hero h1{
 
-                font-size:
-                    31px;
+            .topbar-badge {
 
-            }
-
-            .hero p{
-
-                font-size:
-                    13px;
+                display:
+                    none;
 
             }
 
-            .search-grid{
+
+            .search-grid {
 
                 grid-template-columns:
                     1fr;
 
             }
 
-            .stats{
+
+            .search-button {
+
+                width:
+                    100%;
+
+            }
+
+
+            .stats {
 
                 grid-template-columns:
-                    repeat(2,1fr);
+                    repeat(
+                        2,
+                        1fr
+                    );
 
             }
 
-            .stat:last-child{
 
-                grid-column:
-                    1 / -1;
+            .results {
 
-            }
-
-            .search-info{
-
-                align-items:
-                    flex-start;
-
-                flex-direction:
-                    column;
+                grid-template-columns:
+                    1fr;
 
             }
 
-            .toolbar{
+
+            .toolbar {
 
                 align-items:
                     stretch;
 
             }
 
-            .toolbar-left,
-            .toolbar-right{
 
-                width:100%;
+            .filters {
 
-            }
-
-            .tool-btn,
-            .sort-select{
-
-                flex:1;
+                width:
+                    100%;
 
             }
 
-            .lead-top{
 
-                gap:10px;
+            .toolbar-actions {
 
-            }
+                width:
+                    100%;
 
-            .score{
-
-                min-width:
-                    56px;
-
-                width:56px;
-
-                height:56px;
-
-            }
-
-            .lead-actions{
-
-                display:grid;
-
-                grid-template-columns:
-                    1fr 1fr;
-
-            }
-
-            .lead-action{
-
-                width:100%;
+                justify-content:
+                    space-between;
 
             }
 
         }
 
 
-        @media(
-            max-width:420px
-        ){
+        @media (
+            max-width: 480px
+        ) {
 
-            .container{
+            .topbar-inner,
+            main {
 
                 width:
-                    92%;
+                    min(
+                        100% - 20px,
+                        1180px
+                    );
 
             }
 
-            .stats{
 
-                gap:8px;
+            .search-panel {
+
+                padding:
+                    15px;
 
             }
 
-            .stat{
+
+            .stats {
+
+                gap:
+                    8px;
+
+            }
+
+
+            .stat {
 
                 padding:
                     13px;
 
             }
 
-            .stat-value{
+
+            .stat strong {
 
                 font-size:
-                    23px;
+                    21px;
 
             }
 
-            .brand-icon{
 
-                width:40px;
+            .hero h1 {
 
-                height:40px;
+                font-size:
+                    28px;
 
             }
 
-            .brand-text strong{
 
-                font-size:
-                    15px;
+            .toolbar-actions {
+
+                flex-wrap:
+                    wrap;
+
+            }
+
+
+            .toolbar-select,
+            .export-btn {
+
+                flex:
+                    1;
 
             }
 
@@ -2241,1783 +1892,387 @@
 <body>
 
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-<header class="header">
+    <header class="topbar">
 
-    <div class="container header-inner">
+        <div class="topbar-inner">
 
-        <a
-            href="#"
-            class="brand"
-        >
-
-            <div class="brand-icon">
-                LM
-            </div>
-
-            <div class="brand-text">
-
-                <strong>
-                    LeadMap
-                </strong>
-
-                <span>
-                    اكتشاف العملاء المحتملين
-                </span>
-
-            </div>
-
-        </a>
-
-
-        <div class="header-actions">
-
-            <button
-                class="header-btn"
-                onclick="openHelp()"
+            <a
+                href="#"
+                class="brand"
             >
-                ❔ المساعدة
-            </button>
+
+                <div class="brand-mark">
+                    LM
+                </div>
+
+                <div class="brand-text">
+
+                    <strong>
+                        LeadMap
+                    </strong>
+
+                    <span>
+                        Lead Generation Platform
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <div class="topbar-badge">
+                اكتشاف العملاء المحتملين
+            </div>
 
         </div>
 
-    </div>
-
-</header>
+    </header>
 
 
-<!-- =====================================================
-     MAIN
-===================================================== -->
 
-<main class="container">
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main>
 
 
-    <!-- HERO -->
+        <!-- HERO -->
 
-    <section class="hero">
+        <section class="hero">
 
-        <div class="hero-content">
-
-            <div class="eyebrow">
-                Lead Intelligence
+            <div class="hero-label">
+                ✦ منصة اكتشاف العملاء
             </div>
 
             <h1>
-
-                اكتشف الأنشطة التجارية
+                اعثر على
                 <span>
-                    التي تحتاج موقعًا إلكترونيًا
+                    العملاء المحتملين
                 </span>
-
+                بذكاء
             </h1>
 
             <p>
-
-                ابحث عن المطاعم والكافيهات والمتاجر والأنشطة التجارية،
-                وحلل حضورها الرقمي، ثم حدد العملاء المحتملين الأعلى قيمة
-                لخدمات تطوير المواقع والتسويق الرقمي.
-
+                ابحث عن الأنشطة التجارية، حلل حضورها الرقمي،
+                واكتشف الشركات التي يمكن أن تستفيد من خدمات تطوير المواقع.
             </p>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- =================================================
-         SEARCH
-    ================================================== -->
 
-    <section class="search-panel">
+        <!-- SEARCH -->
 
-        <div class="search-grid">
+        <section class="search-panel">
+
+            <form
+                id="searchForm"
+            >
+
+                <div class="search-grid">
 
 
-            <!-- CITY -->
+                    <div class="field">
 
-            <div class="field">
+                        <label
+                            for="business"
+                        >
+                            نوع النشاط
+                        </label>
 
-                <label for="f-city">
-                    المدينة
-                </label>
+                        <input
+                            id="business"
+                            type="text"
+                            value="حلويات"
+                            placeholder="مثال: مطاعم، كافيهات، عيادات..."
+                            autocomplete="off"
+                        >
 
-                <select id="f-city">
+                    </div>
 
-                    <option value="جدة">
-                        جدة
+
+                    <div class="field">
+
+                        <label
+                            for="city"
+                        >
+                            المدينة
+                        </label>
+
+                        <select
+                            id="city"
+                        >
+
+                            <option value="">
+                                اختر المدينة
+                            </option>
+
+                            <option value="جدة">
+                                جدة
+                            </option>
+
+                            <option value="الرياض">
+                                الرياض
+                            </option>
+
+                            <option value="الدمام">
+                                الدمام
+                            </option>
+
+                            <option value="مكة">
+                                مكة
+                            </option>
+
+                            <option value="المدينة المنورة">
+                                المدينة المنورة
+                            </option>
+
+                            <option value="الخبر">
+                                الخبر
+                            </option>
+
+                            <option value="أبها">
+                                أبها
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        id="searchButton"
+                        class="search-button"
+                        type="submit"
+                    >
+                        بحث عن العملاء
+                    </button>
+
+
+                </div>
+
+
+                <div class="search-hint">
+
+                    سيتم البحث عبر Google Maps وتحليل حالة الموقع
+                    والحضور الرقمي للنشاط.
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- STATS -->
+
+        <section class="stats">
+
+
+            <div class="stat">
+
+                <span>
+                    إجمالي النتائج
+                </span>
+
+                <strong
+                    id="totalCount"
+                >
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span>
+                    فرص ساخنة
+                </span>
+
+                <strong
+                    id="hotCount"
+                >
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span>
+                    بدون موقع
+                </span>
+
+                <strong
+                    id="noWebsiteCount"
+                >
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span>
+                    مواقع لا تعمل
+                </span>
+
+                <strong
+                    id="brokenCount"
+                >
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span>
+                    محفوظة
+                </span>
+
+                <strong
+                    id="savedCount"
+                >
+                    0
+                </strong>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- TOOLBAR -->
+
+        <section class="toolbar">
+
+
+            <div class="filters">
+
+
+                <button
+                    class="filter-btn active"
+                    type="button"
+                    onclick="filterBusinesses('all')"
+                >
+                    الكل
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    type="button"
+                    onclick="filterBusinesses('no-website')"
+                >
+                    بدون موقع
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    type="button"
+                    onclick="filterBusinesses('social')"
+                >
+                    اجتماعي فقط
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    type="button"
+                    onclick="filterBusinesses('broken')"
+                >
+                    موقع لا يعمل
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    type="button"
+                    onclick="filterBusinesses('hot')"
+                >
+                    ساخنة
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    type="button"
+                    onclick="filterBusinesses('high')"
+                >
+                    قوية
+                </button>
+
+
+                <button
+                    class="filter-btn"
+                    type="button"
+                    onclick="filterBusinesses('saved')"
+                >
+                    المحفوظة
+                </button>
+
+
+            </div>
+
+
+            <div class="toolbar-actions">
+
+
+                <select
+                    id="sort"
+                    class="toolbar-select"
+                >
+
+                    <option value="score">
+                        ترتيب حسب فرصة العميل
                     </option>
 
-                    <option value="الرياض">
-                        الرياض
+                    <option value="reviews">
+                        الأكثر تقييمًا
                     </option>
 
-                    <option value="الدمام">
-                        الدمام
-                    </option>
-
-                    <option value="مكة">
-                        مكة
-                    </option>
-
-                    <option value="المدينة المنورة">
-                        المدينة المنورة
-                    </option>
-
-                    <option value="الخبر">
-                        الخبر
-                    </option>
-
-                    <option value="أبها">
-                        أبها
+                    <option value="rating">
+                        أعلى تقييم
                     </option>
 
                 </select>
 
-            </div>
 
-
-            <!-- BUSINESS -->
-
-            <div class="field">
-
-                <label for="f-business">
-                    نوع النشاط التجاري
-                </label>
-
-                <input
-                    id="f-business"
-                    type="text"
-                    value="حلويات"
-                    placeholder="مثال: مطاعم، كافيهات، عيادات..."
+                <button
+                    id="exportCSV"
+                    class="export-btn"
+                    type="button"
                 >
+                    تصدير CSV
+                </button>
+
 
             </div>
 
 
-            <!-- SEARCH BUTTON -->
-
-            <button
-                class="run"
-                id="search-btn"
-                onclick="runSearch()"
-            >
-                🔎 بحث واستخراج الأنشطة
-            </button>
-
-        </div>
+        </section>
 
 
-        <div
-            id="worker-warning"
+
+        <!-- RESULTS -->
+
+        <section
+            id="results"
+            class="results"
         >
-            ⚠️ تأكد من ضبط رابط Cloudflare Worker بشكل صحيح.
-        </div>
-
-
-        <div class="search-info">
-
-            <div id="search-status">
-
-                جاهز للبحث عن العملاء المحتملين.
-
-            </div>
-
-            <div class="pagination-hint">
-
-                💡 كل ضغطة على نفس البحث تجلب دفعة جديدة
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         STATS
-    ================================================== -->
-
-    <section class="stats">
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                إجمالي النتائج
-            </div>
-
-            <div
-                class="stat-value"
-                id="stat-total"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                فرص قوية
-            </div>
-
-            <div
-                class="stat-value gold"
-                id="stat-hot"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                بدون موقع
-            </div>
-
-            <div
-                class="stat-value green"
-                id="stat-no-website"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                مواقع معطلة
-            </div>
-
-            <div
-                class="stat-value red"
-                id="stat-broken"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                المحفوظة
-            </div>
-
-            <div
-                class="stat-value blue"
-                id="stat-saved"
-            >
-                0
-            </div>
-
-        </div>
-
-
-    </section>
-
-
-    <!-- =================================================
-         TOOLBAR
-    ================================================== -->
-
-    <div class="toolbar">
-
-
-        <div class="toolbar-left">
-
-            <button
-                class="tool-btn primary"
-                onclick="openSaved()"
-            >
-                ⭐ العملاء المحفوظون
-            </button>
-
-
-            <button
-                class="tool-btn"
-                onclick="exportCSV()"
-            >
-                📊 تصدير CSV
-            </button>
-
-        </div>
-
-
-        <div class="toolbar-right">
-
-            <select
-                class="sort-select"
-                id="sort-select"
-                onchange="render()"
-            >
-
-                <option value="score">
-                    ترتيب حسب قوة الفرصة
-                </option>
-
-                <option value="reviews">
-                    ترتيب حسب المراجعات
-                </option>
-
-                <option value="rating">
-                    ترتيب حسب التقييم
-                </option>
-
-            </select>
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         FILTERS
-    ================================================== -->
-
-    <div class="filters">
-
-
-        <button
-            class="filter active"
-            data-filter="all"
-            onclick="setFilter('all', this)"
-        >
-            الكل
-        </button>
-
-
-        <button
-            class="filter"
-            data-filter="no_website"
-            onclick="setFilter('no_website', this)"
-        >
-            بدون موقع
-        </button>
-
-
-        <button
-            class="filter"
-            data-filter="social_only"
-            onclick="setFilter('social_only', this)"
-        >
-            سوشيال فقط
-        </button>
-
-
-        <button
-            class="filter"
-            data-filter="broken"
-            onclick="setFilter('broken', this)"
-        >
-            موقع معطل
-        </button>
-
-
-        <button
-            class="filter"
-            data-filter="hot"
-            onclick="setFilter('hot', this)"
-        >
-            🔥 فرصة قوية جدًا
-        </button>
-
-
-        <button
-            class="filter"
-            data-filter="high"
-            onclick="setFilter('high', this)"
-        >
-            فرصة قوية
-        </button>
-
-
-        <button
-            class="filter"
-            data-filter="saved"
-            onclick="setFilter('saved', this)"
-        >
-            ⭐ المحفوظة
-        </button>
-
-    </div>
-
-
-    <!-- =================================================
-         RESULTS
-    ================================================== -->
-
-    <section id="results">
-
-        <div class="empty">
-
-            <div class="empty-icon">
-                🔎
-            </div>
-
-            <h3>
-                ابدأ باكتشاف العملاء المحتملين
-            </h3>
-
-            <p>
-
-                اختر المدينة واكتب نوع النشاط التجاري،
-                ثم اضغط على زر البحث للبدء.
-
-            </p>
-
-        </div>
-
-    </section>
-
-
-</main>
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer>
-
-    <div class="container">
-
-        LeadMap © 2026 — أداة تحليل واكتشاف العملاء المحتملين
-
-    </div>
-
-</footer>
-
-
-<!-- =====================================================
-     SAVED MODAL
-===================================================== -->
-
-<div
-    class="modal"
-    id="saved-modal"
-    onclick="closeSavedOutside(event)"
->
-
-    <div class="modal-card">
-
-
-        <div class="modal-head">
-
-            <h2>
-                ⭐ العملاء المحفوظون
-            </h2>
-
-            <button
-                class="close"
-                onclick="closeSaved()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <div
-            class="saved-list"
-            id="saved-list"
-        >
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     HELP MODAL
-===================================================== -->
-
-<div
-    class="modal"
-    id="help-modal"
-    onclick="closeHelpOutside(event)"
->
-
-    <div class="modal-card">
-
-
-        <div class="modal-head">
-
-            <h2>
-                كيفية استخدام LeadMap
-            </h2>
-
-            <button
-                class="close"
-                onclick="closeHelp()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <div class="help-content">
-
-
-            <h3>
-                1. اختر المدينة
-            </h3>
-
-            <p>
-
-                اختر المدينة التي تريد البحث داخلها.
-
-            </p>
-
-
-            <h3>
-                2. اكتب نوع النشاط
-            </h3>
-
-            <p>
-
-                مثل:
-
-                مطاعم،
-                كافيهات،
-                حلويات،
-                عيادات،
-                متاجر،
-                صالونات...
-
-            </p>
-
-
-            <h3>
-                3. اضغط بحث
-            </h3>
-
-            <p>
-
-                النظام يبحث في Google Maps
-                ويحلل الأنشطة التجارية.
-
-            </p>
-
-
-            <h3>
-                4. اضغط البحث مرة أخرى
-            </h3>
-
-            <p>
-
-                إذا استخدمت نفس المدينة ونفس نوع النشاط،
-                فإن LeadMap ينتقل إلى الصفحة التالية
-                ويجلب أنشطة جديدة بدل إعادة نفس النتائج.
-
-            </p>
-
-
-            <h3>
-                5. فهم التقييم
-            </h3>
-
-            <ul>
-
-                <li>
-                    🔥 80+ — فرصة قوية جدًا
-                </li>
-
-                <li>
-                    🟠 65+ — فرصة قوية
-                </li>
-
-                <li>
-                    🟡 45+ — فرصة متوسطة
-                </li>
-
-                <li>
-                    ⚪ أقل من 45 — فرصة ضعيفة
-                </li>
-
-            </ul>
-
-
-            <h3>
-                6. لماذا بعض العملاء فرصتهم أعلى؟
-            </h3>
-
-            <p>
-
-                يعتمد التقييم على عدة عوامل،
-                أهمها وجود موقع إلكتروني،
-                حالة الموقع،
-                عدد المراجعات،
-                التقييم،
-                ووجود رقم هاتف.
-
-            </p>
-
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     TOAST
-===================================================== -->
-
-<div
-    class="toast"
-    id="toast"
->
-</div>
-
-
-<script>
-
-/* =========================================================
-   LEADMAP — JAVASCRIPT
-========================================================= */
-
-/* =========================================================
-   CONFIG
-========================================================= */
-
-const WORKER_URL =
-    "https://plain-leaf-9c79.mohamedtwfeeg7762.workers.dev";
-
-const STORAGE_KEY =
-    "leadmap_saved_leads";
-
-const SEARCH_PAGE_SIZE = 20;
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let businesses = [];
-
-let searchStart = 0;
-
-let currentSearchKey = "";
-
-let hasMoreResults = true;
-
-let isSearching = false;
-
-let seenPlaceIds = new Set();
-
-
-/* =========================================================
-   DOM HELPERS
-========================================================= */
-
-function $(id) {
-    return document.getElementById(id);
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-   يحل مشكلة:
-   escapeHTML is not defined
-========================================================= */
-
-function escapeHTML(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-/* =========================================================
-   SAFE NUMBER
-========================================================= */
-
-function safeNumber(value) {
-
-    const number =
-        Number(value);
-
-    return Number.isFinite(number)
-        ? number
-        : 0;
-}
-
-
-/* =========================================================
-   LOAD SAVED LEADS
-========================================================= */
-
-function getSavedLeads() {
-
-    try {
-
-        const data =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
-
-        if (!data) {
-            return [];
-        }
-
-        const parsed =
-            JSON.parse(data);
-
-        return Array.isArray(parsed)
-            ? parsed
-            : [];
-
-    } catch (error) {
-
-        console.error(
-            "Storage error:",
-            error
-        );
-
-        return [];
-    }
-}
-
-
-/* =========================================================
-   SAVE LEADS
-========================================================= */
-
-function saveSavedLeads(leads) {
-
-    try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(leads)
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Storage save error:",
-            error
-        );
-    }
-}
-
-
-/* =========================================================
-   CHECK IF LEAD IS SAVED
-========================================================= */
-
-function isLeadSaved(placeId) {
-
-    const saved =
-        getSavedLeads();
-
-    return saved.some(
-        lead =>
-            lead.place_id === placeId
-    );
-}
-
-
-/* =========================================================
-   SAVE / REMOVE LEAD
-========================================================= */
-
-function toggleSaveLead(placeId) {
-
-    const saved =
-        getSavedLeads();
-
-    const index =
-        saved.findIndex(
-            lead =>
-                lead.place_id === placeId
-        );
-
-    if (index !== -1) {
-
-        saved.splice(
-            index,
-            1
-        );
-
-        saveSavedLeads(
-            saved
-        );
-
-        showToast(
-            "تمت إزالة النشاط من المحفوظات"
-        );
-
-    } else {
-
-        const lead =
-            businesses.find(
-                item =>
-                    item.place_id === placeId
-            );
-
-        if (!lead) {
-            return;
-        }
-
-        saved.push(
-            lead
-        );
-
-        saveSavedLeads(
-            saved
-        );
-
-        showToast(
-            "تم حفظ النشاط بنجاح"
-        );
-    }
-
-    renderBusinesses();
-
-    updateStats();
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-function showToast(message) {
-
-    let toast =
-        $("toast");
-
-    if (!toast) {
-
-        toast =
-            document.createElement(
-                "div"
-            );
-
-        toast.id =
-            "toast";
-
-        toast.className =
-            "toast";
-
-        document.body.appendChild(
-            toast
-        );
-    }
-
-    toast.textContent =
-        message;
-
-    toast.classList.add(
-        "show"
-    );
-
-    clearTimeout(
-        window.__leadmapToastTimer
-    );
-
-    window.__leadmapToastTimer =
-        setTimeout(
-            () => {
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            3000
-        );
-}
-
-
-/* =========================================================
-   NORMALIZE BUSINESS
-========================================================= */
-
-function normalizeBusiness(place) {
-
-    const rating =
-        safeNumber(
-            place.rating
-        );
-
-    const reviews =
-        safeNumber(
-            place.reviews ??
-            place.review_count
-        );
-
-    const website =
-        place.website ||
-        null;
-
-    const websiteStatus =
-        place.website_status ||
-        (
-            !website
-                ? "no_website"
-                : "needs_verification"
-        );
-
-    return {
-
-        ...place,
-
-        title:
-            place.title ||
-            "نشاط بدون اسم",
-
-        address:
-            place.address ||
-            "العنوان غير متوفر",
-
-        phone:
-            place.phone ||
-            "",
-
-        rating,
-
-        reviews,
-
-        website,
-
-        website_status:
-            websiteStatus,
-
-        website_verified:
-            Boolean(
-                place.website_verified
-            ),
-
-        place_id:
-            place.place_id ||
-            `${place.title || ""}|${place.address || ""}`
-
-    };
-}
-
-
-/* =========================================================
-   CALCULATE LEAD SCORE
-========================================================= */
-
-function calculateScore(
-    business
-) {
-
-    let score = 0;
-
-    const reviews =
-        safeNumber(
-            business.reviews
-        );
-
-    const rating =
-        safeNumber(
-            business.rating
-        );
-
-    const status =
-        business.website_status;
-
-
-    /* Website */
-
-    if (
-        status ===
-        "no_website"
-    ) {
-
-        score += 45;
-
-    } else if (
-        status ===
-        "social_only"
-    ) {
-
-        score += 35;
-
-    } else if (
-        status ===
-        "broken"
-    ) {
-
-        score += 55;
-
-    } else if (
-        status ===
-        "website"
-    ) {
-
-        score -= 25;
-    }
-
-
-    /* Reviews */
-
-    if (
-        reviews >= 2000
-    ) {
-
-        score += 30;
-
-    } else if (
-        reviews >= 1000
-    ) {
-
-        score += 27;
-
-    } else if (
-        reviews >= 500
-    ) {
-
-        score += 22;
-
-    } else if (
-        reviews >= 250
-    ) {
-
-        score += 17;
-
-    } else if (
-        reviews >= 50
-    ) {
-
-        score += 10;
-    }
-
-
-    /* Rating */
-
-    if (
-        rating >= 4.5
-    ) {
-
-        score += 18;
-
-    } else if (
-        rating >= 4.0
-    ) {
-
-        score += 12;
-
-    } else if (
-        rating > 0
-    ) {
-
-        score += 4;
-    }
-
-
-    /* Phone */
-
-    if (
-        business.phone
-    ) {
-
-        score += 10;
-    }
-
-
-    return Math.max(
-        0,
-        Math.min(
-            100,
-            score
-        )
-    );
-}
-
-
-/* =========================================================
-   LEAD TIER
-========================================================= */
-
-function getLeadTier(score) {
-
-    if (score >= 80) {
-        return {
-            key: "hot",
-            label: "فرصة ساخنة"
-        };
-    }
-
-    if (score >= 65) {
-        return {
-            key: "high",
-            label: "فرصة قوية"
-        };
-    }
-
-    if (score >= 45) {
-        return {
-            key: "medium",
-            label: "فرصة متوسطة"
-        };
-    }
-
-    return {
-        key: "low",
-        label: "فرصة ضعيفة"
-    };
-}
-
-
-/* =========================================================
-   WEBSITE LABEL
-========================================================= */
-
-function getWebsiteInfo(
-    business
-) {
-
-    switch (
-        business.website_status
-    ) {
-
-        case "no_website":
-
-            return {
-                label:
-                    "لا يوجد موقع رسمي",
-                className:
-                    "no-website"
-            };
-
-
-        case "social_only":
-
-            return {
-                label:
-                    "حضور اجتماعي فقط",
-                className:
-                    "social"
-            };
-
-
-        case "broken":
-
-            return {
-                label:
-                    "الموقع لا يعمل",
-                className:
-                    "broken"
-            };
-
-
-        case "website":
-
-            return {
-                label:
-                    "لديه موقع",
-                className:
-                    "website"
-            };
-
-
-        default:
-
-            return {
-                label:
-                    "يحتاج تحقق",
-                className:
-                    "unknown"
-            };
-    }
-}
-
-
-/* =========================================================
-   GET BUSINESS KEY
-========================================================= */
-
-function getBusinessKey(
-    business
-) {
-
-    return (
-        business.place_id ||
-        `${business.title}|${business.address}`
-    )
-        .toLowerCase()
-        .trim();
-}
-
-
-/* =========================================================
-   FETCH FROM WORKER
-========================================================= */
-
-async function fetchFromWorker(
-    query,
-    start
-) {
-
-    const url =
-        `${WORKER_URL}?q=${encodeURIComponent(query)}&start=${start}`;
-
-    console.log(
-        "LeadMap request:",
-        url
-    );
-
-    const controller =
-        new AbortController();
-
-    const timeoutId =
-        setTimeout(
-            () => {
-                controller.abort();
-            },
-            30000
-        );
-
-    try {
-
-        const response =
-            await fetch(
-                url,
-                {
-                    method:
-                        "GET",
-
-                    headers: {
-                        Accept:
-                            "application/json"
-                    },
-
-                    signal:
-                        controller.signal
-                }
-            );
-
-        if (!response.ok) {
-
-            let errorMessage =
-                `خطأ من الخادم: ${response.status}`;
-
-            try {
-
-                const errorData =
-                    await response.json();
-
-                if (
-                    errorData &&
-                    errorData.error
-                ) {
-
-                    errorMessage =
-                        errorData.error;
-                }
-
-            } catch {}
-
-            throw new Error(
-                errorMessage
-            );
-        }
-
-        const data =
-            await response.json();
-
-        if (
-            data.error
-        ) {
-
-            throw new Error(
-                data.error
-            );
-        }
-
-        return data;
-
-    } catch (error) {
-
-        if (
-            error.name ===
-            "AbortError"
-        ) {
-
-            throw new Error(
-                "استغرق البحث وقتًا أطول من المتوقع. حاول مرة أخرى."
-            );
-        }
-
-        throw error;
-
-    } finally {
-
-        clearTimeout(
-            timeoutId
-        );
-    }
-}
-
-
-/* =========================================================
-   RUN SEARCH
-========================================================= */
-
-async function runSearch(
-    loadMore = false
-) {
-
-    if (
-        isSearching
-    ) {
-
-        showToast(
-            "البحث جارٍ بالفعل..."
-        );
-
-        return;
-    }
-
-
-    const businessInput =
-        $("business");
-
-    const cityInput =
-        $("city");
-
-
-    const business =
-        businessInput
-            ? businessInput.value.trim()
-            : "";
-
-
-    const city =
-        cityInput
-            ? cityInput.value.trim()
-            : "";
-
-
-    if (!business) {
-
-        showToast(
-            "اكتب نوع النشاط أولاً"
-        );
-
-        return;
-    }
-
-
-    if (!city) {
-
-        showToast(
-            "اختر المدينة أولاً"
-        );
-
-        return;
-    }
-
-
-    const query =
-        `${business} في ${city}`;
-
-
-    const searchKey =
-        `${business}|${city}`;
-
-
-    /*
-       بحث جديد
-    */
-
-    if (
-        !loadMore ||
-        currentSearchKey !==
-            searchKey
-    ) {
-
-        searchStart =
-            0;
-
-        businesses =
-            [];
-
-        seenPlaceIds =
-            new Set();
-
-        currentSearchKey =
-            searchKey;
-
-        hasMoreResults =
-            true;
-
-        renderBusinesses();
-
-        updateStats();
-    }
-
-
-    if (
-        !hasMoreResults &&
-        loadMore
-    ) {
-
-        showToast(
-            "لا توجد نتائج إضافية"
-        );
-
-        return;
-    }
-
-
-    isSearching =
-        true;
-
-    showLoading(
-        loadMore
-    );
-
-
-    try {
-
-        const data =
-            await fetchFromWorker(
-                query,
-                searchStart
-            );
-
-
-        const rawResults =
-            Array.isArray(
-                data.local_results
-            )
-                ? data.local_results
-                : [];
-
-
-        /*
-           Normalize
-        */
-
-        const newBusinesses =
-            [];
-
-
-        for (
-            const raw of rawResults
-        ) {
-
-            const business =
-                normalizeBusiness(
-                    raw
-                );
-
-
-            const key =
-                getBusinessKey(
-                    business
-                );
-
-
-            if (
-                seenPlaceIds.has(
-                    key
-                )
-            ) {
-
-                continue;
-            }
-
-
-            seenPlaceIds.add(
-                key
-            );
-
-
-            business.score =
-                calculateScore(
-                    business
-                );
-
-
-            business.tier =
-                getLeadTier(
-                    business.score
-                );
-
-
-            newBusinesses.push(
-                business
-            );
-        }
-
-
-        /*
-           Add results
-        */
-
-        businesses.push(
-            ...newBusinesses
-        );
-
-
-        /*
-           Pagination
-        */
-
-        if (
-            data.next_start !==
-            null &&
-            data.next_start !==
-            undefined
-        ) {
-
-            searchStart =
-                Number(
-                    data.next_start
-                );
-
-        } else {
-
-            searchStart +=
-                SEARCH_PAGE_SIZE;
-        }
-
-
-        hasMoreResults =
-            Boolean(
-                data.has_more
-            );
-
-
-        /*
-           Sort
-        */
-
-        sortBusinesses();
-
-
-        /*
-           Render
-        */
-
-        renderBusinesses();
-
-        updateStats();
-
-
-        if (
-            newBusinesses.length ===
-            0
-        ) {
-
-            if (
-                hasMoreResults
-            ) {
-
-                showToast(
-                    "لم نجد أنشطة جديدة في هذه الصفحة، حاول البحث مرة أخرى."
-                );
-
-            } else {
-
-                showToast(
-                    "انتهت النتائج."
-                );
-            }
-
-        } else {
-
-            showToast(
-                `تم العثور على ${newBusinesses.length} نشاط جديد`
-            );
-        }
-
-
-    } catch (error) {
-
-        console.error(
-            "LeadMap Search Error:",
-            error
-        );
-
-
-        const results =
-            $("results");
-
-
-        if (
-            results
-        ) {
-
-            results.innerHTML = `
-
-                <div class="empty">
-
-                    <div class="empty-icon">
-                        ⚠️
-                    </div>
-
-                    <h3>
-                        تعذر تنفيذ البحث
-                    </h3>
-
-                    <p>
-                        ${escapeHTML(
-                            error.message
-                        )}
-                    </p>
-
-                </div>
-
-            `;
-
-        } else {
-
-            showToast(
-                error.message
-            );
-        }
-
-    } finally {
-
-        isSearching =
-            false;
-
-        hideLoading();
-    }
-}
-
-
-/* =========================================================
-   LOADING
-========================================================= */
-
-function showLoading(
-    loadMore = false
-) {
-
-    const results =
-        $("results");
-
-    if (!results) {
-        return;
-    }
-
-
-    if (
-        loadMore &&
-        businesses.length
-    ) {
-
-        /*
-           لا نمسح النتائج الموجودة
-        */
-
-        const oldButton =
-            $("loadMoreButton");
-
-        if (
-            oldButton
-        ) {
-
-            oldButton.disabled =
-                true;
-
-            oldButton.innerHTML =
-                "جاري تحميل المزيد...";
-        }
-
-        return;
-    }
-
-
-    results.innerHTML = `
-
-        <div class="empty loading-state">
-
-            <div class="empty-icon">
-                ⏳
-            </div>
-
-            <h3>
-                جاري استخراج الأنشطة
-            </h3>
-
-            <p>
-                يتم البحث عن الأنشطة وتحليل حضورها الرقمي...
-            </p>
-
-        </div>
-
-    `;
-}
-
-
-/* =========================================================
-   HIDE LOADING
-========================================================= */
-
-function hideLoading() {
-
-    const button =
-        $("loadMoreButton");
-
-    if (
-        button
-    ) {
-
-        button.disabled =
-            false;
-
-        button.innerHTML =
-            "تحميل المزيد";
-    }
-}
-
-
-/* =========================================================
-   RENDER BUSINESSES
-========================================================= */
-
-function renderBusinesses() {
-
-    const results =
-        $("results");
-
-    if (!results) {
-        return;
-    }
-
-
-    if (
-        businesses.length ===
-        0
-    ) {
-
-        results.innerHTML = `
 
             <div class="empty">
 
@@ -4035,853 +2290,2266 @@ function renderBusinesses() {
 
             </div>
 
-        `;
-
-        return;
-    }
+        </section>
 
 
-    let html = "";
+    </main>
 
 
-    for (
-        const business of businesses
-    ) {
 
-        html +=
-            renderBusinessCard(
-                business
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        LeadMap —
+        منصة اكتشاف العملاء المحتملين وتحليل الحضور الرقمي
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           CONFIG
+        ===================================================== */
+
+        const WORKER_URL =
+            "https://plain-leaf-9c79.mohamedtwfeeg7762.workers.dev";
+
+        const STORAGE_KEY =
+            "leadmap_saved_leads";
+
+        const SEARCH_PAGE_SIZE =
+            20;
+
+
+        /* =====================================================
+           STATE
+        ===================================================== */
+
+        let businesses = [];
+
+        let searchStart = 0;
+
+        let currentSearchKey = "";
+
+        let hasMoreResults = true;
+
+        let isSearching = false;
+
+        let seenPlaceIds =
+            new Set();
+
+
+        /* =====================================================
+           SHORT DOM FUNCTION
+        ===================================================== */
+
+        function $(id) {
+
+            return document.getElementById(
+                id
             );
-    }
 
+        }
 
-    /*
-       زر تحميل المزيد
-    */
 
-    if (
-        hasMoreResults
-    ) {
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
 
-        html += `
+        function escapeHTML(value) {
 
-            <div class="load-more-wrapper">
-
-                <button
-                    id="loadMoreButton"
-                    class="load-more-btn"
-                    onclick="runSearch(true)"
-                >
-                    تحميل المزيد
-                </button>
-
-            </div>
-
-        `;
-    }
-
-
-    results.innerHTML =
-        html;
-}
-
-
-/* =========================================================
-   BUSINESS CARD
-========================================================= */
-
-function renderBusinessCard(
-    business
-) {
-
-    const websiteInfo =
-        getWebsiteInfo(
-            business
-        );
-
-
-    const saved =
-        isLeadSaved(
-            business.place_id
-        );
-
-
-    const tier =
-        business.tier ||
-        getLeadTier(
-            business.score || 0
-        );
-
-
-    const mapsUrl =
-        business.maps_url ||
-        business.google_maps_url ||
-        "#";
-
-
-    const phone =
-        business.phone
-            ? escapeHTML(
-                business.phone
-            )
-            : "غير متوفر";
-
-
-    const websiteButton =
-        business.website
-            ? `
-                <a
-                    href="${escapeHTML(
-                        business.website
-                    )}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="card-action"
-                >
-                    الموقع
-                </a>
-              `
-            : "";
-
-
-    return `
-
-        <article
-            class="business-card"
-            data-place-id="${escapeHTML(
-                business.place_id
-            )}"
-        >
-
-            <div class="card-top">
-
-                <div>
-
-                    <span
-                        class="lead-tier ${tier.key}"
-                    >
-                        ${escapeHTML(
-                            tier.label
-                        )}
-                    </span>
-
-                    <h3>
-                        ${escapeHTML(
-                            business.title
-                        )}
-                    </h3>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="save-btn ${
-                        saved
-                            ? "saved"
-                            : ""
-                    }"
-                    onclick="toggleSaveLead('${escapeHTML(
-                        business.place_id
-                    )}')"
-                    title="${
-                        saved
-                            ? "إزالة من المحفوظات"
-                            : "حفظ النشاط"
-                    }"
-                >
-                    ${
-                        saved
-                            ? "★"
-                            : "☆"
-                    }
-                </button>
-
-            </div>
-
-
-            <div class="card-info">
-
-                <div class="info-row">
-
-                    <span>
-                        📍
-                    </span>
-
-                    <span>
-                        ${escapeHTML(
-                            business.address
-                        )}
-                    </span>
-
-                </div>
-
-
-                <div class="info-row">
-
-                    <span>
-                        ⭐
-                    </span>
-
-                    <span>
-                        ${business.rating.toFixed(1)}
-                        —
-                        ${business.reviews.toLocaleString()}
-                        تقييم
-                    </span>
-
-                </div>
-
-
-                <div class="info-row">
-
-                    <span>
-                        📞
-                    </span>
-
-                    <span>
-                        ${phone}
-                    </span>
-
-                </div>
-
-
-                <div class="website-status">
-
-                    <span
-                        class="status-badge ${websiteInfo.className}"
-                    >
-                        ${escapeHTML(
-                            websiteInfo.label
-                        )}
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="score-row">
-
-                <div class="score">
-
-                    <strong>
-                        ${business.score}
-                    </strong>
-
-                    <span>
-                        / 100
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="card-actions">
-
-                <a
-                    href="${escapeHTML(
-                        mapsUrl
-                    )}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="card-action primary"
-                >
-                    فتح في Google Maps
-                </a>
-
-                ${websiteButton}
-
-            </div>
-
-        </article>
-
-    `;
-}
-
-
-/* =========================================================
-   SORT BUSINESSES
-========================================================= */
-
-function sortBusinesses() {
-
-    const sortSelect =
-        $("sort");
-
-    const sortValue =
-        sortSelect
-            ? sortSelect.value
-            : "score";
-
-
-    businesses.sort(
-        (a, b) => {
-
-            switch (
-                sortValue
+            if (
+                value === null ||
+                value === undefined
             ) {
 
-                case "reviews":
+                return "";
 
-                    return (
-                        b.reviews -
-                        a.reviews
+            }
+
+
+            return String(value)
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        /* =====================================================
+           SAFE NUMBER
+        ===================================================== */
+
+        function safeNumber(value) {
+
+            const number =
+                Number(value);
+
+            return Number.isFinite(
+                number
+            )
+                ? number
+                : 0;
+
+        }
+
+
+        /* =====================================================
+           STORAGE
+        ===================================================== */
+
+        function getSavedLeads() {
+
+            try {
+
+                const raw =
+                    localStorage.getItem(
+                        STORAGE_KEY
+                    );
+
+                if (!raw) {
+
+                    return [];
+
+                }
+
+
+                const data =
+                    JSON.parse(
+                        raw
                     );
 
 
-                case "rating":
+                return Array.isArray(
+                    data
+                )
+                    ? data
+                    : [];
 
-                    return (
-                        b.rating -
-                        a.rating
+            } catch (error) {
+
+                console.error(
+                    "Storage read error:",
+                    error
+                );
+
+                return [];
+
+            }
+
+        }
+
+
+        function saveSavedLeads(
+            leads
+        ) {
+
+            try {
+
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(
+                        leads
+                    )
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Storage save error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SAVED CHECK
+        ===================================================== */
+
+        function isLeadSaved(
+            placeId
+        ) {
+
+            return getSavedLeads()
+                .some(
+                    lead =>
+                        lead.place_id ===
+                        placeId
+                );
+
+        }
+
+
+        /* =====================================================
+           TOGGLE SAVE
+        ===================================================== */
+
+        function toggleSaveLead(
+            placeId
+        ) {
+
+            const saved =
+                getSavedLeads();
+
+
+            const index =
+                saved.findIndex(
+                    lead =>
+                        lead.place_id ===
+                        placeId
+                );
+
+
+            if (
+                index !== -1
+            ) {
+
+                saved.splice(
+                    index,
+                    1
+                );
+
+                saveSavedLeads(
+                    saved
+                );
+
+                showToast(
+                    "تمت إزالة النشاط من المحفوظات"
+                );
+
+            } else {
+
+                const lead =
+                    businesses.find(
+                        item =>
+                            item.place_id ===
+                            placeId
                     );
 
 
-                case "score":
+                if (!lead) {
+
+                    return;
+
+                }
+
+
+                saved.push(
+                    lead
+                );
+
+                saveSavedLeads(
+                    saved
+                );
+
+                showToast(
+                    "تم حفظ النشاط بنجاح"
+                );
+
+            }
+
+
+            renderBusinesses();
+
+            updateStats();
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        let toastTimer = null;
+
+
+        function showToast(
+            message
+        ) {
+
+            let toast =
+                $("toast");
+
+
+            if (!toast) {
+
+                toast =
+                    document.createElement(
+                        "div"
+                    );
+
+                toast.id =
+                    "toast";
+
+                toast.className =
+                    "toast";
+
+                document.body.appendChild(
+                    toast
+                );
+
+            }
+
+
+            toast.textContent =
+                message;
+
+
+            toast.classList.add(
+                "show"
+            );
+
+
+            clearTimeout(
+                toastTimer
+            );
+
+
+            toastTimer =
+                setTimeout(
+                    () => {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    3000
+                );
+
+        }
+
+
+        /* =====================================================
+           NORMALIZE
+        ===================================================== */
+
+        function normalizeBusiness(
+            place
+        ) {
+
+            const title =
+                place.title ||
+                "نشاط بدون اسم";
+
+
+            const address =
+                place.address ||
+                "العنوان غير متوفر";
+
+
+            const rating =
+                safeNumber(
+                    place.rating
+                );
+
+
+            const reviews =
+                safeNumber(
+                    place.reviews ??
+                    place.review_count
+                );
+
+
+            const website =
+                place.website ||
+                null;
+
+
+            let status =
+                place.website_status;
+
+
+            if (!status) {
+
+                status =
+                    website
+                        ? "needs_verification"
+                        : "no_website";
+
+            }
+
+
+            const placeId =
+                place.place_id ||
+                `${title}|${address}`;
+
+
+            return {
+
+                ...place,
+
+                title,
+
+                address,
+
+                rating,
+
+                reviews,
+
+                phone:
+                    place.phone ||
+                    "",
+
+                website,
+
+                website_status:
+                    status,
+
+                website_verified:
+                    Boolean(
+                        place.website_verified
+                    ),
+
+                place_id:
+                    placeId
+
+            };
+
+        }
+
+
+        /* =====================================================
+           SCORE
+        ===================================================== */
+
+        function calculateScore(
+            business
+        ) {
+
+            let score = 0;
+
+
+            const reviews =
+                safeNumber(
+                    business.reviews
+                );
+
+
+            const rating =
+                safeNumber(
+                    business.rating
+                );
+
+
+            const status =
+                business.website_status;
+
+
+            if (
+                status ===
+                "no_website"
+            ) {
+
+                score += 45;
+
+            } else if (
+                status ===
+                "social_only"
+            ) {
+
+                score += 35;
+
+            } else if (
+                status ===
+                "broken"
+            ) {
+
+                score += 55;
+
+            } else if (
+                status ===
+                "website"
+            ) {
+
+                score -= 25;
+
+            }
+
+
+            if (
+                reviews >= 2000
+            ) {
+
+                score += 30;
+
+            } else if (
+                reviews >= 1000
+            ) {
+
+                score += 27;
+
+            } else if (
+                reviews >= 500
+            ) {
+
+                score += 22;
+
+            } else if (
+                reviews >= 250
+            ) {
+
+                score += 17;
+
+            } else if (
+                reviews >= 50
+            ) {
+
+                score += 10;
+
+            }
+
+
+            if (
+                rating >= 4.5
+            ) {
+
+                score += 18;
+
+            } else if (
+                rating >= 4.0
+            ) {
+
+                score += 12;
+
+            } else if (
+                rating > 0
+            ) {
+
+                score += 4;
+
+            }
+
+
+            if (
+                business.phone
+            ) {
+
+                score += 10;
+
+            }
+
+
+            return Math.max(
+                0,
+                Math.min(
+                    100,
+                    score
+                )
+            );
+
+        }
+
+
+        /* =====================================================
+           TIER
+        ===================================================== */
+
+        function getLeadTier(
+            score
+        ) {
+
+            if (
+                score >= 80
+            ) {
+
+                return {
+                    key:
+                        "hot",
+                    label:
+                        "فرصة ساخنة"
+                };
+
+            }
+
+
+            if (
+                score >= 65
+            ) {
+
+                return {
+                    key:
+                        "high",
+                    label:
+                        "فرصة قوية"
+                };
+
+            }
+
+
+            if (
+                score >= 45
+            ) {
+
+                return {
+                    key:
+                        "medium",
+                    label:
+                        "فرصة متوسطة"
+                };
+
+            }
+
+
+            return {
+                key:
+                    "low",
+                label:
+                    "فرصة ضعيفة"
+            };
+
+        }
+
+
+        /* =====================================================
+           WEBSITE INFO
+        ===================================================== */
+
+        function getWebsiteInfo(
+            business
+        ) {
+
+            switch (
+                business.website_status
+            ) {
+
+                case "no_website":
+
+                    return {
+                        label:
+                            "لا يوجد موقع رسمي",
+                        className:
+                            "no-website"
+                    };
+
+
+                case "social_only":
+
+                    return {
+                        label:
+                            "حضور اجتماعي فقط",
+                        className:
+                            "social"
+                    };
+
+
+                case "broken":
+
+                    return {
+                        label:
+                            "الموقع لا يعمل",
+                        className:
+                            "broken"
+                    };
+
+
+                case "website":
+
+                    return {
+                        label:
+                            "لديه موقع",
+                        className:
+                            "website"
+                    };
+
+
                 default:
+
+                    return {
+                        label:
+                            "يحتاج تحقق",
+                        className:
+                            "unknown"
+                    };
+
+            }
+
+        }
+
+
+        /* =====================================================
+           BUSINESS KEY
+        ===================================================== */
+
+        function getBusinessKey(
+            business
+        ) {
+
+            return String(
+                business.place_id ||
+                `${business.title}|${business.address}`
+            )
+                .toLowerCase()
+                .trim();
+
+        }
+
+
+        /* =====================================================
+           FETCH WORKER
+        ===================================================== */
+
+        async function fetchFromWorker(
+            query,
+            start
+        ) {
+
+            const url =
+                `${WORKER_URL}?q=${encodeURIComponent(
+                    query
+                )}&start=${start}`;
+
+
+            console.log(
+                "LeadMap request:",
+                url
+            );
+
+
+            const controller =
+                new AbortController();
+
+
+            const timeoutId =
+                setTimeout(
+                    () => {
+
+                        controller.abort();
+
+                    },
+                    30000
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        url,
+                        {
+                            method:
+                                "GET",
+
+                            headers: {
+                                Accept:
+                                    "application/json"
+                            },
+
+                            signal:
+                                controller.signal
+                        }
+                    );
+
+
+                if (
+                    !response.ok
+                ) {
+
+                    let message =
+                        `خطأ من الخادم: ${response.status}`;
+
+
+                    try {
+
+                        const errorData =
+                            await response.json();
+
+
+                        if (
+                            errorData &&
+                            errorData.error
+                        ) {
+
+                            message =
+                                errorData.error;
+
+                        }
+
+                    } catch {}
+
+
+                    throw new Error(
+                        message
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    data.error
+                ) {
+
+                    throw new Error(
+                        data.error
+                    );
+
+                }
+
+
+                return data;
+
+            } catch (error) {
+
+                if (
+                    error.name ===
+                    "AbortError"
+                ) {
+
+                    throw new Error(
+                        "استغرق الاتصال بالخادم أكثر من 30 ثانية. تأكد من Worker وSerpAPI."
+                    );
+
+                }
+
+
+                throw error;
+
+            } finally {
+
+                clearTimeout(
+                    timeoutId
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        async function runSearch(
+            loadMore = false
+        ) {
+
+            if (
+                isSearching
+            ) {
+
+                showToast(
+                    "البحث جارٍ بالفعل..."
+                );
+
+                return;
+
+            }
+
+
+            const businessElement =
+                $("business");
+
+
+            const cityElement =
+                $("city");
+
+
+            const business =
+                businessElement
+                    ? businessElement.value.trim()
+                    : "";
+
+
+            const city =
+                cityElement
+                    ? cityElement.value.trim()
+                    : "";
+
+
+            if (!business) {
+
+                showToast(
+                    "اكتب نوع النشاط أولاً"
+                );
+
+                return;
+
+            }
+
+
+            if (!city) {
+
+                showToast(
+                    "اختر المدينة أولاً"
+                );
+
+                return;
+
+            }
+
+
+            const query =
+                `${business} في ${city}`;
+
+
+            const searchKey =
+                `${business}|${city}`;
+
+
+            /*
+               New search
+            */
+
+            if (
+                !loadMore ||
+                currentSearchKey !==
+                    searchKey
+            ) {
+
+                searchStart =
+                    0;
+
+                businesses =
+                    [];
+
+                seenPlaceIds =
+                    new Set();
+
+                currentSearchKey =
+                    searchKey;
+
+                hasMoreResults =
+                    true;
+
+                renderBusinesses();
+
+                updateStats();
+
+            }
+
+
+            if (
+                loadMore &&
+                !hasMoreResults
+            ) {
+
+                showToast(
+                    "لا توجد نتائج إضافية"
+                );
+
+                return;
+
+            }
+
+
+            isSearching =
+                true;
+
+
+            setSearchButtonLoading(
+                true
+            );
+
+
+            showLoading(
+                loadMore
+            );
+
+
+            try {
+
+                const data =
+                    await fetchFromWorker(
+                        query,
+                        searchStart
+                    );
+
+
+                const rawResults =
+                    Array.isArray(
+                        data.local_results
+                    )
+                        ? data.local_results
+                        : [];
+
+
+                const newBusinesses =
+                    [];
+
+
+                for (
+                    const raw of rawResults
+                ) {
+
+                    const business =
+                        normalizeBusiness(
+                            raw
+                        );
+
+
+                    const key =
+                        getBusinessKey(
+                            business
+                        );
+
+
+                    if (
+                        seenPlaceIds.has(
+                            key
+                        )
+                    ) {
+
+                        continue;
+
+                    }
+
+
+                    seenPlaceIds.add(
+                        key
+                    );
+
+
+                    business.score =
+                        calculateScore(
+                            business
+                        );
+
+
+                    business.tier =
+                        getLeadTier(
+                            business.score
+                        );
+
+
+                    newBusinesses.push(
+                        business
+                    );
+
+                }
+
+
+                businesses.push(
+                    ...newBusinesses
+                );
+
+
+                /*
+                   Pagination
+                */
+
+                if (
+                    data.next_start !==
+                        null &&
+                    data.next_start !==
+                        undefined
+                ) {
+
+                    searchStart =
+                        Number(
+                            data.next_start
+                        );
+
+                } else {
+
+                    searchStart +=
+                        SEARCH_PAGE_SIZE;
+
+                }
+
+
+                hasMoreResults =
+                    Boolean(
+                        data.has_more
+                    );
+
+
+                sortBusinesses();
+
+                renderBusinesses();
+
+                updateStats();
+
+
+                if (
+                    newBusinesses.length
+                    === 0
+                ) {
+
+                    if (
+                        hasMoreResults
+                    ) {
+
+                        showToast(
+                            "لم نجد أنشطة جديدة في هذه الصفحة."
+                        );
+
+                    } else {
+
+                        showToast(
+                            "انتهت النتائج."
+                        );
+
+                    }
+
+                } else {
+
+                    showToast(
+                        `تم العثور على ${newBusinesses.length} نشاط جديد`
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "LeadMap Search Error:",
+                    error
+                );
+
+
+                const results =
+                    $("results");
+
+
+                if (
+                    results
+                ) {
+
+                    results.innerHTML = `
+
+                        <div class="empty">
+
+                            <div class="empty-icon">
+                                ⚠️
+                            </div>
+
+                            <h3>
+                                تعذر تنفيذ البحث
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(
+                                    error.message
+                                )}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                showToast(
+                    error.message
+                );
+
+
+            } finally {
+
+                isSearching =
+                    false;
+
+                setSearchButtonLoading(
+                    false
+                );
+
+                hideLoading();
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SEARCH BUTTON LOADING
+        ===================================================== */
+
+        function setSearchButtonLoading(
+            loading
+        ) {
+
+            const button =
+                $("searchButton");
+
+
+            if (!button) {
+                return;
+            }
+
+
+            button.disabled =
+                loading;
+
+
+            button.textContent =
+                loading
+                    ? "جاري البحث..."
+                    : "بحث عن العملاء";
+
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        function showLoading(
+            loadMore
+        ) {
+
+            const results =
+                $("results");
+
+
+            if (!results) {
+                return;
+            }
+
+
+            if (
+                loadMore &&
+                businesses.length
+            ) {
+
+                const button =
+                    $("loadMoreButton");
+
+
+                if (
+                    button
+                ) {
+
+                    button.disabled =
+                        true;
+
+                    button.textContent =
+                        "جاري تحميل المزيد...";
+
+                }
+
+
+                return;
+
+            }
+
+
+            results.innerHTML = `
+
+                <div class="empty loading-state">
+
+                    <div class="empty-icon">
+                        ⏳
+                    </div>
+
+                    <h3>
+                        جاري استخراج الأنشطة
+                    </h3>
+
+                    <p>
+                        يتم البحث عن الأنشطة وتحليل حضورها الرقمي...
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+
+        function hideLoading() {
+
+            const button =
+                $("loadMoreButton");
+
+
+            if (
+                button
+            ) {
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    "تحميل المزيد";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RENDER
+        ===================================================== */
+
+        function renderBusinesses() {
+
+            const results =
+                $("results");
+
+
+            if (!results) {
+                return;
+            }
+
+
+            if (
+                businesses.length ===
+                0
+            ) {
+
+                results.innerHTML = `
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🔎
+                        </div>
+
+                        <h3>
+                            ابدأ البحث
+                        </h3>
+
+                        <p>
+                            اختر المدينة واكتب نوع النشاط للعثور على العملاء المحتملين.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            let html =
+                businesses
+                    .map(
+                        renderBusinessCard
+                    )
+                    .join("");
+
+
+            if (
+                hasMoreResults
+            ) {
+
+                html += `
+
+                    <div class="load-more-wrapper">
+
+                        <button
+                            id="loadMoreButton"
+                            class="load-more-btn"
+                            type="button"
+                            onclick="runSearch(true)"
+                        >
+                            تحميل المزيد
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            results.innerHTML =
+                html;
+
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        function renderBusinessCard(
+            business
+        ) {
+
+            const websiteInfo =
+                getWebsiteInfo(
+                    business
+                );
+
+
+            const saved =
+                isLeadSaved(
+                    business.place_id
+                );
+
+
+            const tier =
+                business.tier ||
+                getLeadTier(
+                    business.score || 0
+                );
+
+
+            const mapsUrl =
+                business.maps_url ||
+                business.google_maps_url ||
+                "#";
+
+
+            const phone =
+                business.phone
+                    ? escapeHTML(
+                        business.phone
+                    )
+                    : "غير متوفر";
+
+
+            let websiteButton =
+                "";
+
+
+            if (
+                business.website
+            ) {
+
+                websiteButton = `
+
+                    <a
+                        href="${escapeHTML(
+                            business.website
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="card-action"
+                    >
+                        الموقع
+                    </a>
+
+                `;
+
+            }
+
+
+            return `
+
+                <article
+                    class="business-card"
+                    data-place-id="${escapeHTML(
+                        business.place_id
+                    )}"
+                >
+
+                    <div class="card-top">
+
+                        <div>
+
+                            <span
+                                class="lead-tier ${tier.key}"
+                            >
+                                ${escapeHTML(
+                                    tier.label
+                                )}
+                            </span>
+
+                            <h3>
+                                ${escapeHTML(
+                                    business.title
+                                )}
+                            </h3>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="save-btn ${
+                                saved
+                                    ? "saved"
+                                    : ""
+                            }"
+                            onclick="toggleSaveLead('${escapeHTML(
+                                business.place_id
+                            )}')"
+                            title="${
+                                saved
+                                    ? "إزالة من المحفوظات"
+                                    : "حفظ النشاط"
+                            }"
+                        >
+                            ${
+                                saved
+                                    ? "★"
+                                    : "☆"
+                            }
+                        </button>
+
+                    </div>
+
+
+                    <div class="card-info">
+
+
+                        <div class="info-row">
+
+                            <span>
+                                📍
+                            </span>
+
+                            <span>
+                                ${escapeHTML(
+                                    business.address
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>
+                                ⭐
+                            </span>
+
+                            <span>
+                                ${business.rating.toFixed(1)}
+                                —
+                                ${business.reviews.toLocaleString()}
+                                تقييم
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>
+                                📞
+                            </span>
+
+                            <span>
+                                ${phone}
+                            </span>
+
+                        </div>
+
+
+                        <div class="website-status">
+
+                            <span
+                                class="status-badge ${websiteInfo.className}"
+                            >
+                                ${escapeHTML(
+                                    websiteInfo.label
+                                )}
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="score-row">
+
+                        <div class="score">
+
+                            <strong>
+                                ${business.score}
+                            </strong>
+
+                            <span>
+                                / 100
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-actions">
+
+                        <a
+                            href="${escapeHTML(
+                                mapsUrl
+                            )}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="card-action primary"
+                        >
+                            فتح في Google Maps
+                        </a>
+
+
+                        ${websiteButton}
+
+                    </div>
+
+
+                </article>
+
+            `;
+
+        }
+
+
+        /* =====================================================
+           SORT
+        ===================================================== */
+
+        function sortBusinesses() {
+
+            const select =
+                $("sort");
+
+
+            const value =
+                select
+                    ? select.value
+                    : "score";
+
+
+            businesses.sort(
+                (
+                    a,
+                    b
+                ) => {
+
+                    if (
+                        value ===
+                        "reviews"
+                    ) {
+
+                        return (
+                            b.reviews -
+                            a.reviews
+                        );
+
+                    }
+
+
+                    if (
+                        value ===
+                        "rating"
+                    ) {
+
+                        return (
+                            b.rating -
+                            a.rating
+                        );
+
+                    }
+
 
                     return (
                         b.score -
                         a.score
                     );
-            }
+
+                }
+            );
+
         }
-    );
-}
 
 
-/* =========================================================
-   UPDATE STATS
-========================================================= */
+        /* =====================================================
+           STATS
+        ===================================================== */
 
-function updateStats() {
+        function updateStats() {
 
-    const total =
-        businesses.length;
-
-
-    const hot =
-        businesses.filter(
-            item =>
-                item.tier?.key ===
-                "hot"
-        ).length;
+            const total =
+                businesses.length;
 
 
-    const noWebsite =
-        businesses.filter(
-            item =>
-                item.website_status ===
-                "no_website"
-        ).length;
-
-
-    const broken =
-        businesses.filter(
-            item =>
-                item.website_status ===
-                "broken"
-        ).length;
-
-
-    const saved =
-        getSavedLeads()
-            .length;
-
-
-    setText(
-        "totalCount",
-        total
-    );
-
-    setText(
-        "hotCount",
-        hot
-    );
-
-    setText(
-        "noWebsiteCount",
-        noWebsite
-    );
-
-    setText(
-        "brokenCount",
-        broken
-    );
-
-    setText(
-        "savedCount",
-        saved
-    );
-}
-
-
-/* =========================================================
-   SAFE TEXT
-========================================================= */
-
-function setText(
-    id,
-    value
-) {
-
-    const element =
-        $(id);
-
-    if (
-        element
-    ) {
-
-        element.textContent =
-            value;
-    }
-}
-
-
-/* =========================================================
-   FILTER
-========================================================= */
-
-function filterBusinesses(
-    filter
-) {
-
-    let filtered =
-        [...businesses];
-
-
-    switch (
-        filter
-    ) {
-
-        case "no-website":
-
-            filtered =
-                businesses.filter(
-                    item =>
-                        item.website_status ===
-                        "no_website"
-                );
-
-            break;
-
-
-        case "social":
-
-            filtered =
-                businesses.filter(
-                    item =>
-                        item.website_status ===
-                        "social_only"
-                );
-
-            break;
-
-
-        case "broken":
-
-            filtered =
-                businesses.filter(
-                    item =>
-                        item.website_status ===
-                        "broken"
-                );
-
-            break;
-
-
-        case "hot":
-
-            filtered =
+            const hot =
                 businesses.filter(
                     item =>
                         item.tier?.key ===
                         "hot"
-                );
-
-            break;
+                ).length;
 
 
-        case "high":
-
-            filtered =
+            const noWebsite =
                 businesses.filter(
                     item =>
-                        item.tier?.key ===
-                            "hot" ||
-                        item.tier?.key ===
-                            "high"
-                );
-
-            break;
+                        item.website_status ===
+                        "no_website"
+                ).length;
 
 
-        case "saved":
-
-            filtered =
+            const broken =
                 businesses.filter(
                     item =>
-                        isLeadSaved(
-                            item.place_id
-                        )
+                        item.website_status ===
+                        "broken"
+                ).length;
+
+
+            const saved =
+                getSavedLeads()
+                    .length;
+
+
+            setText(
+                "totalCount",
+                total
+            );
+
+
+            setText(
+                "hotCount",
+                hot
+            );
+
+
+            setText(
+                "noWebsiteCount",
+                noWebsite
+            );
+
+
+            setText(
+                "brokenCount",
+                broken
+            );
+
+
+            setText(
+                "savedCount",
+                saved
+            );
+
+        }
+
+
+        function setText(
+            id,
+            value
+        ) {
+
+            const element =
+                $(id);
+
+
+            if (
+                element
+            ) {
+
+                element.textContent =
+                    value;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FILTER
+        ===================================================== */
+
+        function filterBusinesses(
+            filter
+        ) {
+
+            document
+                .querySelectorAll(
+                    ".filter-btn"
+                )
+                .forEach(
+                    button => {
+
+                        button.classList.remove(
+                            "active"
+                        );
+
+                    }
                 );
 
-            break;
+
+            const buttons =
+                document
+                    .querySelectorAll(
+                        ".filter-btn"
+                    );
 
 
-        case "all":
-        default:
+            const filterMap = {
+                all:
+                    "الكل",
+                "no-website":
+                    "بدون موقع",
+                social:
+                    "اجتماعي فقط",
+                broken:
+                    "موقع لا يعمل",
+                hot:
+                    "ساخنة",
+                high:
+                    "قوية",
+                saved:
+                    "المحفوظة"
+            };
 
-            filtered =
+
+            buttons.forEach(
+                button => {
+
+                    if (
+                        button.textContent
+                            .trim() ===
+                        filterMap[filter]
+                    ) {
+
+                        button.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            let filtered =
                 [...businesses];
-    }
 
 
-    renderFilteredBusinesses(
-        filtered
-    );
-}
+            switch (
+                filter
+            ) {
+
+                case "no-website":
+
+                    filtered =
+                        businesses.filter(
+                            item =>
+                                item.website_status ===
+                                "no_website"
+                        );
+
+                    break;
 
 
-/* =========================================================
-   RENDER FILTERED
-========================================================= */
+                case "social":
 
-function renderFilteredBusinesses(
-    list
-) {
+                    filtered =
+                        businesses.filter(
+                            item =>
+                                item.website_status ===
+                                "social_only"
+                        );
 
-    const results =
-        $("results");
-
-    if (!results) {
-        return;
-    }
+                    break;
 
 
-    if (
-        list.length ===
-        0
-    ) {
+                case "broken":
 
-        results.innerHTML = `
+                    filtered =
+                        businesses.filter(
+                            item =>
+                                item.website_status ===
+                                "broken"
+                        );
 
-            <div class="empty">
-
-                <div class="empty-icon">
-                    📭
-                </div>
-
-                <h3>
-                    لا توجد نتائج
-                </h3>
-
-                <p>
-                    لا توجد أنشطة مطابقة لهذا الفلتر.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-    }
+                    break;
 
 
-    results.innerHTML =
-        list
-            .map(
-                renderBusinessCard
-            )
-            .join("");
-}
+                case "hot":
+
+                    filtered =
+                        businesses.filter(
+                            item =>
+                                item.tier?.key ===
+                                "hot"
+                        );
+
+                    break;
 
 
-/* =========================================================
-   CSV EXPORT
-========================================================= */
+                case "high":
 
-function exportCSV() {
+                    filtered =
+                        businesses.filter(
+                            item =>
+                                item.tier?.key ===
+                                    "hot" ||
+                                item.tier?.key ===
+                                    "high"
+                        );
 
-    const saved =
-        getSavedLeads();
-
-
-    if (
-        saved.length ===
-        0
-    ) {
-
-        showToast(
-            "لا توجد أنشطة محفوظة لتصديرها"
-        );
-
-        return;
-    }
+                    break;
 
 
-    const headers = [
-        "الاسم",
-        "العنوان",
-        "الهاتف",
-        "التقييم",
-        "عدد التقييمات",
-        "حالة الموقع",
-        "الموقع",
-        "Google Maps",
-        "النتيجة"
-    ];
+                case "saved":
+
+                    filtered =
+                        businesses.filter(
+                            item =>
+                                isLeadSaved(
+                                    item.place_id
+                                )
+                        );
+
+                    break;
 
 
-    const rows =
-        saved.map(
-            item => [
+                case "all":
 
-                item.title,
+                default:
 
-                item.address,
+                    filtered =
+                        [...businesses];
 
-                item.phone,
+            }
 
-                item.rating,
 
-                item.reviews,
+            renderFilteredBusinesses(
+                filtered
+            );
 
-                item.website_status,
+        }
 
-                item.website,
 
-                item.maps_url,
+        /* =====================================================
+           FILTER RENDER
+        ===================================================== */
 
-                item.score
+        function renderFilteredBusinesses(
+            list
+        ) {
+
+            const results =
+                $("results");
+
+
+            if (!results) {
+                return;
+            }
+
+
+            if (
+                list.length ===
+                0
+            ) {
+
+                results.innerHTML = `
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            📭
+                        </div>
+
+                        <h3>
+                            لا توجد نتائج
+                        </h3>
+
+                        <p>
+                            لا توجد أنشطة مطابقة لهذا الفلتر.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            let html =
+                list
+                    .map(
+                        renderBusinessCard
+                    )
+                    .join("");
+
+
+            results.innerHTML =
+                html;
+
+        }
+
+
+        /* =====================================================
+           CSV
+        ===================================================== */
+
+        function exportCSV() {
+
+            const saved =
+                getSavedLeads();
+
+
+            if (
+                saved.length ===
+                0
+            ) {
+
+                showToast(
+                    "لا توجد أنشطة محفوظة لتصديرها"
+                );
+
+                return;
+
+            }
+
+
+            const headers = [
+
+                "الاسم",
+                "العنوان",
+                "الهاتف",
+                "التقييم",
+                "عدد التقييمات",
+                "حالة الموقع",
+                "الموقع",
+                "Google Maps",
+                "النتيجة"
+
+            ];
+
+
+            const rows =
+                saved.map(
+                    item => [
+
+                        item.title,
+
+                        item.address,
+
+                        item.phone,
+
+                        item.rating,
+
+                        item.reviews,
+
+                        item.website_status,
+
+                        item.website,
+
+                        item.maps_url,
+
+                        item.score
+
+                    ]
+                );
+
+
+            const csv = [
+
+                headers,
+
+                ...rows
 
             ]
-        );
-
-
-    const csv = [
-
-        headers,
-
-        ...rows
-
-    ]
-        .map(
-            row =>
-                row
-                    .map(
-                        value =>
-                            `"${String(
-                                value ??
-                                ""
+                .map(
+                    row =>
+                        row
+                            .map(
+                                value =>
+                                    `"${String(
+                                        value ??
+                                        ""
+                                    )
+                                        .replace(
+                                            /"/g,
+                                            '""'
+                                        )}"`
                             )
-                                .replace(
-                                    /"/g,
-                                    '""'
-                                )}"`
-                    )
-                    .join(",")
-        )
-        .join("\n");
+                            .join(",")
+                )
+                .join("\n");
 
 
-    const blob =
-        new Blob(
-            [
-                "\uFEFF" +
-                csv
-            ],
-            {
-                type:
-                    "text/csv;charset=utf-8;"
+            const blob =
+                new Blob(
+                    [
+                        "\uFEFF" +
+                        csv
+                    ],
+                    {
+                        type:
+                            "text/csv;charset=utf-8;"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                url;
+
+
+            link.download =
+                "leadmap-leads.csv";
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            link.remove();
+
+
+            URL.revokeObjectURL(
+                url
+            );
+
+
+            showToast(
+                "تم تصدير العملاء بنجاح"
+            );
+
+        }
+
+
+        /* =====================================================
+           EVENTS
+        ===================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+
+                const form =
+                    $("searchForm");
+
+
+                if (
+                    form
+                ) {
+
+                    form.addEventListener(
+                        "submit",
+                        event => {
+
+                            event.preventDefault();
+
+                            runSearch(
+                                false
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                const sort =
+                    $("sort");
+
+
+                if (
+                    sort
+                ) {
+
+                    sort.addEventListener(
+                        "change",
+                        () => {
+
+                            sortBusinesses();
+
+                            renderBusinesses();
+
+                        }
+                    );
+
+                }
+
+
+                const exportButton =
+                    $("exportCSV");
+
+
+                if (
+                    exportButton
+                ) {
+
+                    exportButton.addEventListener(
+                        "click",
+                        exportCSV
+                    );
+
+                }
+
+
+                updateStats();
+
+                renderBusinesses();
+
+
+                console.log(
+                    "LeadMap loaded successfully."
+                );
+
             }
         );
 
 
-    const url =
-        URL.createObjectURL(
-            blob
-        );
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        window.runSearch =
+            runSearch;
+
+        window.toggleSaveLead =
+            toggleSaveLead;
+
+        window.filterBusinesses =
+            filterBusinesses;
+
+        window.exportCSV =
+            exportCSV;
+
+        window.showToast =
+            showToast;
 
 
-    const link =
-        document.createElement(
-            "a"
-        );
-
-    link.href =
-        url;
-
-    link.download =
-        "leadmap-leads.csv";
-
-    document.body.appendChild(
-        link
-    );
-
-    link.click();
-
-    link.remove();
-
-    URL.revokeObjectURL(
-        url
-    );
-
-
-    showToast(
-        "تم تصدير العملاء بنجاح"
-    );
-}
-
-
-/* =========================================================
-   EVENTS
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        /*
-           Sort
-        */
-
-        const sort =
-            $("sort");
-
-        if (
-            sort
-        ) {
-
-            sort.addEventListener(
-                "change",
-                () => {
-
-                    sortBusinesses();
-
-                    renderBusinesses();
-                }
-            );
-        }
-
-
-        /*
-           Search form
-        */
-
-        const searchForm =
-            $("searchForm");
-
-        if (
-            searchForm
-        ) {
-
-            searchForm.addEventListener(
-                "submit",
-                event => {
-
-                    event.preventDefault();
-
-                    runSearch(
-                        false
-                    );
-                }
-            );
-        }
-
-
-        /*
-           Search button
-        */
-
-        const searchButton =
-            $("searchButton");
-
-        if (
-            searchButton
-        ) {
-
-            searchButton.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
-
-                    runSearch(
-                        false
-                    );
-                }
-            );
-        }
-
-
-        /*
-           Export CSV
-        */
-
-        const exportButton =
-            $("exportCSV");
-
-        if (
-            exportButton
-        ) {
-
-            exportButton.addEventListener(
-                "click",
-                exportCSV
-            );
-        }
-
-
-        /*
-           Initial stats
-        */
-
-        updateStats();
-
-        renderBusinesses();
-
-    }
-);
-
-
-/* =========================================================
-   GLOBAL FUNCTIONS
-========================================================= */
-
-window.runSearch =
-    runSearch;
-
-window.toggleSaveLead =
-    toggleSaveLead;
-
-window.filterBusinesses =
-    filterBusinesses;
-
-window.exportCSV =
-    exportCSV;
-
-window.showToast =
-    showToast;
-
-
-/* =========================================================
-   DEBUG
-========================================================= */
-
-console.log(
-    "LeadMap JavaScript loaded successfully."
-);
-
-console.log(
-    "Worker:",
-    WORKER_URL
-);
-
-</script>
-
+    </script>
 
 
 </body>
