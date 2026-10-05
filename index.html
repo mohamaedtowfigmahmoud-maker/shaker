@@ -68,6 +68,7 @@ main{padding:40px 0 60px}
 footer{border-top:1px solid var(--border);padding:22px 16px;text-align:center;color:var(--muted);font-size:12px}
 @media(max-width:1000px){.results{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.btn-main{width:100%}.results{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+.cact.done{background:#e5f1ec;color:#3b725d;border-color:#bfd9cd;cursor:default}
 </style>
 </head>
 <body>
@@ -100,6 +101,25 @@ footer{border-top:1px solid var(--border);padding:22px 16px;text-align:center;co
       </div>
       <div class="hint">كل ضغطة بحث تعرض عملاء جدد فقط، لم يظهروا لك من قبل في أي بحث سابق.</div>
     </form>
+  </section>
+
+  <section class="panel" id="teamPanel" style="display:none">
+    <div id="loginBox" style="display:none">
+      <div class="grid">
+        <div class="field"><label for="teamEmail">بريد الفريق</label><input id="teamEmail" type="email" autocomplete="username" dir="ltr"></div>
+        <div class="field"><label for="teamPass">كلمة السر</label><input id="teamPass" type="password" autocomplete="current-password" dir="ltr"></div>
+        <button id="teamLogin" class="btn-main" type="button">دخول سجل الفريق</button>
+      </div>
+      <div class="hint">سجّل الدخول مرة واحدة لتفعيل سجل الفريق المشترك.</div>
+    </div>
+    <div id="teamBox" style="display:none">
+      <div class="grid" style="grid-template-columns:1fr auto auto">
+        <div class="field"><label for="nameCheck">تحقق من اسم نشاط في سجل الفريق</label><input id="nameCheck" type="text" placeholder="اكتب جزءًا من الاسم..."></div>
+        <button id="nameCheckBtn" class="btn-main" type="button">تحقق</button>
+        <button id="teamLogout" class="tbtn" type="button">خروج</button>
+      </div>
+      <div id="nameCheckResult" class="hint"></div>
+    </div>
   </section>
 
   <section class="stats">
@@ -137,6 +157,81 @@ footer{border-top:1px solid var(--border);padding:22px 16px;text-align:center;co
 <footer>LeadMap — منصة اكتشاف العملاء المحتملين وتحليل الحضور الرقمي</footer>
 <div id="toast" class="toast"></div>
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, deleteDoc, collection, query, where, documentId, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* الصق هنا إعدادات مشروعك من Firebase Console (Project settings > Your apps > Web app) */
+const firebaseConfig = {
+  apiKey: "PASTE_API_KEY",
+  authDomain: "PASTE_AUTH_DOMAIN",
+  projectId: "PASTE_PROJECT_ID",
+  appId: "PASTE_APP_ID"
+};
+
+const enabled = !Object.values(firebaseConfig).some(v => String(v).startsWith("PASTE"));
+const Registry = { enabled, user: null };
+window.Registry = Registry;
+
+if (enabled) {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const COL = "handled";
+
+  const docId = id => encodeURIComponent(String(id)).replace(/%/g, "~").slice(0, 400);
+  const norm = t => String(t || "").toLowerCase()
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, "")
+    .replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي")
+    .replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+
+  Registry.login = (email, pass) => signInWithEmailAndPassword(auth, email, pass);
+  Registry.logout = () => signOut(auth);
+
+  Registry.checkMany = async ids => {
+    const found = new Set();
+    const map = new Map(ids.map(i => [docId(i), i]));
+    const keys = [...map.keys()];
+    for (let i = 0; i < keys.length; i += 30) {
+      const snap = await getDocs(query(collection(db, COL), where(documentId(), "in", keys.slice(i, i + 30))));
+      snap.forEach(d => { if (map.has(d.id)) found.add(map.get(d.id)); });
+    }
+    return found;
+  };
+
+  Registry.claim = async b => {
+    if (!auth.currentUser) return { ok: false, reason: "auth" };
+    try {
+      await setDoc(doc(db, COL, docId(b.place_id)), {
+        place_id: String(b.place_id), title: String(b.title || ""),
+        at: serverTimestamp(), by: auth.currentUser.uid
+      });
+      return { ok: true };
+    } catch (e) {
+      // الإضافة المكررة ترفضها قواعد Firestore (لا تعديل على سجل موجود)
+      return { ok: false, reason: e.code === "permission-denied" ? "exists" : "error", error: e };
+    }
+  };
+
+  Registry.searchNames = async text => {
+    const q = norm(text);
+    if (!q) return [];
+    const snap = await getDocs(collection(db, COL));
+    const out = [];
+    snap.forEach(d => { const t = d.data().title; if (norm(t).includes(q)) out.push(t); });
+    return out;
+  };
+
+  onAuthStateChanged(auth, user => {
+    Registry.user = user;
+    window.dispatchEvent(new CustomEvent("registry-auth"));
+  });
+} else {
+  window.dispatchEvent(new CustomEvent("registry-auth"));
+}
+</script>
+
 <script>
 /* ================= CONFIG ================= */
 const WORKER_URL = "https://plain-leaf-9c79.mohamedtwfeeg7762.workers.dev";
@@ -166,6 +261,7 @@ let isSearching = false;
 let currentFilter = "all";
 let seenPlaceIds = new Set();
 let seenBrands = new Set();
+let handledIds = new Set();
 
 const $ = id => document.getElementById(id);
 
@@ -300,6 +396,7 @@ async function runSearch(loadMore = false) {
   const city = $("city").value.trim();
   if (!business) return showToast("اكتب نوع النشاط أولاً");
   if (!city) return showToast("اختر المدينة أولاً");
+  if (window.Registry?.enabled && !window.Registry.user) return showToast("سجّل الدخول لسجل الفريق أولاً");
 
   const searchKey = `${business}|${city}`;
   const variants = buildVariants(business, city);
@@ -328,9 +425,14 @@ async function runSearch(loadMore = false) {
       requests++;
 
       const raw = Array.isArray(data.local_results) ? data.local_results : [];
+      let teamHandled = new Set();
+      if (window.Registry?.enabled) {
+        teamHandled = await window.Registry.checkMany(raw.map(it => normalizeBusiness(it).place_id));
+      }
       for (const item of raw) {
         const b = normalizeBusiness(item);
         const idKey = getBusinessKey(b);
+        if (teamHandled.has(b.place_id)) { seenPlaceIds.add(idKey); seenBrands.add(getBrandKey(b)); continue; }
         const brandKey = getBrandKey(b);
         if (seenPlaceIds.has(idKey)) continue;
         if (DEDUPE_BRANDS && seenBrands.has(brandKey)) { seenPlaceIds.add(idKey); continue; }
@@ -440,6 +542,7 @@ function renderBusinesses() {
 function renderCard(b) {
   const w = getWebsiteInfo(b);
   const saved = isLeadSaved(b.place_id);
+  const handled = handledIds.has(b.place_id);
   const score = b.score ?? calculateScore(b);
   const tier = b.tier || getLeadTier(score);
   const mapsUrl = safeUrl(b.maps_url || b.google_maps_url) || "#";
@@ -463,6 +566,7 @@ function renderCard(b) {
       <a class="cact primary" href="${escapeHTML(mapsUrl)}" target="_blank" rel="noopener noreferrer">فتح في Google Maps</a>
       ${site ? `<a class="cact" href="${escapeHTML(site)}" target="_blank" rel="noopener noreferrer">الموقع</a>` : ""}
     </div>
+    ${window.Registry?.enabled ? `<div class="cacts" style="margin-top:7px"><button type="button" class="cact ${handled ? "done" : ""}" data-claim="${escapeHTML(b.place_id)}" ${handled ? "disabled" : ""}>${handled ? "✓ تم التعامل معه" : "أنا تعاملت مع هذا النشاط"}</button></div>` : ""}
   </article>`;
 }
 
@@ -528,6 +632,28 @@ function resetSearchHistory() {
   showToast("تم مسح سجل البحث");
 }
 
+/* ================= TEAM REGISTRY ================= */
+async function claimLead(placeId) {
+  const b = businesses.find(x => x.place_id === placeId) || getSavedLeads().find(x => x.place_id === placeId);
+  if (!b || !window.Registry?.enabled) return;
+  const r = await window.Registry.claim(b);
+  if (r.ok) { handledIds.add(placeId); showToast("تم تسجيل النشاط في سجل الفريق"); }
+  else if (r.reason === "exists") { handledIds.add(placeId); showToast("سبقك زميل في التعامل مع هذا النشاط"); }
+  else if (r.reason === "auth") showToast("سجّل الدخول لسجل الفريق أولاً");
+  else { console.error(r.error); showToast("تعذر الحفظ في سجل الفريق"); }
+  renderBusinesses();
+}
+
+function updateTeamUI() {
+  const R = window.Registry;
+  const panel = $("teamPanel");
+  if (!R || !R.enabled) { panel.style.display = "none"; return; }
+  panel.style.display = "";
+  $("loginBox").style.display = R.user ? "none" : "";
+  $("teamBox").style.display = R.user ? "" : "none";
+}
+window.addEventListener("registry-auth", updateTeamUI);
+
 /* ================= EVENTS ================= */
 document.addEventListener("DOMContentLoaded", () => {
   $("searchForm").addEventListener("submit", e => { e.preventDefault(); runSearch(false); });
@@ -543,9 +669,27 @@ document.addEventListener("DOMContentLoaded", () => {
   $("results").addEventListener("click", e => {
     const s = e.target.closest("[data-save]");
     if (s) return toggleSaveLead(s.dataset.save);
+    const c = e.target.closest("[data-claim]");
+    if (c) return claimLead(c.dataset.claim);
     if (e.target.closest("[data-more]")) runSearch(true);
   });
 
+  $("teamLogin").addEventListener("click", async () => {
+    try { await window.Registry.login($("teamEmail").value.trim(), $("teamPass").value); showToast("تم تسجيل الدخول"); }
+    catch { showToast("بيانات الدخول غير صحيحة"); }
+  });
+  $("teamLogout").addEventListener("click", () => window.Registry.logout());
+  $("nameCheckBtn").addEventListener("click", async () => {
+    const out = $("nameCheckResult");
+    try {
+      const list = await window.Registry.searchNames($("nameCheck").value);
+      out.textContent = list.length
+        ? "موجود في سجل الفريق (تم التعامل معه): " + list.slice(0, 10).join(" ، ")
+        : "غير موجود في السجل، لم يتعامل معه أحد.";
+    } catch (e) { console.error(e); out.textContent = "تعذر قراءة السجل."; }
+  });
+
+  updateTeamUI();
   renderBusinesses();
   updateStats();
 });
